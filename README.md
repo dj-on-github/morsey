@@ -32,15 +32,15 @@ It is listed on Amazon as the "CW Key Morse Code Key Morse Telegraph Key Morse C
 [Keyer Amazon Link](https://www.amazon.com/dp/B0CQFVPRTR?ref=ppx_yo2ov_dt_b_fed_asin_title&th=1)
 
 This provides a 3.5mm jack interface. To connect to a computer you need
-a USB interface. I use is listed on Amazon as the "Morse Code Training Adapter USB Key Trainer for/Key Mobile Computer Support 3.5mmPlug Key Trainer Connectors"
+a USB interface. The one I use is listed on Amazon as the "Morse Code Training Adapter USB Key Trainer for/Key Mobile Computer Support 3.5mmPlug Key Trainer Connectors"
 
 ![Keyer USB Interface Image](usbinterface.jpg "Keyer USB Interface")
 
 [USB Interface Amazon Link](https://www.amazon.com/dp/B0DLVYYKDX?ref=ppx_yo2ov_dt_b_fed_asin_title&th=1)
 
-## The USB Morse key (413d:2107)
+## The USB Morse key
 
-The key enumerates as a standard USB HID keyboard. On Linux it is read directly
+The key enumerates as a standard USB HID keyboard with the identifier 413d:2107. On Linux it is read directly
 from its `/dev/hidrawN` node — no drivers needed. Each paddle is reported in the
 HID modifier byte:
 
@@ -53,6 +53,13 @@ alternating elements) and decodes them into characters. Which paddle is dit vs
 dah is set in Settings ("Paddle orientation").
 
 ### Permissions
+
+On MacOs:
+
+When first run, you should be prompted to open the input monitoring section in 
+the settings. Grant input monitoring to Morsey then close and reopen Morsey.
+
+On linux:
 
 You need read access to the key's `/dev/hidraw*` node. On this machine the node
 is owned by group `plugdev` with an ACL, and the user is in `plugdev`, so it
