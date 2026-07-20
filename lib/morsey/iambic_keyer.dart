@@ -69,6 +69,10 @@ class IambicKeyer {
   /// Clears any partially-keyed character without committing it.
   void clear() => _resetPattern();
 
+  /// True while an element is sounding/spacing or a keyed pattern is still
+  /// awaiting its letter-gap commit — i.e. the keyer owns the side-tone.
+  bool get active => _phase != _Phase.idle || _pattern.isNotEmpty;
+
   void setDit(bool down) {
     _dit = down;
     if (down && _current == '-') _ditMem = true; // latch during a dah

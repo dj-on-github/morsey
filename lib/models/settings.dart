@@ -32,6 +32,7 @@ class Settings extends ChangeNotifier {
   double _frequency = 600; // Hz
   CharacterSet _characterSet = CharacterSet.letters;
   int _tutorialLevel = 1; // highest unlocked Listen Tutorial level, 1..26
+  int _inputTutorialLevel = 1; // highest unlocked Input Tutorial level, 1..26
 
   InputMethod get inputMethod => _inputMethod;
   set inputMethod(InputMethod v) {
@@ -89,6 +90,17 @@ class Settings extends ChangeNotifier {
     v = v.clamp(1, kTutorialLetterOrder.length);
     if (v == _tutorialLevel) return;
     _tutorialLevel = v;
+    notifyListeners();
+  }
+
+  /// Highest Input Tutorial level the pupil has unlocked (1-based). Tracked
+  /// separately from the listening course: hearing a letter and keying it are
+  /// different skills.
+  int get inputTutorialLevel => _inputTutorialLevel;
+  set inputTutorialLevel(int v) {
+    v = v.clamp(1, kTutorialLetterOrder.length);
+    if (v == _inputTutorialLevel) return;
+    _inputTutorialLevel = v;
     notifyListeners();
   }
 }

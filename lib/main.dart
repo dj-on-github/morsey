@@ -5,6 +5,7 @@ import 'audio/audio_engine.dart';
 import 'models/settings.dart';
 import 'screens/about_screen.dart';
 import 'screens/input_train_screen.dart';
+import 'screens/input_tutorial_screen.dart';
 import 'screens/listen_train_screen.dart';
 import 'screens/listen_tutorial_screen.dart';
 import 'screens/settings_screen.dart';
@@ -79,6 +80,8 @@ class _HomePageState extends State<HomePage> {
     _Section('Listen Train', Icons.hearing, (_) => const ListenTrainScreen()),
     _Section('Listen Tutorial', Icons.school,
         (_) => const ListenTutorialScreen()),
+    _Section('Input Tutorial', Icons.school_outlined,
+        (_) => const InputTutorialScreen()),
   ];
 
   @override
