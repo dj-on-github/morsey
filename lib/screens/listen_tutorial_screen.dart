@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/services.dart';
 import '../app_scope.dart';
 import '../models/settings.dart';
 import '../morsey/morse_code.dart';
+import 'onscreen_keyboard.dart';
 import 'page_scaffold.dart';
 
 /// A guided, 26-level listening course. Each level introduces one new letter
@@ -250,12 +252,22 @@ class _ListenTutorialScreenState extends State<ListenTutorialScreen> {
                 ),
               Expanded(child: Center(child: _body(theme))),
               if (_phase != _Phase.levelComplete) _controls(theme),
+              // Touch platforms have no hardware keyboard to answer with.
+              if (_phase != _Phase.levelComplete && _isTouchPlatform) ...[
+                const SizedBox(height: 8),
+                OnScreenKeyboard(
+                  characters: CharacterSet.letters.characters.toSet(),
+                  onKey: _check,
+                ),
+              ],
             ],
           ),
         ),
       ),
     );
   }
+
+  static final bool _isTouchPlatform = Platform.isIOS || Platform.isAndroid;
 
   Widget _header(ThemeData theme, Settings settings) {
     final unlocked = settings.tutorialLevel;

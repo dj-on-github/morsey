@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import '../app_scope.dart';
@@ -57,8 +59,28 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       .toList(),
                 ),
               ),
-              // USB detection status.
-              if (settings.inputMethod == InputMethod.usbPaddle)
+              // USB detection status. On iPadOS the key is read as a
+              // hardware keyboard, so there is nothing to detect.
+              if (settings.inputMethod == InputMethod.usbPaddle &&
+                  Platform.isIOS)
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 4, 16, 8),
+                  child: Row(
+                    children: [
+                      Icon(Icons.usb,
+                          color: theme.colorScheme.primary, size: 20),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          'On iPadOS the USB key acts as a keyboard — just '
+                          'plug it in; the paddles arrive as Left/Right-Ctrl.',
+                          style: theme.textTheme.bodySmall,
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              else if (settings.inputMethod == InputMethod.usbPaddle)
                 Padding(
                   padding: const EdgeInsets.fromLTRB(16, 4, 16, 8),
                   child: Row(

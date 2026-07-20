@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/services.dart';
 import '../app_scope.dart';
 import '../models/settings.dart';
 import '../morsey/morse_code.dart';
+import 'onscreen_keyboard.dart';
 import 'page_scaffold.dart';
 
 class ListenTrainScreen extends StatefulWidget {
@@ -184,8 +186,10 @@ class _ListenTrainScreenState extends State<ListenTrainScreen> {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        'Type a letter/number key (click here if typing does '
-                        'nothing).',
+                        _isTouchPlatform
+                            ? 'Tap the matching key below.'
+                            : 'Type a letter/number key (click here if typing '
+                                'does nothing).',
                         style: theme.textTheme.bodySmall
                             ?.copyWith(color: theme.colorScheme.outline),
                       ),
@@ -225,12 +229,22 @@ class _ListenTrainScreenState extends State<ListenTrainScreen> {
                   ),
                 ],
               ),
+              // Touch platforms have no hardware keyboard to answer with.
+              if (_isTouchPlatform) ...[
+                const SizedBox(height: 8),
+                OnScreenKeyboard(
+                  characters: _settings!.characterSet.characters.toSet(),
+                  onKey: _check,
+                ),
+              ],
             ],
           ),
         ),
       ),
     );
   }
+
+  static final bool _isTouchPlatform = Platform.isIOS || Platform.isAndroid;
 
   Widget _feedback(ThemeData theme) {
     if (_revealed) {

@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -71,9 +72,19 @@ class _InputTrainScreenState extends State<InputTrainScreen> {
     await _source?.stop();
     final ditIsLeft = _settings!.ditPaddle == DitPaddle.left;
     _sourceMethod = _settings!.inputMethod;
-    final PaddleSource src = _sourceMethod == InputMethod.usbPaddle
-        ? HidPaddleSource(ditIsLeft: ditIsLeft)
-        : KeyboardPaddleSource(ditIsLeft: ditIsLeft);
+    final PaddleSource src;
+    if (_sourceMethod != InputMethod.usbPaddle) {
+      src = KeyboardPaddleSource(ditIsLeft: ditIsLeft);
+    } else if (Platform.isIOS) {
+      // iPadOS has no raw HID access, but the USB key enumerates as a
+      // keyboard whose paddles send Left-Ctrl / Right-Ctrl — read it as one.
+      src = KeyboardPaddleSource(
+        ditIsLeft: ditIsLeft,
+        statusLabel: 'USB key as keyboard (Left/Right-Ctrl paddles)',
+      );
+    } else {
+      src = HidPaddleSource(ditIsLeft: ditIsLeft);
+    }
     src.onDit = (down) => _keyer.setDit(down);
     src.onDah = (down) => _keyer.setDah(down);
     await src.start();
