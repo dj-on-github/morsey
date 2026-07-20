@@ -97,7 +97,7 @@ def main():
             "Terminal=false\n"
             f"Name={appname}\n"
             f"Exec={appname}\n"
-            "Icon=morsey\n"
+            f"Icon={appname}\n"
             "Categories=Utility;\n"
         )
     print(f"+ wrote {desktop}")
