@@ -1,4 +1,4 @@
-package com.example.morse
+package com.deadhat.morsey
 
 import io.flutter.embedding.android.FlutterActivity
 

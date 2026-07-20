@@ -1,6 +1,6 @@
 {
-    "name": "morse",
-    "short_name": "morse",
+    "name": "Morsey",
+    "short_name": "Morsey",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
