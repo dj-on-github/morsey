@@ -20,6 +20,24 @@ open it:
 - **Listen Train** — the trainer plays a character as Morse audio; you type the
   character you heard.
 
+## The Hardware
+
+The iambic keyer that I have used is the Putikeeg MCT II.
+
+It is listed on Amazon as the "CW Key Morse Code Key Morse Telegraph Key Morse Code Key Aluminum Alloy CW Square-Shaped Base Red (Grey)"
+
+
+![Putikeeg Keyer Image](putikeegkeyer.jpg "Putikeeg Iambic Keyer")
+
+[Keyer Amazon Link](https://www.amazon.com/dp/B0CQFVPRTR?ref=ppx_yo2ov_dt_b_fed_asin_title&th=1)
+
+This provides a 3.5mm jack interface. To connect to a computer you need
+a USB interface. I use is listed on Amazon as the "Morse Code Training Adapter USB Key Trainer for/Key Mobile Computer Support 3.5mmPlug Key Trainer Connectors"
+
+![Keyer USB Interface Image](usbinterface.jpg "Keyer USB Interface")
+
+[USB Interface Amazon Link](https://www.amazon.com/dp/B0DLVYYKDX?ref=ppx_yo2ov_dt_b_fed_asin_title&th=1)
+
 ## The USB Morse key (413d:2107)
 
 The key enumerates as a standard USB HID keyboard. On Linux it is read directly
