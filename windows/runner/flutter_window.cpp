@@ -25,6 +25,11 @@ bool FlutterWindow::OnCreate() {
     return false;
   }
   RegisterPlugins(flutter_controller_->engine());
+
+  tone_engine_ = std::make_unique<ToneEngine>();
+  tone_engine_->RegisterWithMessenger(
+      flutter_controller_->engine()->messenger());
+
   SetChildContent(flutter_controller_->view()->GetNativeWindow());
 
   flutter_controller_->engine()->SetNextFrameCallback([&]() {
@@ -40,6 +45,7 @@ bool FlutterWindow::OnCreate() {
 }
 
 void FlutterWindow::OnDestroy() {
+  tone_engine_ = nullptr;
   if (flutter_controller_) {
     flutter_controller_ = nullptr;
   }

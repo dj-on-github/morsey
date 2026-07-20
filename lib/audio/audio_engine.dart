@@ -213,10 +213,12 @@ class PulseAudioEngine extends AudioEngine {
   }
 }
 
-/// macOS side-tone engine. Delegates sine synthesis to a Swift
-/// AVAudioSourceNode via the `morsey/tone_engine` MethodChannel.
-class MacosAudioEngine extends AudioEngine {
-  MacosAudioEngine({double frequency = 600, double volume = 0.5})
+/// Native side-tone engine driven over the `morsey/tone_engine` MethodChannel.
+/// The native side synthesises the sine wave: an AVAudioSourceNode on macOS
+/// and a WASAPI render thread on Windows. Both expose the identical method
+/// contract, so a single Dart class serves both platforms.
+class NativeToneEngine extends AudioEngine {
+  NativeToneEngine({double frequency = 600, double volume = 0.5})
       : super(frequency, volume);
 
   static const MethodChannel _channel = MethodChannel('morsey/tone_engine');
@@ -303,8 +305,8 @@ AudioEngine createAudioEngine({double frequency = 600, double volume = 0.5}) {
   if (Platform.isLinux) {
     return PulseAudioEngine(frequency: frequency, volume: volume);
   }
-  if (Platform.isMacOS) {
-    return MacosAudioEngine(frequency: frequency, volume: volume);
+  if (Platform.isMacOS || Platform.isWindows) {
+    return NativeToneEngine(frequency: frequency, volume: volume);
   }
   return SilentAudioEngine();
 }
