@@ -71,6 +71,15 @@ String? morseForChar(String char) => kCharToMorse[char.toUpperCase()];
 /// Decodes a Morse pattern (e.g. ".-") to a character, or null if unknown.
 String? charForMorse(String pattern) => kMorseToChar[pattern];
 
+/// Order in which letters are introduced by the Listen Tutorial — one letter
+/// per level, 26 levels in total. Follows the Koch-method ordering, which
+/// front-loads sounds that are easy to tell apart so the ear learns fastest.
+const List<String> kTutorialLetterOrder = [
+  'K', 'M', 'U', 'R', 'E', 'S', 'N', 'A', 'P', 'T', 'L', 'W', 'I',
+  'J', 'Z', 'F', 'O', 'Y', 'V', 'G', 'Q', 'H', 'B', 'C', 'D', 'X',
+];
+
+
 /// Named groups of characters that a training session can draw from.
 enum CharacterSet {
   letters('Letters', 'A – Z'),

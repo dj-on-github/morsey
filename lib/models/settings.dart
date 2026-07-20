@@ -31,6 +31,7 @@ class Settings extends ChangeNotifier {
   double _volume = 0.5; // 0.0 .. 1.0
   double _frequency = 600; // Hz
   CharacterSet _characterSet = CharacterSet.letters;
+  int _tutorialLevel = 1; // highest unlocked Listen Tutorial level, 1..26
 
   InputMethod get inputMethod => _inputMethod;
   set inputMethod(InputMethod v) {
@@ -78,6 +79,16 @@ class Settings extends ChangeNotifier {
   set characterSet(CharacterSet v) {
     if (v == _characterSet) return;
     _characterSet = v;
+    notifyListeners();
+  }
+
+  /// Highest Listen Tutorial level the pupil has unlocked (1-based). Each level
+  /// introduces one more letter; completing a level unlocks the next.
+  int get tutorialLevel => _tutorialLevel;
+  set tutorialLevel(int v) {
+    v = v.clamp(1, kTutorialLetterOrder.length);
+    if (v == _tutorialLevel) return;
+    _tutorialLevel = v;
     notifyListeners();
   }
 }
