@@ -46,6 +46,34 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^6.0.0
 
+  # Generates the platform launcher icons from a single master image.
+  # Regenerate icons after editing the master:
+  #   dart run flutter_launcher_icons
+  # The master itself is produced by assets/icon/make_icon.py.
+  flutter_launcher_icons: ^0.14.4
+
+# Morse-themed app icon: "MORSEY" spelled in Morse code (gold on a teal/navy
+# gradient). Master lives at assets/icon/morsey_icon.png.
+flutter_launcher_icons:
+  image_path: "assets/icon/morsey_icon.png"
+  # Legacy square icons (not adaptive): the design is full-bleed, so Android's
+  # circular adaptive mask would clip the wider rows.
+  android: true
+  ios: true
+  remove_alpha_ios: true
+  macos:
+    generate: true
+    image_path: "assets/icon/morsey_icon.png"
+  windows:
+    generate: true
+    image_path: "assets/icon/morsey_icon.png"
+    icon_size: 256
+  web:
+    generate: true
+    image_path: "assets/icon/morsey_icon.png"
+    background_color: "#0D1E30"
+    theme_color: "#169694"
+
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
