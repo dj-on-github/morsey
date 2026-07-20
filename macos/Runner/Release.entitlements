@@ -2,7 +2,9 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>com.apple.security.app-sandbox</key>
-	<true/>
+	<!-- App sandbox intentionally disabled for release. This is a
+	     self-distributed app (not through the Mac App Store); the
+	     sandbox blocks the Input Monitoring TCC prompt for ad-hoc
+	     signed builds, which prevents the USB paddle from opening. -->
 </dict>
 </plist>

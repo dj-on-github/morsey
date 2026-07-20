@@ -87,6 +87,9 @@ def main():
         os.remove(dmg)  # create-dmg refuses to overwrite an existing file
     run([
         "create-dmg",
+        # hdiutil's internet-enable was removed in macOS 10.15 and now prints
+        # a noisy warning. Skip it.
+        "--no-internet-enable",
         "--volname", f"Ham Channel {abc} Installer",
         "--background", f"release/{appname}_release_colateral/dmg_background_7b5.png",
         "--window-pos", "200", "120",

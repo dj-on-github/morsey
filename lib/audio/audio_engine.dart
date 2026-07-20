@@ -3,6 +3,8 @@ import 'dart:io';
 import 'dart:math' as math;
 import 'dart:typed_data';
 
+import 'package:flutter/services.dart';
+
 /// Generates a Morse side-tone. Two use cases:
 ///   * real-time keying feedback  -> [toneOn] / [toneOff]
 ///   * playback of a sequence     -> [playPattern]
@@ -211,6 +213,76 @@ class PulseAudioEngine extends AudioEngine {
   }
 }
 
+/// macOS side-tone engine. Delegates sine synthesis to a Swift
+/// AVAudioSourceNode via the `morsey/tone_engine` MethodChannel.
+class MacosAudioEngine extends AudioEngine {
+  MacosAudioEngine({double frequency = 600, double volume = 0.5})
+      : super(frequency, volume);
+
+  static const MethodChannel _channel = MethodChannel('morsey/tone_engine');
+
+  bool _available = false;
+
+  @override
+  bool get available => _available;
+
+  @override
+  Future<void> start() async {
+    try {
+      final ok = await _channel.invokeMethod<bool>('start');
+      _available = ok ?? false;
+    } on PlatformException {
+      _available = false;
+      return;
+    } on MissingPluginException {
+      _available = false;
+      return;
+    }
+    if (_available) {
+      // Push the initial values so the native side matches Settings.
+      await _invoke('setFrequency', {'hz': frequency});
+      await _invoke('setVolume', {'v': volume});
+    }
+  }
+
+  @override
+  set frequency(double v) {
+    super.frequency = v;
+    if (_available) _invoke('setFrequency', {'hz': v});
+  }
+
+  @override
+  set volume(double v) {
+    super.volume = v;
+    if (_available) _invoke('setVolume', {'v': v});
+  }
+
+  @override
+  void toneOn() {
+    if (_available) _invoke('toneOn', null);
+  }
+
+  @override
+  void toneOff() {
+    if (_available) _invoke('toneOff', null);
+  }
+
+  @override
+  Future<void> dispose() async {
+    _available = false;
+    await _invoke('dispose', null);
+  }
+
+  // Fire-and-forget wrapper: platform errors here shouldn't crash the app.
+  Future<void> _invoke(String method, Map<String, dynamic>? args) async {
+    try {
+      await _channel.invokeMethod<void>(method, args);
+    } on Object {
+      // ignore
+    }
+  }
+}
+
 /// No-op fallback when no audio backend is available.
 class SilentAudioEngine extends AudioEngine {
   SilentAudioEngine() : super(600, 0.5);
@@ -230,6 +302,9 @@ class SilentAudioEngine extends AudioEngine {
 AudioEngine createAudioEngine({double frequency = 600, double volume = 0.5}) {
   if (Platform.isLinux) {
     return PulseAudioEngine(frequency: frequency, volume: volume);
+  }
+  if (Platform.isMacOS) {
+    return MacosAudioEngine(frequency: frequency, volume: volume);
   }
   return SilentAudioEngine();
 }

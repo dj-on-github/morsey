@@ -22,8 +22,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
     _detectUsb();
   }
 
-  void _detectUsb() {
-    setState(() => _usbPath = HidPaddleSource.findDevicePath());
+  Future<void> _detectUsb() async {
+    final path = await HidPaddleSource.detect();
+    if (!mounted) return;
+    setState(() => _usbPath = path);
   }
 
   @override
@@ -72,9 +74,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       Expanded(
                         child: Text(
                           _usbPath != null
-                              ? 'USB key 413d:2107 detected at $_usbPath'
+                              ? 'USB key 413d:2107 detected: $_usbPath'
                               : 'USB key 413d:2107 not found — plug it in, or '
-                                  'check that you can read /dev/hidraw*',
+                                  'check permissions (Linux: /dev/hidraw*; '
+                                  'macOS: Input Monitoring in System Settings).',
                           style: theme.textTheme.bodySmall,
                         ),
                       ),
@@ -158,7 +161,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     const SizedBox(width: 12),
                     if (!scope.audio.available)
                       Text(
-                        'No audio backend available (needs pacat / PulseAudio).',
+                        'No audio backend available '
+                        '(Linux: needs pacat / PulseAudio).',
                         style: theme.textTheme.bodySmall
                             ?.copyWith(color: theme.colorScheme.error),
                       ),
