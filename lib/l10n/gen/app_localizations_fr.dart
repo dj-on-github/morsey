@@ -406,4 +406,21 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get aboutFreeKeyDesc =>
       'L\'inverse de la Saisie libre : manipulez du Morse à la palette ou au clavier et voyez-le décodé en texte — les points et les traits apparaissent dans la case Morse pendant la manipulation, et les caractères terminés s\'écrivent en texte. Une pause de sept dits crée une espace.';
+
+  @override
+  String get settingsKeyerMode => 'Mode de manipulation';
+
+  @override
+  String get keyerModeIambic => 'Palettes ïambiques';
+
+  @override
+  String get keyerModeIambicDesc =>
+      'Deux palettes — une pour les dits, une pour les dahs ; serrez les deux pour alterner';
+
+  @override
+  String get keyerModeStraight => 'Manipulateur droit';
+
+  @override
+  String get keyerModeStraightDesc =>
+      'Une seule touche — c\'est vous qui rythmez : un appui court donne un dit, un appui long un dah';
 }

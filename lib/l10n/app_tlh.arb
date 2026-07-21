@@ -110,5 +110,10 @@
   "aboutFreeTypeDesc": "vay' DaghItlh 'ej morS Dalegh — Do DawIvpu'bogh lo'lu' 'ej DaneHchugh wab je chu'lu'.",
   "menuFreeKey": "tlhab lab",
   "freeKeyTextLabel": "ghItlh",
-  "aboutFreeKeyDesc": "tlhab ghItlh tammey: morS Dalab 'ej ngutlhmey mojmoH jan — Dalab morS 'anglu', rInDI' ngutlh ghItlhlu'. mu' bIng DaneHchugh Soch dit yIloS."
+  "aboutFreeKeyDesc": "tlhab ghItlh tammey: morS Dalab 'ej ngutlhmey mojmoH jan — Dalab morS 'anglu', rInDI' ngutlh ghItlhlu'. mu' bIng DaneHchugh Soch dit yIloS.",
+  "settingsKeyerMode": "leQ mIw",
+  "keyerModeIambic": "cha' leQ (iambic)",
+  "keyerModeIambicDesc": "cha' leQ — wa' dit, wa' dah; cha' Da'uychugh tlhej",
+  "keyerModeStraight": "leQ mob",
+  "keyerModeStraightDesc": "wa' leQ neH — poH DachenmoH: 'uy ngaj dit 'oH, 'uy nI' dah 'oH"
 }

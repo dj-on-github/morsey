@@ -407,4 +407,21 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get aboutFreeKeyDesc =>
       'Die Umkehrung von Freies Tippen: Geben Sie Morse mit Paddel oder Tastatur und sehen Sie die Dekodierung als Text — die Punkte und Striche erscheinen beim Geben im Morse-Feld, fertige Zeichen werden als Text geschrieben. Für ein Leerzeichen sieben Dits pausieren.';
+
+  @override
+  String get settingsKeyerMode => 'Tastenmodus';
+
+  @override
+  String get keyerModeIambic => 'Iambische Paddel';
+
+  @override
+  String get keyerModeIambicDesc =>
+      'Zwei Paddel — eines für Dits, eines für Dahs; zusammendrücken für Wechsel';
+
+  @override
+  String get keyerModeStraight => 'Handtaste';
+
+  @override
+  String get keyerModeStraightDesc =>
+      'Eine Taste — Sie machen das Timing: kurzer Druck ist ein Dit, langer Druck ein Dah';
 }

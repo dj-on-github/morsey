@@ -406,4 +406,21 @@ class AppLocalizationsHi extends AppLocalizations {
   @override
   String get aboutFreeKeyDesc =>
       'मुक्त टाइपिंग का उल्टा: पैडल या कीबोर्ड से मोर्स भेजें और उसे टेक्स्ट में बदलते देखें — भेजते समय बिंदियाँ और रेखाएँ मोर्स बॉक्स में दिखती हैं, और पूरे अक्षर टेक्स्ट में लिखे जाते हैं। शब्द के बीच जगह के लिए सात डिट रुकें।';
+
+  @override
+  String get settingsKeyerMode => 'कुंजी मोड';
+
+  @override
+  String get keyerModeIambic => 'iambic पैडल';
+
+  @override
+  String get keyerModeIambicDesc =>
+      'दो पैडल — एक डिट के लिए, एक डाह के लिए; दोनों दबाने पर बारी-बारी';
+
+  @override
+  String get keyerModeStraight => 'सीधी कुंजी';
+
+  @override
+  String get keyerModeStraightDesc =>
+      'एक ही कुंजी — समय आप तय करते हैं: छोटा दबाव डिट, लंबा दबाव डाह';
 }

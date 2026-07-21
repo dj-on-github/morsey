@@ -227,5 +227,10 @@
   "aboutFreeTypeDesc": "Type any text and watch it rendered as Morse — the dots and dashes appear at your configured speed, with optional audio playing in sync.",
   "menuFreeKey": "Free Key",
   "freeKeyTextLabel": "Text",
-  "aboutFreeKeyDesc": "The reverse of Free Type: key Morse with the paddle or keyboard and watch it decoded into text — the dots and dashes appear in the Morse box as you key, and finished characters are written as text. Pause seven dits to make a word space."
+  "aboutFreeKeyDesc": "The reverse of Free Type: key Morse with the paddle or keyboard and watch it decoded into text — the dots and dashes appear in the Morse box as you key, and finished characters are written as text. Pause seven dits to make a word space.",
+  "settingsKeyerMode": "Keyer mode",
+  "keyerModeIambic": "Iambic paddles",
+  "keyerModeIambicDesc": "Two paddles — one for dits, one for dahs; squeeze for alternation",
+  "keyerModeStraight": "Straight key",
+  "keyerModeStraightDesc": "One key — you make the timing: a short press is a dit, a long press a dah"
 }

@@ -110,5 +110,10 @@
   "aboutFreeTypeDesc": "Teipiwch unrhyw destun a'i weld fel Morse — mae'r dotiau a'r llinellau'n ymddangos ar eich cyflymder dewisedig, gyda sain ddewisol yn chwarae'n gydamserol.",
   "menuFreeKey": "Bysellu Rhydd",
   "freeKeyTextLabel": "Testun",
-  "aboutFreeKeyDesc": "Gwrthwyneb Teipio Rhydd: bysellwch Morse gyda'r padl neu'r bysellfwrdd a'i weld yn cael ei ddatgodio'n destun — mae'r dotiau a'r llinellau'n ymddangos yn y blwch Morse wrth i chi fysellu, ac ysgrifennir nodau gorffenedig fel testun. Oedwch saith dit i gael bwlch gair."
+  "aboutFreeKeyDesc": "Gwrthwyneb Teipio Rhydd: bysellwch Morse gyda'r padl neu'r bysellfwrdd a'i weld yn cael ei ddatgodio'n destun — mae'r dotiau a'r llinellau'n ymddangos yn y blwch Morse wrth i chi fysellu, ac ysgrifennir nodau gorffenedig fel testun. Oedwch saith dit i gael bwlch gair.",
+  "settingsKeyerMode": "Modd bysellu",
+  "keyerModeIambic": "Padlau iambig",
+  "keyerModeIambicDesc": "Dau badl — un ar gyfer ditiau, un ar gyfer dahiau; gwasgwch y ddau am ailadrodd bob yn ail",
+  "keyerModeStraight": "Allwedd syth",
+  "keyerModeStraightDesc": "Un allwedd — chi sy'n amseru: mae pwysiad byr yn dit, a phwysiad hir yn dah"
 }

@@ -13,6 +13,12 @@ enum AppTheme { system, light, dark }
 /// Display labels are localized (see l10n/enum_l10n.dart).
 enum DitPaddle { left, right }
 
+/// How key contacts are turned into elements. [iambic] uses two paddles (one
+/// dit, one dah, squeeze for alternation); [straight] uses any contact as a
+/// single key where the press duration decides dit vs dah.
+/// Display labels are localized (see l10n/enum_l10n.dart).
+enum KeyerMode { iambic, straight }
+
 /// UI language. [system] follows the platform locale; the rest force one of
 /// the bundled translations.
 enum AppLanguage {
@@ -60,6 +66,7 @@ class Settings extends ChangeNotifier {
   // Preference keys.
   static const _kLanguage = 'language';
   static const _kAppTheme = 'appTheme';
+  static const _kKeyerMode = 'keyerMode';
   static const _kDitPaddle = 'ditPaddle';
   static const _kWpm = 'wpm';
   static const _kVolume = 'volume';
@@ -73,6 +80,7 @@ class Settings extends ChangeNotifier {
   // following the platform.
   AppTheme _appTheme = AppTheme.dark;
   DitPaddle _ditPaddle = DitPaddle.left;
+  KeyerMode _keyerMode = KeyerMode.iambic;
   int _wpm = 15;
   double _volume = 0.5; // 0.0 .. 1.0
   double _frequency = 600; // Hz
@@ -91,6 +99,8 @@ class Settings extends ChangeNotifier {
         AppTheme.values.asNameMap()[p.getString(_kAppTheme)] ?? _appTheme;
     _ditPaddle =
         DitPaddle.values.asNameMap()[p.getString(_kDitPaddle)] ?? _ditPaddle;
+    _keyerMode =
+        KeyerMode.values.asNameMap()[p.getString(_kKeyerMode)] ?? _keyerMode;
     _wpm = (p.getInt(_kWpm) ?? _wpm).clamp(5, 40);
     _volume = (p.getDouble(_kVolume) ?? _volume).clamp(0.0, 1.0);
     _frequency = (p.getDouble(_kFrequency) ?? _frequency).clamp(200, 1200);
@@ -125,6 +135,14 @@ class Settings extends ChangeNotifier {
     if (v == _ditPaddle) return;
     _ditPaddle = v;
     _prefs?.setString(_kDitPaddle, v.name);
+    notifyListeners();
+  }
+
+  KeyerMode get keyerMode => _keyerMode;
+  set keyerMode(KeyerMode v) {
+    if (v == _keyerMode) return;
+    _keyerMode = v;
+    _prefs?.setString(_kKeyerMode, v.name);
     notifyListeners();
   }
 

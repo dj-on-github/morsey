@@ -398,4 +398,21 @@ class AppLocalizationsTlh extends AppLocalizations {
   @override
   String get aboutFreeKeyDesc =>
       'tlhab ghItlh tammey: morS Dalab \'ej ngutlhmey mojmoH jan — Dalab morS \'anglu\', rInDI\' ngutlh ghItlhlu\'. mu\' bIng DaneHchugh Soch dit yIloS.';
+
+  @override
+  String get settingsKeyerMode => 'leQ mIw';
+
+  @override
+  String get keyerModeIambic => 'cha\' leQ (iambic)';
+
+  @override
+  String get keyerModeIambicDesc =>
+      'cha\' leQ — wa\' dit, wa\' dah; cha\' Da\'uychugh tlhej';
+
+  @override
+  String get keyerModeStraight => 'leQ mob';
+
+  @override
+  String get keyerModeStraightDesc =>
+      'wa\' leQ neH — poH DachenmoH: \'uy ngaj dit \'oH, \'uy nI\' dah \'oH';
 }

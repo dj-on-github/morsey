@@ -110,5 +110,10 @@
   "aboutFreeTypeDesc": "输入任意文字并将其显示为摩尔斯电码 — 点和划按设定速度出现，可选择同步播放声音。",
   "menuFreeKey": "自由发报",
   "freeKeyTextLabel": "文字",
-  "aboutFreeKeyDesc": "自由输入的反向操作：用拨片或键盘发出摩尔斯电码，程序将其解码为文字 — 发报时点和划显示在摩尔斯框中，完成的字符会写入文字框。停顿七个点的时长即为词间空格。"
+  "aboutFreeKeyDesc": "自由输入的反向操作：用拨片或键盘发出摩尔斯电码，程序将其解码为文字 — 发报时点和划显示在摩尔斯框中，完成的字符会写入文字框。停顿七个点的时长即为词间空格。",
+  "settingsKeyerMode": "键控方式",
+  "keyerModeIambic": "双拨片（iambic）",
+  "keyerModeIambicDesc": "两个拨片 — 一个发点，一个发划；同时按住则交替发出",
+  "keyerModeStraight": "直键",
+  "keyerModeStraightDesc": "只有一个键 — 节奏由你掌握：短按为点，长按为划"
 }

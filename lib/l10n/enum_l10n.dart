@@ -13,6 +13,18 @@ extension AppThemeL10n on AppTheme {
       };
 }
 
+extension KeyerModeL10n on KeyerMode {
+  String label(AppLocalizations l10n) => switch (this) {
+        KeyerMode.iambic => l10n.keyerModeIambic,
+        KeyerMode.straight => l10n.keyerModeStraight,
+      };
+
+  String description(AppLocalizations l10n) => switch (this) {
+        KeyerMode.iambic => l10n.keyerModeIambicDesc,
+        KeyerMode.straight => l10n.keyerModeStraightDesc,
+      };
+}
+
 extension DitPaddleL10n on DitPaddle {
   String label(AppLocalizations l10n) => switch (this) {
         DitPaddle.left => l10n.ditPaddleLeft,

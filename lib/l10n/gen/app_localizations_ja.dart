@@ -398,4 +398,19 @@ class AppLocalizationsJa extends AppLocalizations {
   @override
   String get aboutFreeKeyDesc =>
       'フリータイプの逆です。パドルまたはキーボードでモールスを送信すると、テキストに解読されます — 送信中の短点・長点はモールス欄に表示され、確定した文字はテキストとして書かれます。単語の区切りは短点 7 つ分の休止で入ります。';
+
+  @override
+  String get settingsKeyerMode => '電鍵モード';
+
+  @override
+  String get keyerModeIambic => 'パドル（イアンビック）';
+
+  @override
+  String get keyerModeIambicDesc => 'パドル 2 つ — 短点用と長点用。両方握ると交互に出ます';
+
+  @override
+  String get keyerModeStraight => '縦振れ電鍵';
+
+  @override
+  String get keyerModeStraightDesc => 'キー 1 つ — タイミングは自分で作ります。短く押すと短点、長く押すと長点';
 }

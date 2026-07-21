@@ -405,4 +405,21 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get aboutFreeKeyDesc =>
       'Lo inverso de Texto libre: manipule Morse con la pala o el teclado y véalo decodificado como texto — los puntos y rayas aparecen en el cuadro Morse mientras manipula, y los caracteres terminados se escriben como texto. Haga una pausa de siete dits para un espacio.';
+
+  @override
+  String get settingsKeyerMode => 'Modo de manipulación';
+
+  @override
+  String get keyerModeIambic => 'Palas yámbicas';
+
+  @override
+  String get keyerModeIambicDesc =>
+      'Dos palas: una para dits y otra para dahs; apriete ambas para alternar';
+
+  @override
+  String get keyerModeStraight => 'Llave vertical';
+
+  @override
+  String get keyerModeStraightDesc =>
+      'Una sola llave — usted marca el tiempo: una pulsación corta es un dit y una larga, un dah';
 }

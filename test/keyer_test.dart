@@ -67,4 +67,50 @@ void main() {
     expect('EISH5'.contains(decoded.first), isTrue,
         reason: 'expected an all-dits character, got ${decoded.first}');
   }, timeout: const Timeout(Duration(seconds: 5)));
+
+  group('straight key mode', () {
+    late IambicKeyer sk;
+    late List<String> skDecoded;
+
+    setUp(() {
+      skDecoded = [];
+      sk = IambicKeyer(
+        ditMs: () => dit,
+        audio: SilentAudioEngine(),
+        straightKey: () => true,
+        onCharacter: (pattern, ch) => skDecoded.add(ch ?? '?'),
+      );
+      sk.start();
+    });
+
+    tearDown(() => sk.dispose());
+
+    test('a short press decodes to E', () async {
+      sk.setDit(true);
+      await wait(30); // well under the 2-dit threshold (120 ms)
+      sk.setDit(false);
+      await wait(dit * 4); // let the character-gap commit
+      expect(skDecoded, ['E']);
+    }, timeout: const Timeout(Duration(seconds: 5)));
+
+    test('a long press decodes to T', () async {
+      sk.setDah(true); // either contact acts as the straight key
+      await wait(dit * 4); // well over the threshold
+      sk.setDah(false);
+      await wait(dit * 4);
+      expect(skDecoded, ['T']);
+    }, timeout: const Timeout(Duration(seconds: 5)));
+
+    test('short-long with a tight gap decodes to A', () async {
+      sk.setDit(true);
+      await wait(30);
+      sk.setDit(false);
+      await wait(dit); // intra-character gap, under 2 dits
+      sk.setDit(true);
+      await wait(dit * 4);
+      sk.setDit(false);
+      await wait(dit * 4);
+      expect(skDecoded, ['A']);
+    }, timeout: const Timeout(Duration(seconds: 5)));
+  });
 }

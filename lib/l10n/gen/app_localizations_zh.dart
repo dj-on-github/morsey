@@ -394,4 +394,19 @@ class AppLocalizationsZh extends AppLocalizations {
   @override
   String get aboutFreeKeyDesc =>
       '自由输入的反向操作：用拨片或键盘发出摩尔斯电码，程序将其解码为文字 — 发报时点和划显示在摩尔斯框中，完成的字符会写入文字框。停顿七个点的时长即为词间空格。';
+
+  @override
+  String get settingsKeyerMode => '键控方式';
+
+  @override
+  String get keyerModeIambic => '双拨片（iambic）';
+
+  @override
+  String get keyerModeIambicDesc => '两个拨片 — 一个发点，一个发划；同时按住则交替发出';
+
+  @override
+  String get keyerModeStraight => '直键';
+
+  @override
+  String get keyerModeStraightDesc => '只有一个键 — 节奏由你掌握：短按为点，长按为划';
 }

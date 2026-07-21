@@ -9,11 +9,13 @@ The main window has a left column listing the parts of the program; click one to
 open it:
 
 - **About** — a description of the program and how it works.
-- **Settings** — choose the paddle orientation, the keying speed (WPM), the
-  side-tone volume and frequency, the training character set, the appearance
-  (follow system, light, or dark), and the language. There is no input-device
-  selection: the USB key and the keyboard paddles are both always active, and
-  the key can be plugged in (or unplugged) at any time.
+- **Settings** — choose the keyer mode (iambic paddles, or a straight key
+  where the press length makes the dits and dahs), the paddle orientation,
+  the keying speed (WPM), the side-tone volume and frequency, the training
+  character set, the appearance (follow system, light, or dark), and the
+  language. There is no input-device selection: the USB key and the keyboard
+  paddles are both always active, and the key can be plugged in (or
+  unplugged) at any time.
 - **Input Train** — a character is shown; you key it in Morse and the trainer
   decodes what you send and tells you whether it was correct.
 - **Listen Train** — the trainer plays a character as Morse audio; you type the

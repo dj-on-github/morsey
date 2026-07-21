@@ -405,4 +405,21 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get aboutFreeKeyDesc =>
       'The reverse of Free Type: key Morse with the paddle or keyboard and watch it decoded into text — the dots and dashes appear in the Morse box as you key, and finished characters are written as text. Pause seven dits to make a word space.';
+
+  @override
+  String get settingsKeyerMode => 'Keyer mode';
+
+  @override
+  String get keyerModeIambic => 'Iambic paddles';
+
+  @override
+  String get keyerModeIambicDesc =>
+      'Two paddles — one for dits, one for dahs; squeeze for alternation';
+
+  @override
+  String get keyerModeStraight => 'Straight key';
+
+  @override
+  String get keyerModeStraightDesc =>
+      'One key — you make the timing: a short press is a dit, a long press a dah';
 }

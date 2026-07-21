@@ -104,22 +104,44 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
 
               const SizedBox(height: 8),
-              _sectionTitle(context, l10n.settingsPaddleOrientation),
-              RadioGroup<DitPaddle>(
-                groupValue: settings.ditPaddle,
-                onChanged: (v) => settings.ditPaddle = v!,
+              _sectionTitle(context, l10n.settingsKeyerMode),
+              RadioGroup<KeyerMode>(
+                groupValue: settings.keyerMode,
+                onChanged: (v) => settings.keyerMode = v!,
                 child: Column(
-                  children: DitPaddle.values
+                  children: KeyerMode.values
                       .map(
-                        (p) => RadioListTile<DitPaddle>(
-                          value: p,
-                          title: Text(p.label(l10n)),
+                        (m) => RadioListTile<KeyerMode>(
+                          value: m,
+                          title: Text(m.label(l10n)),
+                          subtitle: Text(m.description(l10n)),
                           dense: true,
                         ),
                       )
                       .toList(),
                 ),
               ),
+
+              // Which paddle is dit only matters with two paddles.
+              if (settings.keyerMode == KeyerMode.iambic) ...[
+                const SizedBox(height: 8),
+                _sectionTitle(context, l10n.settingsPaddleOrientation),
+                RadioGroup<DitPaddle>(
+                  groupValue: settings.ditPaddle,
+                  onChanged: (v) => settings.ditPaddle = v!,
+                  child: Column(
+                    children: DitPaddle.values
+                        .map(
+                          (p) => RadioListTile<DitPaddle>(
+                            value: p,
+                            title: Text(p.label(l10n)),
+                            dense: true,
+                          ),
+                        )
+                        .toList(),
+                  ),
+                ),
+              ],
 
               const SizedBox(height: 16),
               _sectionTitle(context, l10n.settingsSpeed),

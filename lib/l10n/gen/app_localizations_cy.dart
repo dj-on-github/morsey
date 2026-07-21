@@ -406,4 +406,21 @@ class AppLocalizationsCy extends AppLocalizations {
   @override
   String get aboutFreeKeyDesc =>
       'Gwrthwyneb Teipio Rhydd: bysellwch Morse gyda\'r padl neu\'r bysellfwrdd a\'i weld yn cael ei ddatgodio\'n destun — mae\'r dotiau a\'r llinellau\'n ymddangos yn y blwch Morse wrth i chi fysellu, ac ysgrifennir nodau gorffenedig fel testun. Oedwch saith dit i gael bwlch gair.';
+
+  @override
+  String get settingsKeyerMode => 'Modd bysellu';
+
+  @override
+  String get keyerModeIambic => 'Padlau iambig';
+
+  @override
+  String get keyerModeIambicDesc =>
+      'Dau badl — un ar gyfer ditiau, un ar gyfer dahiau; gwasgwch y ddau am ailadrodd bob yn ail';
+
+  @override
+  String get keyerModeStraight => 'Allwedd syth';
+
+  @override
+  String get keyerModeStraightDesc =>
+      'Un allwedd — chi sy\'n amseru: mae pwysiad byr yn dit, a phwysiad hir yn dah';
 }

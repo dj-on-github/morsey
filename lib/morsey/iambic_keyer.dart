@@ -5,18 +5,25 @@ import 'morse_code.dart';
 
 enum _Phase { idle, mark, space }
 
-/// A software iambic keyer + live Morse decoder.
+/// A software keyer + live Morse decoder with two modes.
 ///
-/// Fed with raw paddle up/down state ([setDit] / [setDah]), it generates
-/// correctly-timed dit/dah elements at the configured speed, drives the audio
-/// side-tone, and assembles elements into decoded characters using standard
-/// element (1 dit) and letter (3 dit) spacing. Iambic squeeze (holding both
-/// paddles) produces alternating dits and dahs, with one element of memory
-/// (Curtis "mode B"-ish behaviour).
+/// **Iambic** (default): fed with raw paddle up/down state ([setDit] /
+/// [setDah]), it generates correctly-timed dit/dah elements at the configured
+/// speed, drives the audio side-tone, and assembles elements into decoded
+/// characters using standard element (1 dit) and letter (3 dit) spacing.
+/// Iambic squeeze (holding both paddles) produces alternating dits and dahs,
+/// with one element of memory (Curtis "mode B"-ish behaviour).
+///
+/// **Straight** (when [straightKey] returns true): any contact (either
+/// paddle, so every input route works) is a single key. The side-tone
+/// follows the contact exactly; the operator makes the timing. On release
+/// the press length classifies the element — under 2 dits is a dit,
+/// otherwise a dah — and 2 dits of silence commits the character.
 class IambicKeyer {
   IambicKeyer({
     required this.ditMs,
     required this.audio,
+    this.straightKey,
     this.onElement,
     this.onPattern,
     this.onCharacter,
@@ -25,6 +32,10 @@ class IambicKeyer {
   /// Current dit length in ms (read fresh each element so speed changes apply).
   int Function() ditMs;
   final AudioEngine audio;
+
+  /// When it returns true the keyer runs in straight-key mode. Read every
+  /// tick, so flipping the setting applies immediately.
+  final bool Function()? straightKey;
 
   /// Called when an element starts, with '.' or '-'.
   void Function(String element)? onElement;
@@ -47,6 +58,12 @@ class IambicKeyer {
   int _commitAtMs = 0;
   final StringBuffer _pattern = StringBuffer();
 
+  // Straight-key state.
+  bool _inStraight = false;
+  bool _skDown = false;
+  int _skDownAt = 0;
+  int _skUpAt = 0;
+
   final Stopwatch _clock = Stopwatch();
   Timer? _ticker;
 
@@ -63,6 +80,7 @@ class IambicKeyer {
     _phase = _Phase.idle;
     _current = null;
     _dit = _dah = _ditMem = _dahMem = false;
+    _skDown = false;
     _resetPattern();
   }
 
@@ -71,7 +89,7 @@ class IambicKeyer {
 
   /// True while an element is sounding/spacing or a keyed pattern is still
   /// awaiting its letter-gap commit — i.e. the keyer owns the side-tone.
-  bool get active => _phase != _Phase.idle || _pattern.isNotEmpty;
+  bool get active => _phase != _Phase.idle || _pattern.isNotEmpty || _skDown;
 
   void setDit(bool down) {
     _dit = down;
@@ -93,6 +111,23 @@ class IambicKeyer {
   void _tick() {
     final now = _clock.elapsedMilliseconds;
     final dit = ditMs();
+
+    final straight = straightKey?.call() ?? false;
+    if (straight != _inStraight) {
+      // Mode flipped mid-session: drop all in-flight state so neither mode
+      // inherits a stuck tone or a half-built character.
+      _inStraight = straight;
+      audio.toneOff();
+      _phase = _Phase.idle;
+      _current = null;
+      _ditMem = _dahMem = false;
+      _skDown = false;
+      _resetPattern();
+    }
+    if (straight) {
+      _tickStraight(now, dit);
+      return;
+    }
 
     switch (_phase) {
       case _Phase.idle:
@@ -132,6 +167,36 @@ class IambicKeyer {
           }
         }
         break;
+    }
+  }
+
+  /// Straight-key mode: the tone follows the contact (either paddle), the
+  /// press length classifies the element on release, and 2 dits of silence
+  /// commits the character. The 2-dit thresholds sit midway between the
+  /// nominal 1/3-dit timings, which forgives hand-keying jitter.
+  void _tickStraight(int now, int dit) {
+    final down = _dit || _dah;
+    if (down != _skDown) {
+      _skDown = down;
+      if (down) {
+        audio.toneOn();
+        _skDownAt = now;
+      } else {
+        audio.toneOff();
+        final element = (now - _skDownAt) < 2 * dit ? '.' : '-';
+        _pattern.write(element);
+        onElement?.call(element);
+        onPattern?.call(_pattern.toString());
+        _skUpAt = now;
+      }
+      return;
+    }
+    if (!down && _pattern.isNotEmpty && now - _skUpAt >= 2 * dit) {
+      final pattern = _pattern.toString();
+      final char = charForMorse(pattern);
+      _pattern.clear();
+      onPattern?.call('');
+      onCharacter?.call(pattern, char);
     }
   }
 

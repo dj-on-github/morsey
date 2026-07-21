@@ -74,6 +74,7 @@ class _FreeKeyScreenState extends State<FreeKeyScreen> {
       _gated = _GatedAudio(scope.audio);
       _keyer = IambicKeyer(
         ditMs: () => _settings!.ditMs,
+        straightKey: () => _settings!.keyerMode == KeyerMode.straight,
         audio: _gated,
         onPattern: (p) => setState(() {
           _livePattern = p;

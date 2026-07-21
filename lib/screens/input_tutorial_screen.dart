@@ -65,6 +65,7 @@ class _InputTutorialScreenState extends State<InputTutorialScreen> {
       _settings = scope.settings;
       _keyer = IambicKeyer(
         ditMs: () => _settings!.ditMs,
+        straightKey: () => _settings!.keyerMode == KeyerMode.straight,
         audio: scope.audio,
         onPattern: (p) => setState(() {
           _livePattern = p;
