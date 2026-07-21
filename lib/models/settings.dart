@@ -17,8 +17,16 @@ enum DitPaddle { left, right }
 /// the bundled translations.
 enum AppLanguage {
   system(null, null),
-  en('en', 'English'),
+  // Real languages: Latin-script endonyms alphabetically, then other
+  // scripts, Klingon last (the picker shows declaration order).
   cy('cy', 'Cymraeg'),
+  de('de', 'Deutsch'),
+  en('en', 'English'),
+  es('es', 'Español'),
+  fr('fr', 'Français'),
+  hi('hi', 'हिन्दी'),
+  ja('ja', '日本語'),
+  zh('zh', '中文'),
   tlh('tlh', 'tlhIngan Hol');
 
   const AppLanguage(this.code, this.endonym);

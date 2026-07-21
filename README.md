@@ -105,11 +105,12 @@ connects automatically.
 ## Languages
 
 The UI is internationalized with Flutter's gen-l10n. Translations live in
-`lib/l10n/app_<locale>.arb`; currently English (`en`), Welsh (`cy`), and
-Klingon (`tlh`). The language can be set in Settings ("Follow system" uses
-the platform locale, falling back to English). To add a language, copy
-`app_en.arb`, translate the values, and rebuild — the locale is picked up
-automatically from the file name.
+`lib/l10n/app_<locale>.arb`; currently English (`en`), Welsh (`cy`), German
+(`de`), Spanish (`es`), French (`fr`), Hindi (`hi`), Japanese (`ja`), Chinese
+(`zh`), and Klingon (`tlh`). The language can be set in Settings ("Follow
+system" uses the platform locale, falling back to English). To add a
+language, copy `app_en.arb`, translate the values, add the locale to
+`supportedLocales` and `AppLanguage`, and rebuild.
 
 ## Running
 

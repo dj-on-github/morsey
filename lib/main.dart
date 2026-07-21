@@ -59,9 +59,15 @@ class MorseyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           locale: settings.language.locale,
           supportedLocales: const [
-            Locale('en'),
+            Locale('en'), // first = fallback for unsupported system locales
             Locale('cy'),
+            Locale('de'),
+            Locale('es'),
+            Locale('fr'),
+            Locale('hi'),
+            Locale('ja'),
             Locale('tlh'),
+            Locale('zh'),
           ],
           localizationsDelegates: const [
             AppLocalizations.delegate,
