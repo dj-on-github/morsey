@@ -29,6 +29,24 @@ class AboutScreen extends StatelessWidget {
           const _Bullet('Listen Train',
               'The trainer plays a character in Morse audio and you type the '
                   'character you heard.'),
+          const _Bullet('Listen Tutorial',
+              'A guided, 26-level listening course. Each level introduces one '
+                  'new letter (Koch-method order — the easiest-to-distinguish '
+                  'sounds come first): the letter is shown and its Morse is '
+                  'played, you type it to begin, then a random drill of every '
+                  'letter unlocked so far runs until each has been answered '
+                  'correctly three times. Completing a level unlocks the next, '
+                  'and your progress is remembered.'),
+          const _Bullet('Input Tutorial',
+              'The same 26-level course with the roles reversed, to teach '
+                  'sending. Each level shows the new letter\'s dots and dashes '
+                  'with the letter beside them; key the pattern to begin. In '
+                  'practice the pattern is taken away — only the letter is '
+                  'shown — and you key its Morse from memory with the paddle '
+                  'or keyboard, watching a live display of what you are '
+                  'keying. A "Hear it" button plays the target\'s rhythm, and '
+                  'a hint can reveal the pattern if you get stuck. Progress '
+                  'is tracked separately from the Listen Tutorial.'),
           const SizedBox(height: 24),
           _Heading('The USB Morse key'),
           Text(

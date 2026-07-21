@@ -372,7 +372,7 @@ class _InputTutorialScreenState extends State<InputTutorialScreen> {
             children: [
               levelText,
               dropdown,
-              if (mastered != null) mastered,
+              ?mastered,
             ],
           );
         }
@@ -382,7 +382,7 @@ class _InputTutorialScreenState extends State<InputTutorialScreen> {
             const SizedBox(width: 16),
             dropdown,
             const Spacer(),
-            if (mastered != null) mastered,
+            ?mastered,
           ],
         );
       },

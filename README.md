@@ -1,6 +1,3 @@
-# morsey
-A Morse code training program supporting a hardware input key.
-=======
 # Morse Trainer
 
 A Morse code trainer written in Dart / Flutter, with support for a USB iambic
@@ -19,6 +16,22 @@ open it:
   decodes what you send and tells you whether it was correct.
 - **Listen Train** — the trainer plays a character as Morse audio; you type the
   character you heard.
+- **Listen Tutorial** — a guided, 26-level listening course. Each level
+  introduces one new letter (Koch-method order, easiest-to-distinguish sounds
+  first): the letter is shown and its Morse is played, you type it to begin,
+  then a random drill of every letter unlocked so far runs until each has been
+  answered correctly three times. Completing a level unlocks the next; progress
+  is remembered, and a dropdown lets you revisit any unlocked level.
+- **Input Tutorial** — the same 26-level course with the roles reversed, to
+  teach *sending*. Each level shows the new letter's dots and dashes with the
+  letter beside them; key the pattern to begin. In practice the pattern is
+  taken away — only the letter is shown — and you key its Morse from memory
+  (USB paddle or keyboard, exactly as in Input Train) with a live display of
+  what you are keying. A **Hear it** button plays the target's rhythm (it is
+  disabled while you are keying, since the keyer owns the side-tone), and a
+  per-letter hint reveals the pattern if you get stuck. Its progress is
+  tracked separately from the Listen Tutorial — hearing a letter and keying
+  it are different skills.
 
 ## The Hardware
 
@@ -119,5 +132,6 @@ lib/
   input/paddle_source.dart      paddle source abstraction
   input/hid_paddle_source.dart  reads the USB key from /dev/hidraw
   input/keyboard_paddle_source.dart  keyboard keys as dit/dah paddles
-  screens/                      About / Settings / Input Train / Listen Train
+  screens/                      About / Settings / Input Train / Listen Train /
+                                Listen Tutorial / Input Tutorial
 ```

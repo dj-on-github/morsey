@@ -307,7 +307,7 @@ class _ListenTutorialScreenState extends State<ListenTutorialScreen> {
             children: [
               levelText,
               dropdown,
-              if (mastered != null) mastered,
+              ?mastered,
             ],
           );
         }
@@ -317,7 +317,7 @@ class _ListenTutorialScreenState extends State<ListenTutorialScreen> {
             const SizedBox(width: 16),
             dropdown,
             const Spacer(),
-            if (mastered != null) mastered,
+            ?mastered,
           ],
         );
       },
