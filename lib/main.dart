@@ -84,68 +84,117 @@ class _HomePageState extends State<HomePage> {
         (_) => const InputTutorialScreen()),
   ];
 
+  /// Width below which the sidebar collapses into a drawer.
+  static const double _compactBreakpoint = 720;
+
+  /// Builds the navigation menu shared by the permanent sidebar and the drawer.
+  ///
+  /// When [inDrawer] is true, tapping an item also closes the drawer.
+  Widget _buildMenu(BuildContext context, {required bool inDrawer}) {
+    final theme = Theme.of(context);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(20, 24, 20, 16),
+          child: Row(
+            children: [
+              Icon(Icons.graphic_eq, color: theme.colorScheme.primary),
+              const SizedBox(width: 10),
+              Flexible(
+                child: Text(
+                  'Morse Trainer',
+                  overflow: TextOverflow.ellipsis,
+                  style: theme.textTheme.titleMedium
+                      ?.copyWith(fontWeight: FontWeight.bold),
+                ),
+              ),
+            ],
+          ),
+        ),
+        const Divider(height: 1),
+        Expanded(
+          child: ListView.builder(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            itemCount: _sections.length,
+            itemBuilder: (context, i) {
+              final section = _sections[i];
+              final selected = i == _selected;
+              return ListTile(
+                leading: Icon(section.icon),
+                title: Text(section.title),
+                selected: selected,
+                selectedTileColor:
+                    theme.colorScheme.primary.withValues(alpha: 0.18),
+                onTap: () {
+                  setState(() => _selected = i);
+                  if (inDrawer) Navigator.of(context).pop();
+                },
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Scaffold(
-      body: Row(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          // Left column: list of program parts.
-          Material(
-            color: theme.colorScheme.surfaceContainerHighest,
-            child: SizedBox(
-              width: 220,
-              child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 24, 20, 16),
-                  child: Row(
-                    children: [
-                      Icon(Icons.graphic_eq, color: theme.colorScheme.primary),
-                      const SizedBox(width: 10),
-                      Flexible(
-                        child: Text(
-                          'Morse Trainer',
-                          overflow: TextOverflow.ellipsis,
-                          style: theme.textTheme.titleMedium
-                              ?.copyWith(fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ],
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final isCompact = constraints.maxWidth < _compactBreakpoint;
+
+        if (isCompact) {
+          // Narrow / mobile layout: sidebar hidden behind a hamburger menu.
+          return Scaffold(
+            appBar: AppBar(
+              backgroundColor: theme.colorScheme.surfaceContainerHighest,
+              title: Row(
+                children: [
+                  Icon(Icons.graphic_eq, color: theme.colorScheme.primary),
+                  const SizedBox(width: 10),
+                  Flexible(
+                    child: Text(
+                      _sections[_selected].title,
+                      overflow: TextOverflow.ellipsis,
+                      style: theme.textTheme.titleMedium
+                          ?.copyWith(fontWeight: FontWeight.bold),
+                    ),
                   ),
-                ),
-                const Divider(height: 1),
-                Expanded(
-                  child: ListView.builder(
-                    padding: const EdgeInsets.symmetric(vertical: 8),
-                    itemCount: _sections.length,
-                    itemBuilder: (context, i) {
-                      final section = _sections[i];
-                      final selected = i == _selected;
-                      return ListTile(
-                        leading: Icon(section.icon),
-                        title: Text(section.title),
-                        selected: selected,
-                        selectedTileColor:
-                            theme.colorScheme.primary.withValues(alpha: 0.18),
-                        onTap: () => setState(() => _selected = i),
-                      );
-                    },
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
+            drawer: Drawer(
+              backgroundColor: theme.colorScheme.surfaceContainerHighest,
+              child: SafeArea(child: _buildMenu(context, inDrawer: true)),
             ),
+            body: _sections[_selected].builder(context),
+          );
+        }
+
+        // Wide layout: permanent sidebar alongside the content.
+        return Scaffold(
+          body: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              // Left column: list of program parts.
+              Material(
+                color: theme.colorScheme.surfaceContainerHighest,
+                child: SizedBox(
+                  width: 220,
+                  child: _buildMenu(context, inDrawer: false),
+                ),
+              ),
+              const VerticalDivider(width: 1),
+              // Right pane: the selected part.
+              Expanded(
+                child: _sections[_selected].builder(context),
+              ),
+            ],
           ),
-          const VerticalDivider(width: 1),
-          // Right pane: the selected part.
-          Expanded(
-            child: _sections[_selected].builder(context),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

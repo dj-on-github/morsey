@@ -337,32 +337,55 @@ class _InputTutorialScreenState extends State<InputTutorialScreen> {
 
   Widget _header(ThemeData theme, Settings settings) {
     final unlocked = settings.inputTutorialLevel;
-    return Row(
-      children: [
-        Text('Level $_level of $_levelCount',
-            style: theme.textTheme.titleMedium),
-        const SizedBox(width: 16),
-        DropdownButton<int>(
-          value: _level,
-          underline: const SizedBox.shrink(),
-          onChanged: (v) {
-            if (v != null && v != _level) _startLevel(v);
-          },
-          items: [
-            for (var i = 1; i <= unlocked; i++)
-              DropdownMenuItem(
-                value: i,
-                child: Text('Level $i  (${kTutorialLetterOrder[i - 1]})'),
-              ),
-          ],
-        ),
-        const Spacer(),
-        if (_phase == _Phase.practice)
-          Text(
-            '${_mastered()} / ${_levelLetters.length} letters mastered',
-            style: theme.textTheme.bodySmall,
+    final levelText = Text('Level $_level of $_levelCount',
+        style: theme.textTheme.titleMedium);
+    final dropdown = DropdownButton<int>(
+      value: _level,
+      underline: const SizedBox.shrink(),
+      onChanged: (v) {
+        if (v != null && v != _level) _startLevel(v);
+      },
+      items: [
+        for (var i = 1; i <= unlocked; i++)
+          DropdownMenuItem(
+            value: i,
+            child: Text('Level $i  (${kTutorialLetterOrder[i - 1]})'),
           ),
       ],
+    );
+    final mastered = _phase == _Phase.practice
+        ? Text(
+            '${_mastered()} / ${_levelLetters.length} letters mastered',
+            style: theme.textTheme.bodySmall,
+          )
+        : null;
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        // On narrow screens, wrap the controls onto multiple lines instead
+        // of letting the row overflow.
+        if (constraints.maxWidth < 480) {
+          return Wrap(
+            crossAxisAlignment: WrapCrossAlignment.center,
+            spacing: 16,
+            runSpacing: 4,
+            children: [
+              levelText,
+              dropdown,
+              if (mastered != null) mastered,
+            ],
+          );
+        }
+        return Row(
+          children: [
+            levelText,
+            const SizedBox(width: 16),
+            dropdown,
+            const Spacer(),
+            if (mastered != null) mastered,
+          ],
+        );
+      },
     );
   }
 

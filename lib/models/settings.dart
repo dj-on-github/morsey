@@ -4,8 +4,8 @@ import '../morsey/morse_code.dart';
 
 /// How the pupil keys Morse into the trainer.
 enum InputMethod {
-  usbPaddle('USB paddle', 'Iambic key on the USB port (413d:2107)'),
-  keyboardPaddle('Keyboard', 'Use two keyboard keys as dit / dah paddles');
+  keyboardPaddle('Keyboard', 'Use two keyboard keys as dit / dah paddles'),
+  usbPaddle('USB paddle', 'Iambic key on the USB port (413d:2107)');
 
   const InputMethod(this.label, this.description);
   final String label;
@@ -25,7 +25,7 @@ enum DitPaddle {
 /// Application settings, shared across the whole app. Listenable so widgets
 /// (and the audio/keyer engines) can react to changes.
 class Settings extends ChangeNotifier {
-  InputMethod _inputMethod = InputMethod.usbPaddle;
+  InputMethod _inputMethod = InputMethod.keyboardPaddle;
   DitPaddle _ditPaddle = DitPaddle.left;
   int _wpm = 15;
   double _volume = 0.5; // 0.0 .. 1.0
