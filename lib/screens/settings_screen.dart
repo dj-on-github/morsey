@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 
 import '../app_scope.dart';
 import '../input/hid_paddle_source.dart';
+import '../l10n/enum_l10n.dart';
+import '../l10n/gen/app_localizations.dart';
 import '../models/settings.dart';
 import '../morsey/morse_code.dart';
 import 'page_scaffold.dart';
@@ -35,22 +37,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final scope = AppScope.of(context);
     final settings = scope.settings;
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
 
     return PageScaffold(
-      title: 'Settings',
+      title: l10n.menuSettings,
       child: ListenableBuilder(
         listenable: settings,
         builder: (context, _) {
           return ListView(
             children: [
-              _sectionTitle(context, 'Input device'),
+              _sectionTitle(context, l10n.settingsInputDevice),
               Padding(
                 padding: const EdgeInsets.fromLTRB(16, 0, 16, 4),
                 child: Text(
-                  'The keyboard paddles (Left/Right arrows, or . and -) and '
-                  'the USB key (413d:2107) are both always active — keying '
-                  'works from whichever you touch. Plug the key in at any '
-                  'time and it just works.',
+                  l10n.settingsInputDeviceBody,
                   style: theme.textTheme.bodyMedium,
                 ),
               ),
@@ -66,8 +66,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       const SizedBox(width: 8),
                       Expanded(
                         child: Text(
-                          'Here the USB key acts as a keyboard — just plug '
-                          'it in; the paddles arrive as Left/Right-Ctrl.',
+                          l10n.settingsUsbActsAsKeyboard,
                           style: theme.textTheme.bodySmall,
                         ),
                       ),
@@ -90,26 +89,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       Expanded(
                         child: Text(
                           _usbPath != null
-                              ? 'USB key 413d:2107 detected: $_usbPath'
-                              : 'USB key 413d:2107 not detected — it will '
-                                  'connect when plugged in. If it never '
-                                  'does, check permissions (Linux: '
-                                  '/dev/hidraw*; macOS: Input Monitoring in '
-                                  'System Settings).',
+                              ? l10n.settingsUsbDetected(_usbPath!)
+                              : l10n.settingsUsbNotDetected,
                           style: theme.textTheme.bodySmall,
                         ),
                       ),
                       TextButton.icon(
                         onPressed: _detectUsb,
                         icon: const Icon(Icons.refresh, size: 18),
-                        label: const Text('Re-scan'),
+                        label: Text(l10n.settingsRescan),
                       ),
                     ],
                   ),
                 ),
 
               const SizedBox(height: 8),
-              _sectionTitle(context, 'Paddle orientation'),
+              _sectionTitle(context, l10n.settingsPaddleOrientation),
               RadioGroup<DitPaddle>(
                 groupValue: settings.ditPaddle,
                 onChanged: (v) => settings.ditPaddle = v!,
@@ -118,7 +113,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       .map(
                         (p) => RadioListTile<DitPaddle>(
                           value: p,
-                          title: Text(p.label),
+                          title: Text(p.label(l10n)),
                           dense: true,
                         ),
                       )
@@ -127,12 +122,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
 
               const SizedBox(height: 16),
-              _sectionTitle(context, 'Speed'),
+              _sectionTitle(context, l10n.settingsSpeed),
               _sliderRow(
                 context,
-                label: 'Keying speed',
-                valueLabel: '${settings.wpm} WPM  '
-                    '(dit = ${settings.ditMs} ms)',
+                label: l10n.settingsKeyingSpeed,
+                valueLabel: l10n.settingsWpmValue(
+                    settings.wpm, settings.ditMs),
                 value: settings.wpm.toDouble(),
                 min: 5,
                 max: 40,
@@ -141,11 +136,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
 
               const SizedBox(height: 16),
-              _sectionTitle(context, 'Side-tone'),
+              _sectionTitle(context, l10n.settingsSideTone),
               _sliderRow(
                 context,
-                label: 'Volume',
-                valueLabel: '${(settings.volume * 100).round()} %',
+                label: l10n.settingsVolume,
+                valueLabel: l10n.settingsVolumeValue(
+                    (settings.volume * 100).round()),
                 value: settings.volume,
                 min: 0,
                 max: 1,
@@ -154,8 +150,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
               _sliderRow(
                 context,
-                label: 'Frequency',
-                valueLabel: '${settings.frequency.round()} Hz',
+                label: l10n.settingsFrequency,
+                valueLabel: l10n.settingsFrequencyValue(
+                    settings.frequency.round()),
                 value: settings.frequency,
                 min: 200,
                 max: 1200,
@@ -174,13 +171,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         scope.audio.toneOff();
                       },
                       icon: const Icon(Icons.volume_up),
-                      label: const Text('Test tone'),
+                      label: Text(l10n.settingsTestTone),
                     ),
                     const SizedBox(width: 12),
                     if (!scope.audio.available)
                       Text(
-                        'No audio backend available '
-                        '(Linux: needs pacat / PulseAudio).',
+                        l10n.settingsNoAudio,
                         style: theme.textTheme.bodySmall
                             ?.copyWith(color: theme.colorScheme.error),
                       ),
@@ -189,7 +185,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
 
               const SizedBox(height: 16),
-              _sectionTitle(context, 'Training character set'),
+              _sectionTitle(context, l10n.settingsCharacterSet),
               RadioGroup<CharacterSet>(
                 groupValue: settings.characterSet,
                 onChanged: (v) => settings.characterSet = v!,
@@ -198,8 +194,44 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       .map(
                         (c) => RadioListTile<CharacterSet>(
                           value: c,
-                          title: Text(c.label),
-                          subtitle: Text(c.description),
+                          title: Text(c.label(l10n)),
+                          subtitle: Text(c.description(l10n)),
+                          dense: true,
+                        ),
+                      )
+                      .toList(),
+                ),
+              ),
+
+              const SizedBox(height: 16),
+              _sectionTitle(context, l10n.settingsAppearance),
+              RadioGroup<AppTheme>(
+                groupValue: settings.appTheme,
+                onChanged: (v) => settings.appTheme = v!,
+                child: Column(
+                  children: AppTheme.values
+                      .map(
+                        (t) => RadioListTile<AppTheme>(
+                          value: t,
+                          title: Text(t.label(l10n)),
+                          dense: true,
+                        ),
+                      )
+                      .toList(),
+                ),
+              ),
+
+              const SizedBox(height: 16),
+              _sectionTitle(context, l10n.settingsLanguage),
+              RadioGroup<AppLanguage>(
+                groupValue: settings.language,
+                onChanged: (v) => settings.language = v!,
+                child: Column(
+                  children: AppLanguage.values
+                      .map(
+                        (lang) => RadioListTile<AppLanguage>(
+                          value: lang,
+                          title: Text(lang.label(l10n)),
                           dense: true,
                         ),
                       )

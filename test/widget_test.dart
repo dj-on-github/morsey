@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:morsey/audio/audio_engine.dart';
 import 'package:morsey/models/settings.dart';
-import 'package:morsey/morse/morse_code.dart';
+import 'package:morsey/morsey/morse_code.dart';
 import 'package:morsey/main.dart';
 
 void main() {
@@ -49,7 +49,7 @@ void main() {
     });
   });
 
-  testWidgets('App shows the four program parts', (tester) async {
+  testWidgets('App shows the program parts', (tester) async {
     await tester.pumpWidget(
       MorseyApp(settings: Settings(), audio: SilentAudioEngine()),
     );
@@ -59,10 +59,12 @@ void main() {
     expect(find.text('Settings'), findsOneWidget);
     expect(find.text('Input Train'), findsWidgets);
     expect(find.text('Listen Train'), findsOneWidget);
+    expect(find.text('Listen Tutorial'), findsOneWidget);
+    expect(find.text('Input Tutorial'), findsOneWidget);
 
     // Navigate to About.
     await tester.tap(find.text('About'));
     await tester.pump();
-    expect(find.textContaining('Morsey'), findsWidgets);
+    expect(find.textContaining('practice tool'), findsWidgets);
   });
 }

@@ -99,10 +99,9 @@ final class HidPaddle: NSObject, FlutterStreamHandler {
         let rc = IOHIDManagerOpen(mgr, IOOptionBits(kIOHIDOptionsTypeNone))
         if rc != kIOReturnSuccess {
             // 0xE00002C5 = kIOReturnNotPermitted — usually TCC / Input
-            // Monitoring not yet granted.
+            // Monitoring not yet granted. Machine-readable; Dart localizes.
             let hex = String(format: "0x%08X", UInt32(bitPattern: rc))
-            return "Cannot open USB key (IOReturn \(hex)). "
-                + "Grant Input Monitoring in System Settings if prompted."
+            return "denied:\(hex)"
         }
         self.opened = true
 
@@ -112,7 +111,7 @@ final class HidPaddle: NSObject, FlutterStreamHandler {
         if devices?.isEmpty ?? true {
             return nil
         }
-        return "Connected: IOKit HID 413D:2107"
+        return "connected"
     }
 
     private func stop() {

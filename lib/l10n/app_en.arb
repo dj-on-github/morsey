@@ -1,0 +1,222 @@
+{
+  "@@locale": "en",
+  "appTitle": "Morse Trainer",
+  "menuAbout": "About",
+  "menuSettings": "Settings",
+  "menuInputTrain": "Input Train",
+  "menuListenTrain": "Listen Train",
+  "menuListenTutorial": "Listen Tutorial",
+  "menuInputTutorial": "Input Tutorial",
+  "aboutIntro": "A practice tool for learning Morse code, written in Dart / Flutter.",
+  "aboutPartsHeading": "The parts of the program",
+  "aboutAboutDesc": "This page — a description of the program and how it works.",
+  "aboutSettingsDesc": "Set the paddle orientation, the keying speed, the side-tone volume and frequency, the language, and the light/dark appearance. The USB key and the keyboard paddles are both always active — no input selection needed.",
+  "aboutInputTrainDesc": "A character is shown and you key it in Morse. The trainer decodes what you send and tells you if it was correct.",
+  "aboutListenTrainDesc": "The trainer plays a character in Morse audio and you type the character you heard.",
+  "aboutListenTutorialDesc": "A guided, 26-level listening course. Each level introduces one new letter (Koch-method order — the easiest-to-distinguish sounds come first): the letter is shown and its Morse is played, you type it to begin, then a random drill of every letter unlocked so far runs until each has been answered correctly three times. Completing a level unlocks the next, and your progress is remembered.",
+  "aboutInputTutorialDesc": "The same 26-level course with the roles reversed, to teach sending. Each level shows the new letter's dots and dashes with the letter beside them; key the pattern to begin. In practice the pattern is taken away — only the letter is shown — and you key its Morse from memory with the paddle or keyboard, watching a live display of what you are keying. A \"Hear it\" button plays the target's rhythm, and a hint can reveal the pattern if you get stuck. Progress is tracked separately from the Listen Tutorial.",
+  "aboutUsbHeading": "The USB Morse key",
+  "aboutUsbBody": "This program supports an iambic (dual-paddle) Morse key that enumerates over USB as device 413d:2107. On Linux the key is read directly from its /dev/hidraw node — no drivers required, as long as your user can read the device (the plugdev group / a udev rule). Each paddle is reported as a keyboard modifier bit (Left-Ctrl and Right-Ctrl); the software turns those paddle presses into properly-timed dits and dahs.",
+  "aboutTimingHeading": "Timing",
+  "aboutTimingBody": "Speed is expressed in words per minute (WPM) using standard PARIS timing: one dit = 1200 / WPM milliseconds, a dah is three dits, the gap between elements is one dit, and the gap between letters is three dits.",
+  "aboutVersion": "Version {version}",
+  "@aboutVersion": {
+    "placeholders": {
+      "version": {}
+    }
+  },
+  "settingsInputDevice": "Input device",
+  "settingsInputDeviceBody": "The keyboard paddles (Left/Right arrows, or . and -) and the USB key (413d:2107) are both always active — keying works from whichever you touch. Plug the key in at any time and it just works.",
+  "settingsUsbActsAsKeyboard": "Here the USB key acts as a keyboard — just plug it in; the paddles arrive as Left/Right-Ctrl.",
+  "settingsUsbDetected": "USB key 413d:2107 detected: {path}",
+  "@settingsUsbDetected": {
+    "placeholders": {
+      "path": {}
+    }
+  },
+  "settingsUsbNotDetected": "USB key 413d:2107 not detected — it will connect when plugged in. If it never does, check permissions (Linux: /dev/hidraw*; macOS: Input Monitoring in System Settings).",
+  "settingsRescan": "Re-scan",
+  "settingsPaddleOrientation": "Paddle orientation",
+  "settingsSpeed": "Speed",
+  "settingsKeyingSpeed": "Keying speed",
+  "settingsWpmValue": "{wpm} WPM  (dit = {ditMs} ms)",
+  "@settingsWpmValue": {
+    "placeholders": {
+      "wpm": {},
+      "ditMs": {}
+    }
+  },
+  "settingsSideTone": "Side-tone",
+  "settingsVolume": "Volume",
+  "settingsVolumeValue": "{percent} %",
+  "@settingsVolumeValue": {
+    "placeholders": {
+      "percent": {}
+    }
+  },
+  "settingsFrequency": "Frequency",
+  "settingsFrequencyValue": "{hz} Hz",
+  "@settingsFrequencyValue": {
+    "placeholders": {
+      "hz": {}
+    }
+  },
+  "settingsTestTone": "Test tone",
+  "settingsNoAudio": "No audio backend available (Linux: needs pacat / PulseAudio).",
+  "settingsCharacterSet": "Training character set",
+  "settingsAppearance": "Appearance",
+  "settingsLanguage": "Language",
+  "languageSystem": "Follow system",
+  "themeSystem": "Follow system",
+  "themeLight": "Light",
+  "themeDark": "Dark",
+  "ditPaddleLeft": "Left paddle = dit",
+  "ditPaddleRight": "Right paddle = dit",
+  "charSetLetters": "Letters",
+  "charSetLettersDesc": "A – Z",
+  "charSetNumbers": "Numbers",
+  "charSetNumbersDesc": "0 – 9",
+  "charSetLettersNumbers": "Letters + Numbers",
+  "charSetLettersNumbersDesc": "A – Z, 0 – 9",
+  "charSetPunctuation": "Punctuation",
+  "charSetPunctuationDesc": ". , ? / = + …",
+  "charSetAll": "Everything",
+  "charSetAllDesc": "letters, numbers, punctuation",
+  "statusStarting": "Starting…",
+  "score": "Score: {correct} / {attempts}",
+  "@score": {
+    "placeholders": {
+      "correct": {},
+      "attempts": {}
+    }
+  },
+  "keyThisCharacter": "Key this character:",
+  "showHint": "Show hint",
+  "youAreKeying": "You are keying:",
+  "correct": "Correct!",
+  "youKeyedTryAgain": "You keyed \"{decoded}\" — try again",
+  "@youKeyedTryAgain": {
+    "placeholders": {
+      "decoded": {}
+    }
+  },
+  "clear": "Clear",
+  "skipNext": "Skip / Next",
+  "audioMissingListenTrain": "No audio backend available (needs pacat / PulseAudio) — Listen Train needs sound.",
+  "listenThenType": "Listen, then type the character you heard",
+  "tapKeyBelow": "Tap the matching key below.",
+  "typeKeyHint": "Type a letter/number key (click here if typing does nothing).",
+  "replay": "Replay",
+  "reveal": "Reveal",
+  "itWas": "It was  \"{char}\"   ({morse})",
+  "@itWas": {
+    "placeholders": {
+      "char": {},
+      "morse": {}
+    }
+  },
+  "notQuiteListen": "Not quite — listen again",
+  "audioMissingTutorial": "No audio backend available — the Listen Tutorial needs sound.",
+  "levelOf": "Level {level} of {count}",
+  "@levelOf": {
+    "placeholders": {
+      "level": {},
+      "count": {}
+    }
+  },
+  "levelItem": "Level {level}  ({letter})",
+  "@levelItem": {
+    "placeholders": {
+      "level": {},
+      "letter": {}
+    }
+  },
+  "lettersMastered": "{mastered} / {total} letters mastered",
+  "@lettersMastered": {
+    "placeholders": {
+      "mastered": {},
+      "total": {}
+    }
+  },
+  "newLetter": "New letter",
+  "listenTypeToBegin": "Listen, then type this letter to begin",
+  "greatStartingPractice": "Great — starting practice…",
+  "typeLetterYouHear": "Type the letter you hear",
+  "tutorialComplete": "Tutorial complete!",
+  "levelComplete": "Level {level} complete!",
+  "@levelComplete": {
+    "placeholders": {
+      "level": {}
+    }
+  },
+  "learnedAllLetters": "You have learned all {count} letters. Well done!",
+  "@learnedAllLetters": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "youMastered": "You mastered {letters}.",
+  "@youMastered": {
+    "placeholders": {
+      "letters": {}
+    }
+  },
+  "repeatLevelEsc": "Repeat level (Esc)",
+  "nextLevelEnter": "Next level (Enter)",
+  "keyPatternToBegin": "Key this pattern to begin",
+  "keyThisLetter": "Key this letter",
+  "canKeyAllLetters": "You can key all {count} letters. Well done!",
+  "@canKeyAllLetters": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "masteredKeying": "You mastered keying {letters}.",
+  "@masteredKeying": {
+    "placeholders": {
+      "letters": {}
+    }
+  },
+  "hearIt": "Hear it",
+  "statusKeyboardReady": "Keyboard paddles ready (←/→)",
+  "statusPaddlesTouch": "Paddles: keyboard ←/→, or the USB key (acts as a keyboard)",
+  "statusUsbWaiting": "USB key not detected — plug it in and it will connect",
+  "statusUsbConnected": "USB key connected: {detail}",
+  "@statusUsbConnected": {
+    "placeholders": {
+      "detail": {}
+    }
+  },
+  "statusUsbUnplugged": "USB key unplugged — reconnects when plugged in",
+  "statusUsbOpenFailed": "Found {path} but cannot open it (permissions?): {error}",
+  "@statusUsbOpenFailed": {
+    "placeholders": {
+      "path": {},
+      "error": {}
+    }
+  },
+  "statusUsbOpenDenied": "Cannot open USB key (IOReturn {code}) — grant Input Monitoring in System Settings",
+  "@statusUsbOpenDenied": {
+    "placeholders": {
+      "code": {}
+    }
+  },
+  "statusUsbError": "USB key error: {error}",
+  "@statusUsbError": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "statusUsbAndKeyboard": "{usb} · keyboard ←/→ also active",
+  "@statusUsbAndKeyboard": {
+    "placeholders": {
+      "usb": {}
+    }
+  },
+  "statusKeyboardAndUsb": "Paddles: keyboard ←/→ · {usb}",
+  "@statusKeyboardAndUsb": {
+    "placeholders": {
+      "usb": {}
+    }
+  }
+}

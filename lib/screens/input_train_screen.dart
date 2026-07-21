@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 
 import '../app_scope.dart';
 import '../input/combined_paddle_source.dart';
+import '../l10n/gen/app_localizations.dart';
+import '../l10n/status_l10n.dart';
 import '../models/settings.dart';
 import '../morsey/iambic_keyer.dart';
 import '../morsey/morse_code.dart';
@@ -121,11 +123,12 @@ class _InputTrainScreenState extends State<InputTrainScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
     final targetMorse = displayMorse(morseForChar(_target) ?? '');
     final usb = _source?.usbConnected == true;
 
     return PageScaffold(
-      title: 'Input Train',
+      title: l10n.menuInputTrain,
       child: Focus(
         focusNode: _focusNode,
         autofocus: true,
@@ -147,11 +150,11 @@ class _InputTrainScreenState extends State<InputTrainScreen> {
                   const SizedBox(width: 6),
                   Expanded(
                     child: Text(
-                      _source?.status ?? 'Starting…',
+                      _source?.statusText(l10n) ?? l10n.statusStarting,
                       style: theme.textTheme.bodySmall,
                     ),
                   ),
-                  Text('Score: $_correct / $_attempts',
+                  Text(l10n.score(_correct, _attempts),
                       style: theme.textTheme.bodySmall),
                 ],
               ),
@@ -162,7 +165,7 @@ class _InputTrainScreenState extends State<InputTrainScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('Key this character:',
+                      Text(l10n.keyThisCharacter,
                           style: theme.textTheme.titleMedium),
                       const SizedBox(height: 8),
                       Text(
@@ -187,12 +190,12 @@ class _InputTrainScreenState extends State<InputTrainScreen> {
                             : TextButton(
                                 onPressed: () =>
                                     setState(() => _showHint = true),
-                                child: const Text('Show hint'),
+                                child: Text(l10n.showHint),
                               ),
                       ),
                       const SizedBox(height: 24),
                       // Live keyed pattern.
-                      Text('You are keying:',
+                      Text(l10n.youAreKeying,
                           style: theme.textTheme.bodySmall),
                       const SizedBox(height: 4),
                       Container(
@@ -216,7 +219,7 @@ class _InputTrainScreenState extends State<InputTrainScreen> {
                         ),
                       ),
                       const SizedBox(height: 24),
-                      _feedback(theme),
+                      _feedback(theme, l10n),
                     ],
                   ),
                 ),
@@ -236,13 +239,13 @@ class _InputTrainScreenState extends State<InputTrainScreen> {
                       });
                     },
                     icon: const Icon(Icons.backspace_outlined),
-                    label: const Text('Clear'),
+                    label: Text(l10n.clear),
                   ),
                   const SizedBox(width: 12),
                   FilledButton.icon(
                     onPressed: _nextTarget,
                     icon: const Icon(Icons.skip_next),
-                    label: const Text('Skip / Next'),
+                    label: Text(l10n.skipNext),
                   ),
                 ],
               ),
@@ -253,7 +256,7 @@ class _InputTrainScreenState extends State<InputTrainScreen> {
     );
   }
 
-  Widget _feedback(ThemeData theme) {
+  Widget _feedback(ThemeData theme, AppLocalizations l10n) {
     if (_lastDecoded == null) {
       return const SizedBox(height: 40);
     }
@@ -267,9 +270,7 @@ class _InputTrainScreenState extends State<InputTrainScreen> {
               color: ok ? Colors.green : theme.colorScheme.error),
           const SizedBox(width: 8),
           Text(
-            ok
-                ? 'Correct!'
-                : 'You keyed "$_lastDecoded" — try again',
+            ok ? l10n.correct : l10n.youKeyedTryAgain(_lastDecoded ?? '?'),
             style: theme.textTheme.titleMedium?.copyWith(
               color: ok ? Colors.green : theme.colorScheme.error,
             ),

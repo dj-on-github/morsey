@@ -87,16 +87,13 @@ const List<String> kTutorialLetterOrder = [
 
 
 /// Named groups of characters that a training session can draw from.
+/// Display labels are localized (see l10n/enum_l10n.dart).
 enum CharacterSet {
-  letters('Letters', 'A – Z'),
-  numbers('Numbers', '0 – 9'),
-  lettersAndNumbers('Letters + Numbers', 'A – Z, 0 – 9'),
-  punctuation('Punctuation', '. , ? / = + …'),
-  all('Everything', 'letters, numbers, punctuation');
-
-  const CharacterSet(this.label, this.description);
-  final String label;
-  final String description;
+  letters,
+  numbers,
+  lettersAndNumbers,
+  punctuation,
+  all;
 
   /// The characters belonging to this set.
   List<String> get characters {

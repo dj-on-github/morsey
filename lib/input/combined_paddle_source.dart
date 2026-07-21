@@ -42,17 +42,14 @@ class CombinedPaddleSource extends PaddleSource {
   /// True when the USB key is currently attached and delivering events.
   bool get usbConnected => _hid?.connected ?? false;
 
+  /// Whether this platform has direct HID access (Linux/macOS). Elsewhere
+  /// the USB key shows up as a keyboard, covered by the keyboard source.
+  bool get hasUsb => _hid != null;
+
+  /// The USB side's status ([PaddleStatusKind.keyboardReady] when this
+  /// platform has no direct HID access).
   @override
-  String get status {
-    const kb = 'keyboard ←/→';
-    final hid = _hid;
-    if (hid == null) {
-      // The USB key shows up as a keyboard here (Ctrl-bit paddles).
-      return 'Paddles: $kb, or the USB key (acts as a keyboard)';
-    }
-    if (hid.connected) return '${hid.status} · $kb also active';
-    return 'Paddles: $kb · ${hid.status}';
-  }
+  PaddleStatus get status => _hid?.status ?? _keyboard.status;
 
   @override
   Future<void> start() async {

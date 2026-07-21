@@ -14,21 +14,16 @@ import 'paddle_source.dart';
 /// The owning widget forwards raw [KeyEvent]s to [handleKeyEvent]; this class
 /// translates them into paddle transitions.
 class KeyboardPaddleSource extends PaddleSource {
-  KeyboardPaddleSource({this.ditIsLeft = true, this.statusLabel});
+  KeyboardPaddleSource({this.ditIsLeft = true});
 
   bool ditIsLeft;
-
-  /// Overrides the default status line (used when this source is standing in
-  /// for the USB key on platforms where it appears as a keyboard).
-  final String? statusLabel;
 
   bool _ditDown = false;
   bool _dahDown = false;
 
   @override
-  String get status =>
-      statusLabel ??
-      'Keyboard paddles — ${ditIsLeft ? "Left-Arrow = dit, Right-Arrow = dah" : "Right-Arrow = dit, Left-Arrow = dah"}';
+  PaddleStatus get status =>
+      const PaddleStatus(PaddleStatusKind.keyboardReady);
   @override
   bool get connected => true;
 

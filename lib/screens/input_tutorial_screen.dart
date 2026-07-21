@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../app_scope.dart';
+import '../l10n/gen/app_localizations.dart';
+import '../l10n/status_l10n.dart';
 import '../input/combined_paddle_source.dart';
 import '../models/settings.dart';
 import '../morsey/iambic_keyer.dart';
@@ -270,9 +272,10 @@ class _InputTutorialScreenState extends State<InputTutorialScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final scope = AppScope.of(context);
+    final l10n = AppLocalizations.of(context);
 
     return PageScaffold(
-      title: 'Input Tutorial',
+      title: l10n.menuInputTutorial,
       child: Focus(
         focusNode: _focusNode,
         autofocus: true,
@@ -283,7 +286,7 @@ class _InputTutorialScreenState extends State<InputTutorialScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              _header(theme, scope.settings),
+              _header(theme, scope.settings, l10n),
               // Keying-device status: keyboard always works, USB hotplugs.
               Row(
                 children: [
@@ -299,14 +302,15 @@ class _InputTutorialScreenState extends State<InputTutorialScreen> {
                   const SizedBox(width: 6),
                   Expanded(
                     child: Text(
-                      _source?.status ?? 'Starting…',
+                      _source?.statusText(l10n) ?? l10n.statusStarting,
                       style: theme.textTheme.bodySmall,
                     ),
                   ),
                 ],
               ),
-              Expanded(child: Center(child: _body(theme))),
-              if (_phase != _Phase.levelComplete) _controls(theme, scope),
+              Expanded(child: Center(child: _body(theme, l10n))),
+              if (_phase != _Phase.levelComplete)
+                _controls(theme, scope, l10n),
             ],
           ),
         ),
@@ -314,9 +318,10 @@ class _InputTutorialScreenState extends State<InputTutorialScreen> {
     );
   }
 
-  Widget _header(ThemeData theme, Settings settings) {
+  Widget _header(ThemeData theme, Settings settings,
+      AppLocalizations l10n) {
     final unlocked = settings.inputTutorialLevel;
-    final levelText = Text('Level $_level of $_levelCount',
+    final levelText = Text(l10n.levelOf(_level, _levelCount),
         style: theme.textTheme.titleMedium);
     final dropdown = DropdownButton<int>(
       value: _level,
@@ -328,13 +333,13 @@ class _InputTutorialScreenState extends State<InputTutorialScreen> {
         for (var i = 1; i <= unlocked; i++)
           DropdownMenuItem(
             value: i,
-            child: Text('Level $i  (${kTutorialLetterOrder[i - 1]})'),
+            child: Text(l10n.levelItem(i, kTutorialLetterOrder[i - 1])),
           ),
       ],
     );
     final mastered = _phase == _Phase.practice
         ? Text(
-            '${_mastered()} / ${_levelLetters.length} letters mastered',
+            l10n.lettersMastered(_mastered(), _levelLetters.length),
             style: theme.textTheme.bodySmall,
           )
         : null;
@@ -371,23 +376,23 @@ class _InputTutorialScreenState extends State<InputTutorialScreen> {
   int _mastered() =>
       _levelLetters.where((c) => (_counts[c] ?? 0) >= _targetPerLetter).length;
 
-  Widget _body(ThemeData theme) {
+  Widget _body(ThemeData theme, AppLocalizations l10n) {
     switch (_phase) {
       case _Phase.intro:
-        return _introBody(theme);
+        return _introBody(theme, l10n);
       case _Phase.practice:
-        return _practiceBody(theme);
+        return _practiceBody(theme, l10n);
       case _Phase.levelComplete:
-        return _completeBody(theme);
+        return _completeBody(theme, l10n);
     }
   }
 
-  Widget _introBody(ThemeData theme) {
+  Widget _introBody(ThemeData theme, AppLocalizations l10n) {
     final morse = displayMorse(morseForChar(_newLetter) ?? '');
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text('New letter', style: theme.textTheme.titleMedium),
+        Text(l10n.newLetter, style: theme.textTheme.titleMedium),
         const SizedBox(height: 8),
         // The Morse is the star here; the letter it stands for sits beside it.
         Row(
@@ -410,22 +415,22 @@ class _InputTutorialScreenState extends State<InputTutorialScreen> {
           ],
         ),
         const SizedBox(height: 16),
-        Text('Key this pattern to begin',
+        Text(l10n.keyPatternToBegin,
             style: theme.textTheme.bodyMedium),
         const SizedBox(height: 16),
-        _keyingBox(theme),
+        _keyingBox(theme, l10n),
         const SizedBox(height: 12),
-        _feedback(theme, correctLabel: 'Great — starting practice…'),
+        _feedback(theme, l10n, correctLabel: l10n.greatStartingPractice),
       ],
     );
   }
 
-  Widget _practiceBody(ThemeData theme) {
+  Widget _practiceBody(ThemeData theme, AppLocalizations l10n) {
     final morse = displayMorse(morseForChar(_target) ?? '');
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text('Key this letter', style: theme.textTheme.titleMedium),
+        Text(l10n.keyThisLetter, style: theme.textTheme.titleMedium),
         const SizedBox(height: 8),
         Text(
           _target,
@@ -447,20 +452,20 @@ class _InputTutorialScreenState extends State<InputTutorialScreen> {
                 )
               : TextButton(
                   onPressed: () => setState(() => _showHint = true),
-                  child: const Text('Show hint'),
+                  child: Text(l10n.showHint),
                 ),
         ),
         const SizedBox(height: 16),
-        _keyingBox(theme),
+        _keyingBox(theme, l10n),
         const SizedBox(height: 12),
-        _feedback(theme, correctLabel: 'Correct!'),
+        _feedback(theme, l10n, correctLabel: l10n.correct),
         const SizedBox(height: 20),
         _progressChips(theme),
       ],
     );
   }
 
-  Widget _completeBody(ThemeData theme) {
+  Widget _completeBody(ThemeData theme, AppLocalizations l10n) {
     final last = _level >= _levelCount;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -468,14 +473,14 @@ class _InputTutorialScreenState extends State<InputTutorialScreen> {
         Icon(Icons.emoji_events, size: 72, color: theme.colorScheme.tertiary),
         const SizedBox(height: 16),
         Text(
-          last ? 'Tutorial complete!' : 'Level $_level complete!',
+          last ? l10n.tutorialComplete : l10n.levelComplete(_level),
           style: theme.textTheme.headlineSmall,
         ),
         const SizedBox(height: 8),
         Text(
           last
-              ? 'You can key all $_levelCount letters. Well done!'
-              : 'You mastered keying ${_levelLetters.join(' ')}.',
+              ? l10n.canKeyAllLetters(_levelCount)
+              : l10n.masteredKeying(_levelLetters.join(' ')),
           style: theme.textTheme.bodyMedium,
           textAlign: TextAlign.center,
         ),
@@ -486,14 +491,14 @@ class _InputTutorialScreenState extends State<InputTutorialScreen> {
             OutlinedButton.icon(
               onPressed: () => _startLevel(_level),
               icon: const Icon(Icons.replay),
-              label: const Text('Repeat level (Esc)'),
+              label: Text(l10n.repeatLevelEsc),
             ),
             if (!last) ...[
               const SizedBox(width: 12),
               FilledButton.icon(
                 onPressed: () => _startLevel(_level + 1),
                 icon: const Icon(Icons.arrow_forward),
-                label: const Text('Next level (Enter)'),
+                label: Text(l10n.nextLevelEnter),
               ),
             ],
           ],
@@ -503,10 +508,10 @@ class _InputTutorialScreenState extends State<InputTutorialScreen> {
   }
 
   /// The live "you are keying" display, as on the Input Train screen.
-  Widget _keyingBox(ThemeData theme) {
+  Widget _keyingBox(ThemeData theme, AppLocalizations l10n) {
     return Column(
       children: [
-        Text('You are keying:', style: theme.textTheme.bodySmall),
+        Text(l10n.youAreKeying, style: theme.textTheme.bodySmall),
         const SizedBox(height: 4),
         Container(
           constraints: const BoxConstraints(minWidth: 160),
@@ -547,7 +552,8 @@ class _InputTutorialScreenState extends State<InputTutorialScreen> {
     );
   }
 
-  Widget _feedback(ThemeData theme, {required String correctLabel}) {
+  Widget _feedback(ThemeData theme, AppLocalizations l10n,
+      {required String correctLabel}) {
     if (_lastCorrect == null) return const SizedBox(height: 28);
     final ok = _lastCorrect == true;
     return Row(
@@ -559,7 +565,7 @@ class _InputTutorialScreenState extends State<InputTutorialScreen> {
         Text(
           ok
               ? correctLabel
-              : 'You keyed "$_lastDecoded" — try again',
+              : l10n.youKeyedTryAgain(_lastDecoded ?? '?'),
           style: theme.textTheme.titleMedium?.copyWith(
             color: ok ? Colors.green : theme.colorScheme.error,
           ),
@@ -568,7 +574,7 @@ class _InputTutorialScreenState extends State<InputTutorialScreen> {
     );
   }
 
-  Widget _controls(ThemeData theme, AppScope scope) {
+  Widget _controls(ThemeData theme, AppScope scope, AppLocalizations l10n) {
     // The demo shares the side-tone with the keyer, so it can only start
     // while the keyer is quiet; keying also cancels a running demo.
     final canHear =
@@ -582,7 +588,7 @@ class _InputTutorialScreenState extends State<InputTutorialScreen> {
                   _play(_phase == _Phase.intro ? _newLetter : _target)
               : null,
           icon: const Icon(Icons.volume_up),
-          label: const Text('Hear it'),
+          label: Text(l10n.hearIt),
         ),
         const SizedBox(width: 12),
         OutlinedButton.icon(
@@ -596,7 +602,7 @@ class _InputTutorialScreenState extends State<InputTutorialScreen> {
             _refocus();
           },
           icon: const Icon(Icons.backspace_outlined),
-          label: const Text('Clear'),
+          label: Text(l10n.clear),
         ),
       ],
     );

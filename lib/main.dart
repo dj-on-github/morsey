@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'app_scope.dart';
 import 'audio/audio_engine.dart';
+import 'l10n/fallback_localizations.dart';
+import 'l10n/gen/app_localizations.dart';
 import 'models/settings.dart';
 import 'screens/about_screen.dart';
 import 'screens/input_train_screen.dart';
@@ -12,7 +15,7 @@ import 'screens/settings_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final settings = Settings();
+  final settings = await Settings.load();
   final audio = createAudioEngine(
     frequency: settings.frequency,
     volume: settings.volume,
@@ -34,31 +37,62 @@ class MorseyApp extends StatelessWidget {
   final Settings settings;
   final AudioEngine audio;
 
+  static ThemeData _theme(Brightness brightness) => ThemeData(
+        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color(0xFF1565C0),
+          brightness: brightness,
+        ),
+      );
+
   @override
   Widget build(BuildContext context) {
     return AppScope(
       settings: settings,
       audio: audio,
-      child: MaterialApp(
-        title: 'Morse Trainer',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          useMaterial3: true,
-          colorScheme: ColorScheme.fromSeed(
-            seedColor: const Color(0xFF1565C0),
-            brightness: Brightness.dark,
-          ),
+      // Rebuild on settings changes so the theme choice applies immediately.
+      child: ListenableBuilder(
+        listenable: settings,
+        builder: (context, _) => MaterialApp(
+          onGenerateTitle: (context) =>
+              AppLocalizations.of(context).appTitle,
+          debugShowCheckedModeBanner: false,
+          locale: settings.language.locale,
+          supportedLocales: const [
+            Locale('en'),
+            Locale('cy'),
+            Locale('tlh'),
+          ],
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+            // After the global ones: real framework translations win when
+            // Flutter has them; otherwise English framework strings.
+            FallbackMaterialLocalizationsDelegate(),
+            FallbackWidgetsLocalizationsDelegate(),
+            FallbackCupertinoLocalizationsDelegate(),
+          ],
+          theme: _theme(Brightness.light),
+          darkTheme: _theme(Brightness.dark),
+          themeMode: switch (settings.appTheme) {
+            AppTheme.system => ThemeMode.system,
+            AppTheme.light => ThemeMode.light,
+            AppTheme.dark => ThemeMode.dark,
+          },
+          home: const HomePage(),
         ),
-        home: const HomePage(),
       ),
     );
   }
 }
 
-/// A selectable part of the program shown in the left column.
+/// A selectable part of the program shown in the left column. The title is
+/// resolved per-build so it follows the active locale.
 class _Section {
   const _Section(this.title, this.icon, this.builder);
-  final String title;
+  final String Function(AppLocalizations l10n) title;
   final IconData icon;
   final WidgetBuilder builder;
 }
@@ -74,13 +108,17 @@ class _HomePageState extends State<HomePage> {
   int _selected = 2; // start on Input Train
 
   static final List<_Section> _sections = [
-    _Section('About', Icons.info_outline, (_) => const AboutScreen()),
-    _Section('Settings', Icons.settings, (_) => const SettingsScreen()),
-    _Section('Input Train', Icons.keyboard, (_) => const InputTrainScreen()),
-    _Section('Listen Train', Icons.hearing, (_) => const ListenTrainScreen()),
-    _Section('Listen Tutorial', Icons.school,
+    _Section((l) => l.menuAbout, Icons.info_outline,
+        (_) => const AboutScreen()),
+    _Section((l) => l.menuSettings, Icons.settings,
+        (_) => const SettingsScreen()),
+    _Section((l) => l.menuInputTrain, Icons.keyboard,
+        (_) => const InputTrainScreen()),
+    _Section((l) => l.menuListenTrain, Icons.hearing,
+        (_) => const ListenTrainScreen()),
+    _Section((l) => l.menuListenTutorial, Icons.school,
         (_) => const ListenTutorialScreen()),
-    _Section('Input Tutorial', Icons.school_outlined,
+    _Section((l) => l.menuInputTutorial, Icons.school_outlined,
         (_) => const InputTutorialScreen()),
   ];
 
@@ -92,6 +130,7 @@ class _HomePageState extends State<HomePage> {
   /// When [inDrawer] is true, tapping an item also closes the drawer.
   Widget _buildMenu(BuildContext context, {required bool inDrawer}) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -103,7 +142,7 @@ class _HomePageState extends State<HomePage> {
               const SizedBox(width: 10),
               Flexible(
                 child: Text(
-                  'Morse Trainer',
+                  l10n.appTitle,
                   overflow: TextOverflow.ellipsis,
                   style: theme.textTheme.titleMedium
                       ?.copyWith(fontWeight: FontWeight.bold),
@@ -122,7 +161,7 @@ class _HomePageState extends State<HomePage> {
               final selected = i == _selected;
               return ListTile(
                 leading: Icon(section.icon),
-                title: Text(section.title),
+                title: Text(section.title(l10n)),
                 selected: selected,
                 selectedTileColor:
                     theme.colorScheme.primary.withValues(alpha: 0.18),
@@ -156,7 +195,7 @@ class _HomePageState extends State<HomePage> {
                   const SizedBox(width: 10),
                   Flexible(
                     child: Text(
-                      _sections[_selected].title,
+                      _sections[_selected].title(AppLocalizations.of(context)),
                       overflow: TextOverflow.ellipsis,
                       style: theme.textTheme.titleMedium
                           ?.copyWith(fontWeight: FontWeight.bold),

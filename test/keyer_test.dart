@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:morsey/audio/audio_engine.dart';
-import 'package:morsey/morse/iambic_keyer.dart';
+import 'package:morsey/morsey/iambic_keyer.dart';
 
 /// Drives an [IambicKeyer] with a simulated paddle and checks that it decodes
 /// the expected characters. Uses real timers with generous timing so the test

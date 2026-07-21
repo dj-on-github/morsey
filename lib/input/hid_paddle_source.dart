@@ -45,7 +45,7 @@ class HidPaddleSource extends PaddleSource {
 
   bool ditIsLeft;
 
-  String _status = 'Not started';
+  PaddleStatus _status = const PaddleStatus(PaddleStatusKind.idle);
   bool _connected = false;
 
   // Linux state.
@@ -62,12 +62,17 @@ class HidPaddleSource extends PaddleSource {
   bool _lastDah = false;
 
   @override
-  String get status => _status;
+  PaddleStatus get status => _status;
   @override
   bool get connected => _connected;
 
-  void _setStatus(String status, bool connected) {
-    if (status == _status && connected == _connected) return;
+  void _setStatus(PaddleStatus status, bool connected) {
+    if (status.kind == _status.kind &&
+        status.detail == _status.detail &&
+        status.error == _status.error &&
+        connected == _connected) {
+      return;
+    }
     _status = status;
     _connected = connected;
     onStatus?.call();
@@ -104,7 +109,8 @@ class HidPaddleSource extends PaddleSource {
     } else if (Platform.isMacOS) {
       await _startMacOS();
     } else {
-      _setStatus('USB paddle not supported on this platform', false);
+      _setStatus(const PaddleStatus(PaddleStatusKind.usbError,
+          error: 'unsupported platform'), false);
     }
   }
 
@@ -130,7 +136,7 @@ class HidPaddleSource extends PaddleSource {
         // ignore
       }
     }
-    _setStatus('Stopped', false);
+    _setStatus(const PaddleStatus(PaddleStatusKind.idle), false);
     _releaseLatched();
   }
 
@@ -181,15 +187,17 @@ class HidPaddleSource extends PaddleSource {
       _raf = null;
       final path = _linuxFindDevicePath();
       if (path == null) {
-        _setStatus('USB key not detected — plug it in and it will connect',
-            false);
+        _setStatus(const PaddleStatus(PaddleStatusKind.usbWaiting), false);
         return;
       }
       RandomAccessFile raf;
       try {
         raf = await File(path).open(mode: FileMode.read);
       } on Object catch (e) {
-        _setStatus('Found $path but cannot open it (permissions?): $e', false);
+        _setStatus(
+            PaddleStatus(PaddleStatusKind.usbOpenFailed,
+                detail: path, error: '$e'),
+            false);
         return;
       }
       if (_stopped) {
@@ -197,7 +205,8 @@ class HidPaddleSource extends PaddleSource {
         return;
       }
       _raf = raf;
-      _setStatus('Connected: $path', true);
+      _setStatus(PaddleStatus(PaddleStatusKind.usbConnected, detail: path),
+          true);
       unawaited(_linuxReadLoop(raf));
     } finally {
       _attempting = false;
@@ -216,7 +225,8 @@ class HidPaddleSource extends PaddleSource {
     } finally {
       _releaseLatched();
       if (!_stopped) {
-        _setStatus('USB key unplugged — reconnects when plugged in', false);
+        _setStatus(
+            const PaddleStatus(PaddleStatusKind.usbUnplugged), false);
       }
     }
   }
@@ -228,19 +238,36 @@ class HidPaddleSource extends PaddleSource {
     try {
       status = await _macChannel.invokeMethod<String>('start');
     } on PlatformException catch (e) {
-      _setStatus('macOS HID error: ${e.message ?? e.code}', false);
+      _setStatus(
+          PaddleStatus(PaddleStatusKind.usbError,
+              error: e.message ?? e.code),
+          false);
       return;
     } on MissingPluginException {
-      _setStatus('macOS HID bridge not registered', false);
+      _setStatus(
+          const PaddleStatus(PaddleStatusKind.usbError,
+              error: 'HID bridge not registered'),
+          false);
       return;
     }
+    // Native contract: null = no device yet (the manager stays open and
+    // reports 'connected' when the key arrives); 'connected' = attached;
+    // 'denied:<IOReturn>' = the OS refused (TCC / Input Monitoring).
     if (status == null) {
-      // The native manager stays open and will report 'connected' when the
-      // key arrives.
-      _setStatus('USB key not detected — plug it in and it will connect',
+      _setStatus(const PaddleStatus(PaddleStatusKind.usbWaiting), false);
+    } else if (status == 'connected') {
+      _setStatus(
+          const PaddleStatus(PaddleStatusKind.usbConnected,
+              detail: 'IOKit HID 413D:2107'),
+          true);
+    } else if (status.startsWith('denied:')) {
+      _setStatus(
+          PaddleStatus(PaddleStatusKind.usbOpenDenied,
+              error: status.substring('denied:'.length)),
           false);
     } else {
-      _setStatus(status, status.startsWith('Connected'));
+      _setStatus(PaddleStatus(PaddleStatusKind.usbError, error: status),
+          false);
     }
     _macSub = _macEvents.receiveBroadcastStream().listen(
       (dynamic data) {
@@ -248,11 +275,14 @@ class HidPaddleSource extends PaddleSource {
           _dispatchModifiers(data[0]);
         } else if (data is String) {
           if (data == 'connected') {
-            _setStatus('Connected: IOKit HID 413D:2107', true);
+            _setStatus(
+                const PaddleStatus(PaddleStatusKind.usbConnected,
+                    detail: 'IOKit HID 413D:2107'),
+                true);
           } else if (data == 'disconnected') {
             _releaseLatched();
             _setStatus(
-                'USB key unplugged — reconnects when plugged in', false);
+                const PaddleStatus(PaddleStatusKind.usbUnplugged), false);
           }
         } else if (data is List && data.isNotEmpty && data.first is int) {
           _dispatchModifiers(data.first as int);
@@ -260,7 +290,8 @@ class HidPaddleSource extends PaddleSource {
       },
       onError: (Object err) {
         _releaseLatched();
-        _setStatus('macOS HID stream error: $err', false);
+        _setStatus(
+            PaddleStatus(PaddleStatusKind.usbError, error: '$err'), false);
       },
     );
   }

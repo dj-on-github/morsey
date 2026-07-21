@@ -10,9 +10,10 @@ open it:
 
 - **About** — a description of the program and how it works.
 - **Settings** — choose the paddle orientation, the keying speed (WPM), the
-  side-tone volume and frequency, and the training character set. There is no
-  input-device selection: the USB key and the keyboard paddles are both always
-  active, and the key can be plugged in (or unplugged) at any time.
+  side-tone volume and frequency, the training character set, the appearance
+  (follow system, light, or dark), and the language. There is no input-device
+  selection: the USB key and the keyboard paddles are both always active, and
+  the key can be plugged in (or unplugged) at any time.
 - **Input Train** — a character is shown; you key it in Morse and the trainer
   decodes what you send and tells you whether it was correct.
 - **Listen Train** — the trainer plays a character as Morse audio; you type the
@@ -100,6 +101,15 @@ USB key. The Left-Arrow key is the dit paddle and the Right-Arrow key is the
 dah paddle (`.`/`-` and Left/Right-Ctrl also work). Click the Input Train area
 first so it has keyboard focus. If you plug the USB key in mid-session it
 connects automatically.
+
+## Languages
+
+The UI is internationalized with Flutter's gen-l10n. Translations live in
+`lib/l10n/app_<locale>.arb`; currently English (`en`), Welsh (`cy`), and
+Klingon (`tlh`). The language can be set in Settings ("Follow system" uses
+the platform locale, falling back to English). To add a language, copy
+`app_en.arb`, translate the values, and rebuild — the locale is picked up
+automatically from the file name.
 
 ## Running
 

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../app_scope.dart';
+import '../l10n/gen/app_localizations.dart';
 import '../models/settings.dart';
 import '../morsey/morse_code.dart';
 import 'onscreen_keyboard.dart';
@@ -111,9 +112,10 @@ class _ListenTrainScreenState extends State<ListenTrainScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final scope = AppScope.of(context);
+    final l10n = AppLocalizations.of(context);
 
     return PageScaffold(
-      title: 'Listen Train',
+      title: l10n.menuListenTrain,
       child: Focus(
         focusNode: _focusNode,
         autofocus: true,
@@ -129,15 +131,14 @@ class _ListenTrainScreenState extends State<ListenTrainScreen> {
                   if (!scope.audio.available)
                     Expanded(
                       child: Text(
-                        'No audio backend available (needs pacat / PulseAudio) — '
-                        'Listen Train needs sound.',
+                        l10n.audioMissingListenTrain,
                         style: theme.textTheme.bodySmall
                             ?.copyWith(color: theme.colorScheme.error),
                       ),
                     )
                   else
                     const Spacer(),
-                  Text('Score: $_correct / $_attempts',
+                  Text(l10n.score(_correct, _attempts),
                       style: theme.textTheme.bodySmall),
                 ],
               ),
@@ -147,7 +148,7 @@ class _ListenTrainScreenState extends State<ListenTrainScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Listen, then type the character you heard',
+                        l10n.listenThenType,
                         style: theme.textTheme.titleMedium,
                       ),
                       const SizedBox(height: 24),
@@ -186,15 +187,12 @@ class _ListenTrainScreenState extends State<ListenTrainScreen> {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        _isTouchPlatform
-                            ? 'Tap the matching key below.'
-                            : 'Type a letter/number key (click here if typing '
-                                'does nothing).',
+                        _isTouchPlatform ? l10n.tapKeyBelow : l10n.typeKeyHint,
                         style: theme.textTheme.bodySmall
                             ?.copyWith(color: theme.colorScheme.outline),
                       ),
                       const SizedBox(height: 16),
-                      _feedback(theme),
+                      _feedback(theme, l10n),
                     ],
                   ),
                 ),
@@ -210,7 +208,7 @@ class _ListenTrainScreenState extends State<ListenTrainScreen> {
                             _refocus();
                           },
                     icon: const Icon(Icons.replay),
-                    label: const Text('Replay'),
+                    label: Text(l10n.replay),
                   ),
                   const SizedBox(width: 12),
                   OutlinedButton.icon(
@@ -219,13 +217,13 @@ class _ListenTrainScreenState extends State<ListenTrainScreen> {
                       _refocus();
                     },
                     icon: const Icon(Icons.visibility),
-                    label: const Text('Reveal'),
+                    label: Text(l10n.reveal),
                   ),
                   const SizedBox(width: 12),
                   FilledButton.icon(
                     onPressed: _nextTarget,
                     icon: const Icon(Icons.skip_next),
-                    label: const Text('Skip / Next'),
+                    label: Text(l10n.skipNext),
                   ),
                 ],
               ),
@@ -246,11 +244,11 @@ class _ListenTrainScreenState extends State<ListenTrainScreen> {
 
   static final bool _isTouchPlatform = Platform.isIOS || Platform.isAndroid;
 
-  Widget _feedback(ThemeData theme) {
+  Widget _feedback(ThemeData theme, AppLocalizations l10n) {
     if (_revealed) {
       final morse = displayMorse(morseForChar(_target) ?? '');
       return Text(
-        'It was  "$_target"   ($morse)',
+        l10n.itWas(_target, morse),
         style: theme.textTheme.titleMedium
             ?.copyWith(color: theme.colorScheme.tertiary),
       );
@@ -264,7 +262,7 @@ class _ListenTrainScreenState extends State<ListenTrainScreen> {
             color: ok ? Colors.green : theme.colorScheme.error),
         const SizedBox(width: 8),
         Text(
-          ok ? 'Correct!' : 'Not quite — listen again',
+          ok ? l10n.correct : l10n.notQuiteListen,
           style: theme.textTheme.titleMedium?.copyWith(
             color: ok ? Colors.green : theme.colorScheme.error,
           ),

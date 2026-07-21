@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../app_scope.dart';
+import '../l10n/gen/app_localizations.dart';
 import '../models/settings.dart';
 import '../morsey/morse_code.dart';
 import 'letter_progress.dart';
@@ -228,9 +229,10 @@ class _ListenTutorialScreenState extends State<ListenTutorialScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final scope = AppScope.of(context);
+    final l10n = AppLocalizations.of(context);
 
     return PageScaffold(
-      title: 'Listen Tutorial',
+      title: l10n.menuListenTutorial,
       child: Focus(
         focusNode: _focusNode,
         autofocus: true,
@@ -241,18 +243,18 @@ class _ListenTutorialScreenState extends State<ListenTutorialScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              _header(theme, scope.settings),
+              _header(theme, scope.settings, l10n),
               if (!scope.audio.available)
                 Padding(
                   padding: const EdgeInsets.only(top: 8),
                   child: Text(
-                    'No audio backend available — the Listen Tutorial needs sound.',
+                    l10n.audioMissingTutorial,
                     style: theme.textTheme.bodySmall
                         ?.copyWith(color: theme.colorScheme.error),
                   ),
                 ),
-              Expanded(child: Center(child: _body(theme))),
-              if (_phase != _Phase.levelComplete) _controls(theme),
+              Expanded(child: Center(child: _body(theme, l10n))),
+              if (_phase != _Phase.levelComplete) _controls(theme, l10n),
               // Touch platforms have no hardware keyboard to answer with.
               if (_phase != _Phase.levelComplete && _isTouchPlatform) ...[
                 const SizedBox(height: 8),
@@ -270,9 +272,10 @@ class _ListenTutorialScreenState extends State<ListenTutorialScreen> {
 
   static final bool _isTouchPlatform = Platform.isIOS || Platform.isAndroid;
 
-  Widget _header(ThemeData theme, Settings settings) {
+  Widget _header(ThemeData theme, Settings settings,
+      AppLocalizations l10n) {
     final unlocked = settings.tutorialLevel;
-    final levelText = Text('Level $_level of $_levelCount',
+    final levelText = Text(l10n.levelOf(_level, _levelCount),
         style: theme.textTheme.titleMedium);
     final dropdown = DropdownButton<int>(
       value: _level,
@@ -284,13 +287,13 @@ class _ListenTutorialScreenState extends State<ListenTutorialScreen> {
         for (var i = 1; i <= unlocked; i++)
           DropdownMenuItem(
             value: i,
-            child: Text('Level $i  (${kTutorialLetterOrder[i - 1]})'),
+            child: Text(l10n.levelItem(i, kTutorialLetterOrder[i - 1])),
           ),
       ],
     );
     final mastered = _phase == _Phase.practice
         ? Text(
-            '${_mastered()} / ${_levelLetters.length} letters mastered',
+            l10n.lettersMastered(_mastered(), _levelLetters.length),
             style: theme.textTheme.bodySmall,
           )
         : null;
@@ -327,23 +330,23 @@ class _ListenTutorialScreenState extends State<ListenTutorialScreen> {
   int _mastered() =>
       _levelLetters.where((c) => (_counts[c] ?? 0) >= _targetPerLetter).length;
 
-  Widget _body(ThemeData theme) {
+  Widget _body(ThemeData theme, AppLocalizations l10n) {
     switch (_phase) {
       case _Phase.intro:
-        return _introBody(theme);
+        return _introBody(theme, l10n);
       case _Phase.practice:
-        return _practiceBody(theme);
+        return _practiceBody(theme, l10n);
       case _Phase.levelComplete:
-        return _completeBody(theme);
+        return _completeBody(theme, l10n);
     }
   }
 
-  Widget _introBody(ThemeData theme) {
+  Widget _introBody(ThemeData theme, AppLocalizations l10n) {
     final morse = displayMorse(morseForChar(_newLetter) ?? '');
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text('New letter', style: theme.textTheme.titleMedium),
+        Text(l10n.newLetter, style: theme.textTheme.titleMedium),
         const SizedBox(height: 8),
         Text(
           _newLetter,
@@ -364,21 +367,21 @@ class _ListenTutorialScreenState extends State<ListenTutorialScreen> {
               : theme.colorScheme.outline,
         ),
         const SizedBox(height: 16),
-        Text('Listen, then type this letter to begin',
+        Text(l10n.listenTypeToBegin,
             style: theme.textTheme.bodyMedium),
         const SizedBox(height: 16),
         _answerBox(theme),
         const SizedBox(height: 12),
-        _feedback(theme, correctLabel: 'Great — starting practice…'),
+        _feedback(theme, l10n, correctLabel: l10n.greatStartingPractice),
       ],
     );
   }
 
-  Widget _practiceBody(ThemeData theme) {
+  Widget _practiceBody(ThemeData theme, AppLocalizations l10n) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text('Type the letter you hear', style: theme.textTheme.titleMedium),
+        Text(l10n.typeLetterYouHear, style: theme.textTheme.titleMedium),
         const SizedBox(height: 16),
         Icon(
           _playing ? Icons.graphic_eq : Icons.hearing,
@@ -390,14 +393,14 @@ class _ListenTutorialScreenState extends State<ListenTutorialScreen> {
         const SizedBox(height: 16),
         _answerBox(theme),
         const SizedBox(height: 12),
-        _feedback(theme, correctLabel: 'Correct!'),
+        _feedback(theme, l10n, correctLabel: l10n.correct),
         const SizedBox(height: 20),
         _progressChips(theme),
       ],
     );
   }
 
-  Widget _completeBody(ThemeData theme) {
+  Widget _completeBody(ThemeData theme, AppLocalizations l10n) {
     final last = _level >= _levelCount;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -405,14 +408,14 @@ class _ListenTutorialScreenState extends State<ListenTutorialScreen> {
         Icon(Icons.emoji_events, size: 72, color: theme.colorScheme.tertiary),
         const SizedBox(height: 16),
         Text(
-          last ? 'Tutorial complete!' : 'Level $_level complete!',
+          last ? l10n.tutorialComplete : l10n.levelComplete(_level),
           style: theme.textTheme.headlineSmall,
         ),
         const SizedBox(height: 8),
         Text(
           last
-              ? 'You have learned all $_levelCount letters. Well done!'
-              : 'You mastered ${_levelLetters.join(' ')}.',
+              ? l10n.learnedAllLetters(_levelCount)
+              : l10n.youMastered(_levelLetters.join(' ')),
           style: theme.textTheme.bodyMedium,
           textAlign: TextAlign.center,
         ),
@@ -423,14 +426,14 @@ class _ListenTutorialScreenState extends State<ListenTutorialScreen> {
             OutlinedButton.icon(
               onPressed: () => _startLevel(_level),
               icon: const Icon(Icons.replay),
-              label: const Text('Repeat level (Esc)'),
+              label: Text(l10n.repeatLevelEsc),
             ),
             if (!last) ...[
               const SizedBox(width: 12),
               FilledButton.icon(
                 onPressed: () => _startLevel(_level + 1),
                 icon: const Icon(Icons.arrow_forward),
-                label: const Text('Next level (Enter)'),
+                label: Text(l10n.nextLevelEnter),
               ),
             ],
           ],
@@ -481,7 +484,8 @@ class _ListenTutorialScreenState extends State<ListenTutorialScreen> {
     );
   }
 
-  Widget _feedback(ThemeData theme, {required String correctLabel}) {
+  Widget _feedback(ThemeData theme, AppLocalizations l10n,
+      {required String correctLabel}) {
     if (_lastCorrect == null) return const SizedBox(height: 28);
     final ok = _lastCorrect == true;
     return Row(
@@ -491,7 +495,7 @@ class _ListenTutorialScreenState extends State<ListenTutorialScreen> {
             color: ok ? Colors.green : theme.colorScheme.error),
         const SizedBox(width: 8),
         Text(
-          ok ? correctLabel : 'Not quite — listen again',
+          ok ? correctLabel : l10n.notQuiteListen,
           style: theme.textTheme.titleMedium?.copyWith(
             color: ok ? Colors.green : theme.colorScheme.error,
           ),
@@ -500,14 +504,14 @@ class _ListenTutorialScreenState extends State<ListenTutorialScreen> {
     );
   }
 
-  Widget _controls(ThemeData theme) {
+  Widget _controls(ThemeData theme, AppLocalizations l10n) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         FilledButton.tonalIcon(
           onPressed: _playing ? null : _replay,
           icon: const Icon(Icons.replay),
-          label: const Text('Replay'),
+          label: Text(l10n.replay),
         ),
       ],
     );
