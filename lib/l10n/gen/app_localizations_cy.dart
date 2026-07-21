@@ -377,4 +377,23 @@ class AppLocalizationsCy extends AppLocalizations {
   String statusKeyboardAndUsb(Object usb) {
     return 'Padlau: bysellfwrdd ←/→ · $usb';
   }
+
+  @override
+  String get menuFreeType => 'Teipio Rhydd';
+
+  @override
+  String get freeTypeInputLabel => 'Teipiwch destun yma';
+
+  @override
+  String get freeTypeMorseLabel => 'Morse';
+
+  @override
+  String get freeTypeAudioOn => 'Sain ymlaen';
+
+  @override
+  String get freeTypeAudioOff => 'Sain i ffwrdd';
+
+  @override
+  String get aboutFreeTypeDesc =>
+      'Teipiwch unrhyw destun a\'i weld fel Morse — mae\'r dotiau a\'r llinellau\'n ymddangos ar eich cyflymder dewisedig, gyda sain ddewisol yn chwarae\'n gydamserol.';
 }

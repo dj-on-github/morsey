@@ -366,4 +366,22 @@ class AppLocalizationsZh extends AppLocalizations {
   String statusKeyboardAndUsb(Object usb) {
     return '拨片：键盘 ←/→ · $usb';
   }
+
+  @override
+  String get menuFreeType => '自由输入';
+
+  @override
+  String get freeTypeInputLabel => '在此输入文字';
+
+  @override
+  String get freeTypeMorseLabel => '摩尔斯';
+
+  @override
+  String get freeTypeAudioOn => '声音开';
+
+  @override
+  String get freeTypeAudioOff => '声音关';
+
+  @override
+  String get aboutFreeTypeDesc => '输入任意文字并将其显示为摩尔斯电码 — 点和划按设定速度出现，可选择同步播放声音。';
 }

@@ -101,5 +101,11 @@
   "statusUsbOpenDenied": "Impossible d'ouvrir la clé USB (IOReturn {code}) — accordez la Surveillance de l'entrée dans Réglages Système",
   "statusUsbError": "Erreur de clé USB : {error}",
   "statusUsbAndKeyboard": "{usb} · clavier ←/→ aussi actif",
-  "statusKeyboardAndUsb": "Palettes : clavier ←/→ · {usb}"
+  "statusKeyboardAndUsb": "Palettes : clavier ←/→ · {usb}",
+  "menuFreeType": "Saisie libre",
+  "freeTypeInputLabel": "Tapez du texte ici",
+  "freeTypeMorseLabel": "Morse",
+  "freeTypeAudioOn": "Son activé",
+  "freeTypeAudioOff": "Son coupé",
+  "aboutFreeTypeDesc": "Tapez un texte quelconque et voyez-le en Morse — les points et les traits apparaissent à la vitesse configurée, avec un son facultatif joué en synchronisation."
 }

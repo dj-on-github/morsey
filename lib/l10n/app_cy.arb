@@ -101,5 +101,11 @@
   "statusUsbOpenDenied": "Methu agor yr allwedd USB (IOReturn {code}) — rhowch ganiatâd Monitro Mewnbwn yng Ngosodiadau'r System",
   "statusUsbError": "Gwall allwedd USB: {error}",
   "statusUsbAndKeyboard": "{usb} · bysellfwrdd ←/→ hefyd yn weithredol",
-  "statusKeyboardAndUsb": "Padlau: bysellfwrdd ←/→ · {usb}"
+  "statusKeyboardAndUsb": "Padlau: bysellfwrdd ←/→ · {usb}",
+  "menuFreeType": "Teipio Rhydd",
+  "freeTypeInputLabel": "Teipiwch destun yma",
+  "freeTypeMorseLabel": "Morse",
+  "freeTypeAudioOn": "Sain ymlaen",
+  "freeTypeAudioOff": "Sain i ffwrdd",
+  "aboutFreeTypeDesc": "Teipiwch unrhyw destun a'i weld fel Morse — mae'r dotiau a'r llinellau'n ymddangos ar eich cyflymder dewisedig, gyda sain ddewisol yn chwarae'n gydamserol."
 }

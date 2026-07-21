@@ -101,5 +101,11 @@
   "statusUsbOpenDenied": "No se puede abrir la llave USB (IOReturn {code}) — conceda Supervisión de entrada en Ajustes del Sistema",
   "statusUsbError": "Error de la llave USB: {error}",
   "statusUsbAndKeyboard": "{usb} · teclado ←/→ también activo",
-  "statusKeyboardAndUsb": "Palas: teclado ←/→ · {usb}"
+  "statusKeyboardAndUsb": "Palas: teclado ←/→ · {usb}",
+  "menuFreeType": "Texto libre",
+  "freeTypeInputLabel": "Escriba texto aquí",
+  "freeTypeMorseLabel": "Morse",
+  "freeTypeAudioOn": "Sonido activado",
+  "freeTypeAudioOff": "Sonido desactivado",
+  "aboutFreeTypeDesc": "Escriba cualquier texto y véalo como Morse: los puntos y rayas aparecen a la velocidad configurada, con audio opcional sincronizado."
 }

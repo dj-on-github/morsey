@@ -723,6 +723,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Paddles: keyboard ←/→ · {usb}'**
   String statusKeyboardAndUsb(Object usb);
+
+  /// No description provided for @menuFreeType.
+  ///
+  /// In en, this message translates to:
+  /// **'Free Type'**
+  String get menuFreeType;
+
+  /// No description provided for @freeTypeInputLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Type text here'**
+  String get freeTypeInputLabel;
+
+  /// No description provided for @freeTypeMorseLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Morse'**
+  String get freeTypeMorseLabel;
+
+  /// No description provided for @freeTypeAudioOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio on'**
+  String get freeTypeAudioOn;
+
+  /// No description provided for @freeTypeAudioOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio off'**
+  String get freeTypeAudioOff;
+
+  /// No description provided for @aboutFreeTypeDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Type any text and watch it rendered as Morse — the dots and dashes appear at your configured speed, with optional audio playing in sync.'**
+  String get aboutFreeTypeDesc;
 }
 
 class _AppLocalizationsDelegate

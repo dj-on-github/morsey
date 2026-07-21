@@ -369,4 +369,23 @@ class AppLocalizationsJa extends AppLocalizations {
   String statusKeyboardAndUsb(Object usb) {
     return 'パドル：キーボード ←/→ · $usb';
   }
+
+  @override
+  String get menuFreeType => 'フリータイプ';
+
+  @override
+  String get freeTypeInputLabel => 'ここに入力';
+
+  @override
+  String get freeTypeMorseLabel => 'モールス';
+
+  @override
+  String get freeTypeAudioOn => '音オン';
+
+  @override
+  String get freeTypeAudioOff => '音オフ';
+
+  @override
+  String get aboutFreeTypeDesc =>
+      '好きなテキストを入力するとモールスで表示されます — 短点・長点は設定した速度で現れ、必要なら音も同期して再生されます。';
 }

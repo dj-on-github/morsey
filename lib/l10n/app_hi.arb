@@ -101,5 +101,11 @@
   "statusUsbOpenDenied": "USB कुंजी खोली नहीं जा सकी (IOReturn {code}) — सिस्टम सेटिंग्स में Input Monitoring की अनुमति दें",
   "statusUsbError": "USB कुंजी त्रुटि: {error}",
   "statusUsbAndKeyboard": "{usb} · कीबोर्ड ←/→ भी सक्रिय",
-  "statusKeyboardAndUsb": "पैडल: कीबोर्ड ←/→ · {usb}"
+  "statusKeyboardAndUsb": "पैडल: कीबोर्ड ←/→ · {usb}",
+  "menuFreeType": "मुक्त टाइपिंग",
+  "freeTypeInputLabel": "यहाँ टेक्स्ट टाइप करें",
+  "freeTypeMorseLabel": "मोर्स",
+  "freeTypeAudioOn": "ध्वनि चालू",
+  "freeTypeAudioOff": "ध्वनि बंद",
+  "aboutFreeTypeDesc": "कोई भी टेक्स्ट टाइप करें और उसे मोर्स में देखें — बिंदियाँ और रेखाएँ आपकी चुनी गति से दिखती हैं, चाहें तो साथ में ध्वनि भी।"
 }

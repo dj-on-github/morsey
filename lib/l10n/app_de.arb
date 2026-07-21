@@ -101,5 +101,11 @@
   "statusUsbOpenDenied": "USB-Taste lässt sich nicht öffnen (IOReturn {code}) — erlauben Sie die Eingabeüberwachung in den Systemeinstellungen",
   "statusUsbError": "USB-Tasten-Fehler: {error}",
   "statusUsbAndKeyboard": "{usb} · Tastatur ←/→ ebenfalls aktiv",
-  "statusKeyboardAndUsb": "Paddel: Tastatur ←/→ · {usb}"
+  "statusKeyboardAndUsb": "Paddel: Tastatur ←/→ · {usb}",
+  "menuFreeType": "Freies Tippen",
+  "freeTypeInputLabel": "Text hier eingeben",
+  "freeTypeMorseLabel": "Morse",
+  "freeTypeAudioOn": "Ton an",
+  "freeTypeAudioOff": "Ton aus",
+  "aboutFreeTypeDesc": "Tippen Sie beliebigen Text und sehen Sie ihn als Morse — Punkte und Striche erscheinen in der eingestellten Geschwindigkeit, auf Wunsch mit synchronem Ton."
 }

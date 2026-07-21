@@ -218,5 +218,11 @@
     "placeholders": {
       "usb": {}
     }
-  }
+  },
+  "menuFreeType": "Free Type",
+  "freeTypeInputLabel": "Type text here",
+  "freeTypeMorseLabel": "Morse",
+  "freeTypeAudioOn": "Audio on",
+  "freeTypeAudioOff": "Audio off",
+  "aboutFreeTypeDesc": "Type any text and watch it rendered as Morse — the dots and dashes appear at your configured speed, with optional audio playing in sync."
 }

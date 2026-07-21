@@ -376,4 +376,23 @@ class AppLocalizationsEs extends AppLocalizations {
   String statusKeyboardAndUsb(Object usb) {
     return 'Palas: teclado ←/→ · $usb';
   }
+
+  @override
+  String get menuFreeType => 'Texto libre';
+
+  @override
+  String get freeTypeInputLabel => 'Escriba texto aquí';
+
+  @override
+  String get freeTypeMorseLabel => 'Morse';
+
+  @override
+  String get freeTypeAudioOn => 'Sonido activado';
+
+  @override
+  String get freeTypeAudioOff => 'Sonido desactivado';
+
+  @override
+  String get aboutFreeTypeDesc =>
+      'Escriba cualquier texto y véalo como Morse: los puntos y rayas aparecen a la velocidad configurada, con audio opcional sincronizado.';
 }

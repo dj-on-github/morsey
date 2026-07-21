@@ -34,6 +34,10 @@ open it:
   per-letter hint reveals the pattern if you get stuck. Its progress is
   tracked separately from the Listen Tutorial — hearing a letter and keying
   it are different skills.
+- **Free Type** — type any text in the top box and watch it rendered as Morse
+  in the box below. The dots and dashes appear element by element at the
+  keying speed set in Settings, and a toggle at the top plays the Morse audio
+  in sync with the display.
 
 ## The Hardware
 

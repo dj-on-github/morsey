@@ -101,5 +101,11 @@
   "statusUsbOpenDenied": "USB jan poSmoHlaHbe' (IOReturn {code}) — Input Monitoring chaw' yInob",
   "statusUsbError": "USB jan Qagh: {error}",
   "statusUsbAndKeyboard": "{usb} · ←/→ je Qap",
-  "statusKeyboardAndUsb": "leQmey: ←/→ · {usb}"
+  "statusKeyboardAndUsb": "leQmey: ←/→ · {usb}",
+  "menuFreeType": "tlhab ghItlh",
+  "freeTypeInputLabel": "naDev yIghItlh",
+  "freeTypeMorseLabel": "morS",
+  "freeTypeAudioOn": "wab Qap",
+  "freeTypeAudioOff": "wab tam",
+  "aboutFreeTypeDesc": "vay' DaghItlh 'ej morS Dalegh — Do DawIvpu'bogh lo'lu' 'ej DaneHchugh wab je chu'lu'."
 }

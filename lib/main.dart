@@ -7,6 +7,7 @@ import 'l10n/fallback_localizations.dart';
 import 'l10n/gen/app_localizations.dart';
 import 'models/settings.dart';
 import 'screens/about_screen.dart';
+import 'screens/free_type_screen.dart';
 import 'screens/input_train_screen.dart';
 import 'screens/input_tutorial_screen.dart';
 import 'screens/listen_train_screen.dart';
@@ -126,6 +127,8 @@ class _HomePageState extends State<HomePage> {
         (_) => const ListenTutorialScreen()),
     _Section((l) => l.menuInputTutorial, Icons.school_outlined,
         (_) => const InputTutorialScreen()),
+    _Section((l) => l.menuFreeType, Icons.edit_note,
+        (_) => const FreeTypeScreen()),
   ];
 
   /// Width below which the sidebar collapses into a drawer.

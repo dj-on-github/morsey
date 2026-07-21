@@ -378,4 +378,23 @@ class AppLocalizationsDe extends AppLocalizations {
   String statusKeyboardAndUsb(Object usb) {
     return 'Paddel: Tastatur ←/→ · $usb';
   }
+
+  @override
+  String get menuFreeType => 'Freies Tippen';
+
+  @override
+  String get freeTypeInputLabel => 'Text hier eingeben';
+
+  @override
+  String get freeTypeMorseLabel => 'Morse';
+
+  @override
+  String get freeTypeAudioOn => 'Ton an';
+
+  @override
+  String get freeTypeAudioOff => 'Ton aus';
+
+  @override
+  String get aboutFreeTypeDesc =>
+      'Tippen Sie beliebigen Text und sehen Sie ihn als Morse — Punkte und Striche erscheinen in der eingestellten Geschwindigkeit, auf Wunsch mit synchronem Ton.';
 }

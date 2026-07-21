@@ -101,5 +101,11 @@
   "statusUsbOpenDenied": "USB キーを開けません（IOReturn {code}）— システム設定で「入力監視」を許可してください",
   "statusUsbError": "USB キーのエラー：{error}",
   "statusUsbAndKeyboard": "{usb} · キーボード ←/→ も有効",
-  "statusKeyboardAndUsb": "パドル：キーボード ←/→ · {usb}"
+  "statusKeyboardAndUsb": "パドル：キーボード ←/→ · {usb}",
+  "menuFreeType": "フリータイプ",
+  "freeTypeInputLabel": "ここに入力",
+  "freeTypeMorseLabel": "モールス",
+  "freeTypeAudioOn": "音オン",
+  "freeTypeAudioOff": "音オフ",
+  "aboutFreeTypeDesc": "好きなテキストを入力するとモールスで表示されます — 短点・長点は設定した速度で現れ、必要なら音も同期して再生されます。"
 }

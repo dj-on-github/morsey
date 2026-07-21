@@ -377,4 +377,23 @@ class AppLocalizationsHi extends AppLocalizations {
   String statusKeyboardAndUsb(Object usb) {
     return 'पैडल: कीबोर्ड ←/→ · $usb';
   }
+
+  @override
+  String get menuFreeType => 'मुक्त टाइपिंग';
+
+  @override
+  String get freeTypeInputLabel => 'यहाँ टेक्स्ट टाइप करें';
+
+  @override
+  String get freeTypeMorseLabel => 'मोर्स';
+
+  @override
+  String get freeTypeAudioOn => 'ध्वनि चालू';
+
+  @override
+  String get freeTypeAudioOff => 'ध्वनि बंद';
+
+  @override
+  String get aboutFreeTypeDesc =>
+      'कोई भी टेक्स्ट टाइप करें और उसे मोर्स में देखें — बिंदियाँ और रेखाएँ आपकी चुनी गति से दिखती हैं, चाहें तो साथ में ध्वनि भी।';
 }

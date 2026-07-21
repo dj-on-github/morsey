@@ -369,4 +369,23 @@ class AppLocalizationsTlh extends AppLocalizations {
   String statusKeyboardAndUsb(Object usb) {
     return 'leQmey: ←/→ · $usb';
   }
+
+  @override
+  String get menuFreeType => 'tlhab ghItlh';
+
+  @override
+  String get freeTypeInputLabel => 'naDev yIghItlh';
+
+  @override
+  String get freeTypeMorseLabel => 'morS';
+
+  @override
+  String get freeTypeAudioOn => 'wab Qap';
+
+  @override
+  String get freeTypeAudioOff => 'wab tam';
+
+  @override
+  String get aboutFreeTypeDesc =>
+      'vay\' DaghItlh \'ej morS Dalegh — Do DawIvpu\'bogh lo\'lu\' \'ej DaneHchugh wab je chu\'lu\'.';
 }

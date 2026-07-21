@@ -26,6 +26,7 @@ class AboutScreen extends StatelessWidget {
           _Bullet(l10n.menuListenTrain, l10n.aboutListenTrainDesc),
           _Bullet(l10n.menuListenTutorial, l10n.aboutListenTutorialDesc),
           _Bullet(l10n.menuInputTutorial, l10n.aboutInputTutorialDesc),
+          _Bullet(l10n.menuFreeType, l10n.aboutFreeTypeDesc),
           const SizedBox(height: 24),
           _Heading(l10n.aboutUsbHeading),
           Text(

@@ -101,5 +101,11 @@
   "statusUsbOpenDenied": "无法打开 USB 电键（IOReturn {code}）— 请在系统设置中授予“输入监控”权限",
   "statusUsbError": "USB 电键错误：{error}",
   "statusUsbAndKeyboard": "{usb} · 键盘 ←/→ 也可用",
-  "statusKeyboardAndUsb": "拨片：键盘 ←/→ · {usb}"
+  "statusKeyboardAndUsb": "拨片：键盘 ←/→ · {usb}",
+  "menuFreeType": "自由输入",
+  "freeTypeInputLabel": "在此输入文字",
+  "freeTypeMorseLabel": "摩尔斯",
+  "freeTypeAudioOn": "声音开",
+  "freeTypeAudioOff": "声音关",
+  "aboutFreeTypeDesc": "输入任意文字并将其显示为摩尔斯电码 — 点和划按设定速度出现，可选择同步播放声音。"
 }
