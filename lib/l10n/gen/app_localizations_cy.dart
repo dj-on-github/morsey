@@ -396,4 +396,14 @@ class AppLocalizationsCy extends AppLocalizations {
   @override
   String get aboutFreeTypeDesc =>
       'Teipiwch unrhyw destun a\'i weld fel Morse — mae\'r dotiau a\'r llinellau\'n ymddangos ar eich cyflymder dewisedig, gyda sain ddewisol yn chwarae\'n gydamserol.';
+
+  @override
+  String get menuFreeKey => 'Bysellu Rhydd';
+
+  @override
+  String get freeKeyTextLabel => 'Testun';
+
+  @override
+  String get aboutFreeKeyDesc =>
+      'Gwrthwyneb Teipio Rhydd: bysellwch Morse gyda\'r padl neu\'r bysellfwrdd a\'i weld yn cael ei ddatgodio\'n destun — mae\'r dotiau a\'r llinellau\'n ymddangos yn y blwch Morse wrth i chi fysellu, ac ysgrifennir nodau gorffenedig fel testun. Oedwch saith dit i gael bwlch gair.';
 }

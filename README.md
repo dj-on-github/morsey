@@ -38,6 +38,11 @@ open it:
   in the box below. The dots and dashes appear element by element at the
   keying speed set in Settings, and a toggle at the top plays the Morse audio
   in sync with the display.
+- **Free Key** — the reverse: key Morse with the paddle or keyboard and watch
+  it decoded into text. The dots and dashes appear in the Morse box as you
+  key; each completed character is decoded into the text box, and pausing
+  seven dits inserts a word space. The same toggle mutes the keying
+  side-tone.
 
 ## The Hardware
 

@@ -107,5 +107,8 @@
   "freeTypeMorseLabel": "morS",
   "freeTypeAudioOn": "wab Qap",
   "freeTypeAudioOff": "wab tam",
-  "aboutFreeTypeDesc": "vay' DaghItlh 'ej morS Dalegh — Do DawIvpu'bogh lo'lu' 'ej DaneHchugh wab je chu'lu'."
+  "aboutFreeTypeDesc": "vay' DaghItlh 'ej morS Dalegh — Do DawIvpu'bogh lo'lu' 'ej DaneHchugh wab je chu'lu'.",
+  "menuFreeKey": "tlhab lab",
+  "freeKeyTextLabel": "ghItlh",
+  "aboutFreeKeyDesc": "tlhab ghItlh tammey: morS Dalab 'ej ngutlhmey mojmoH jan — Dalab morS 'anglu', rInDI' ngutlh ghItlhlu'. mu' bIng DaneHchugh Soch dit yIloS."
 }

@@ -388,4 +388,14 @@ class AppLocalizationsJa extends AppLocalizations {
   @override
   String get aboutFreeTypeDesc =>
       '好きなテキストを入力するとモールスで表示されます — 短点・長点は設定した速度で現れ、必要なら音も同期して再生されます。';
+
+  @override
+  String get menuFreeKey => 'フリー送信';
+
+  @override
+  String get freeKeyTextLabel => 'テキスト';
+
+  @override
+  String get aboutFreeKeyDesc =>
+      'フリータイプの逆です。パドルまたはキーボードでモールスを送信すると、テキストに解読されます — 送信中の短点・長点はモールス欄に表示され、確定した文字はテキストとして書かれます。単語の区切りは短点 7 つ分の休止で入ります。';
 }

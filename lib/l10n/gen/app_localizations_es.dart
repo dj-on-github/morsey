@@ -395,4 +395,14 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get aboutFreeTypeDesc =>
       'Escriba cualquier texto y véalo como Morse: los puntos y rayas aparecen a la velocidad configurada, con audio opcional sincronizado.';
+
+  @override
+  String get menuFreeKey => 'Manipulación libre';
+
+  @override
+  String get freeKeyTextLabel => 'Texto';
+
+  @override
+  String get aboutFreeKeyDesc =>
+      'Lo inverso de Texto libre: manipule Morse con la pala o el teclado y véalo decodificado como texto — los puntos y rayas aparecen en el cuadro Morse mientras manipula, y los caracteres terminados se escriben como texto. Haga una pausa de siete dits para un espacio.';
 }

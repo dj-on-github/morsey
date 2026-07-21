@@ -388,4 +388,14 @@ class AppLocalizationsTlh extends AppLocalizations {
   @override
   String get aboutFreeTypeDesc =>
       'vay\' DaghItlh \'ej morS Dalegh — Do DawIvpu\'bogh lo\'lu\' \'ej DaneHchugh wab je chu\'lu\'.';
+
+  @override
+  String get menuFreeKey => 'tlhab lab';
+
+  @override
+  String get freeKeyTextLabel => 'ghItlh';
+
+  @override
+  String get aboutFreeKeyDesc =>
+      'tlhab ghItlh tammey: morS Dalab \'ej ngutlhmey mojmoH jan — Dalab morS \'anglu\', rInDI\' ngutlh ghItlhlu\'. mu\' bIng DaneHchugh Soch dit yIloS.';
 }

@@ -396,4 +396,14 @@ class AppLocalizationsHi extends AppLocalizations {
   @override
   String get aboutFreeTypeDesc =>
       'कोई भी टेक्स्ट टाइप करें और उसे मोर्स में देखें — बिंदियाँ और रेखाएँ आपकी चुनी गति से दिखती हैं, चाहें तो साथ में ध्वनि भी।';
+
+  @override
+  String get menuFreeKey => 'मुक्त भेजना';
+
+  @override
+  String get freeKeyTextLabel => 'टेक्स्ट';
+
+  @override
+  String get aboutFreeKeyDesc =>
+      'मुक्त टाइपिंग का उल्टा: पैडल या कीबोर्ड से मोर्स भेजें और उसे टेक्स्ट में बदलते देखें — भेजते समय बिंदियाँ और रेखाएँ मोर्स बॉक्स में दिखती हैं, और पूरे अक्षर टेक्स्ट में लिखे जाते हैं। शब्द के बीच जगह के लिए सात डिट रुकें।';
 }

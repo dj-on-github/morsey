@@ -397,4 +397,14 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get aboutFreeTypeDesc =>
       'Tippen Sie beliebigen Text und sehen Sie ihn als Morse — Punkte und Striche erscheinen in der eingestellten Geschwindigkeit, auf Wunsch mit synchronem Ton.';
+
+  @override
+  String get menuFreeKey => 'Freies Geben';
+
+  @override
+  String get freeKeyTextLabel => 'Text';
+
+  @override
+  String get aboutFreeKeyDesc =>
+      'Die Umkehrung von Freies Tippen: Geben Sie Morse mit Paddel oder Tastatur und sehen Sie die Dekodierung als Text — die Punkte und Striche erscheinen beim Geben im Morse-Feld, fertige Zeichen werden als Text geschrieben. Für ein Leerzeichen sieben Dits pausieren.';
 }

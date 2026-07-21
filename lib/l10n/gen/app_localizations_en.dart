@@ -395,4 +395,14 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get aboutFreeTypeDesc =>
       'Type any text and watch it rendered as Morse — the dots and dashes appear at your configured speed, with optional audio playing in sync.';
+
+  @override
+  String get menuFreeKey => 'Free Key';
+
+  @override
+  String get freeKeyTextLabel => 'Text';
+
+  @override
+  String get aboutFreeKeyDesc =>
+      'The reverse of Free Type: key Morse with the paddle or keyboard and watch it decoded into text — the dots and dashes appear in the Morse box as you key, and finished characters are written as text. Pause seven dits to make a word space.';
 }

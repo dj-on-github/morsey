@@ -396,4 +396,14 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get aboutFreeTypeDesc =>
       'Tapez un texte quelconque et voyez-le en Morse — les points et les traits apparaissent à la vitesse configurée, avec un son facultatif joué en synchronisation.';
+
+  @override
+  String get menuFreeKey => 'Manipulation libre';
+
+  @override
+  String get freeKeyTextLabel => 'Texte';
+
+  @override
+  String get aboutFreeKeyDesc =>
+      'L\'inverse de la Saisie libre : manipulez du Morse à la palette ou au clavier et voyez-le décodé en texte — les points et les traits apparaissent dans la case Morse pendant la manipulation, et les caractères terminés s\'écrivent en texte. Une pause de sept dits crée une espace.';
 }

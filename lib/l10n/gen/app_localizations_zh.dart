@@ -384,4 +384,14 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get aboutFreeTypeDesc => '输入任意文字并将其显示为摩尔斯电码 — 点和划按设定速度出现，可选择同步播放声音。';
+
+  @override
+  String get menuFreeKey => '自由发报';
+
+  @override
+  String get freeKeyTextLabel => '文字';
+
+  @override
+  String get aboutFreeKeyDesc =>
+      '自由输入的反向操作：用拨片或键盘发出摩尔斯电码，程序将其解码为文字 — 发报时点和划显示在摩尔斯框中，完成的字符会写入文字框。停顿七个点的时长即为词间空格。';
 }
