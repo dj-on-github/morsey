@@ -248,7 +248,7 @@ class _ListenTrainScreenState extends State<ListenTrainScreen> {
 
   Widget _feedback(ThemeData theme) {
     if (_revealed) {
-      final morse = morseForChar(_target) ?? '';
+      final morse = displayMorse(morseForChar(_target) ?? '');
       return Text(
         'It was  "$_target"   ($morse)',
         style: theme.textTheme.titleMedium

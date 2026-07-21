@@ -381,7 +381,7 @@ class _InputTutorialScreenState extends State<InputTutorialScreen> {
   }
 
   Widget _introBody(ThemeData theme) {
-    final morse = morseForChar(_newLetter) ?? '';
+    final morse = displayMorse(morseForChar(_newLetter) ?? '');
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -419,7 +419,7 @@ class _InputTutorialScreenState extends State<InputTutorialScreen> {
   }
 
   Widget _practiceBody(ThemeData theme) {
-    final morse = morseForChar(_target) ?? '';
+    final morse = displayMorse(morseForChar(_target) ?? '');
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -519,7 +519,7 @@ class _InputTutorialScreenState extends State<InputTutorialScreen> {
             borderRadius: BorderRadius.circular(8),
           ),
           child: Text(
-            _livePattern.isEmpty ? '·' : _livePattern,
+            _livePattern.isEmpty ? '·' : displayMorse(_livePattern),
             textAlign: TextAlign.center,
             style: theme.textTheme.displaySmall?.copyWith(letterSpacing: 6),
           ),

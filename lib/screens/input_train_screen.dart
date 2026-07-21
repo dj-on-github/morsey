@@ -145,7 +145,7 @@ class _InputTrainScreenState extends State<InputTrainScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final settings = _settings!;
-    final targetMorse = morseForChar(_target) ?? '';
+    final targetMorse = displayMorse(morseForChar(_target) ?? '');
 
     return PageScaffold(
       title: 'Input Train',
@@ -239,7 +239,9 @@ class _InputTrainScreenState extends State<InputTrainScreen> {
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Text(
-                          _livePattern.isEmpty ? '·' : _livePattern,
+                          _livePattern.isEmpty
+                              ? '·'
+                              : displayMorse(_livePattern),
                           textAlign: TextAlign.center,
                           style: theme.textTheme.displaySmall?.copyWith(
                             letterSpacing: 6,

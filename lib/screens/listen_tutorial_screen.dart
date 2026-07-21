@@ -316,7 +316,7 @@ class _ListenTutorialScreenState extends State<ListenTutorialScreen> {
   }
 
   Widget _introBody(ThemeData theme) {
-    final morse = morseForChar(_newLetter) ?? '';
+    final morse = displayMorse(morseForChar(_newLetter) ?? '');
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [

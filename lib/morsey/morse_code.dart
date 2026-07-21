@@ -68,6 +68,12 @@ final Map<String, String> kMorseToChar = {
 /// Returns the Morse pattern for [char], or null if it is not encodable.
 String? morseForChar(String char) => kCharToMorse[char.toUpperCase()];
 
+/// Formats a '.'/'-' pattern for on-screen display. ASCII periods sit on the
+/// baseline while hyphens sit at mid-height; typeset Morse puts both marks on
+/// the same level, so swap in the middle dot (U+00B7) and minus sign (U+2212).
+String displayMorse(String pattern) =>
+    pattern.replaceAll('.', '·').replaceAll('-', '−');
+
 /// Decodes a Morse pattern (e.g. ".-") to a character, or null if unknown.
 String? charForMorse(String pattern) => kMorseToChar[pattern];
 
