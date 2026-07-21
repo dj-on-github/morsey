@@ -78,6 +78,21 @@ final class HidPaddle: NSObject, FlutterStreamHandler {
             let me = Unmanaged<HidPaddle>.fromOpaque(context).takeUnretainedValue()
             me.onInputValue(value)
         }, context)
+        // Hotplug: IOHIDManager tracks matching devices for the manager's
+        // lifetime, so a key plugged in mid-session starts delivering input
+        // automatically. These callbacks let the Dart side show the state.
+        IOHIDManagerRegisterDeviceMatchingCallback(mgr, { context, _, _, _ in
+            guard let context = context else { return }
+            let me = Unmanaged<HidPaddle>.fromOpaque(context).takeUnretainedValue()
+            me.modifiers = 0
+            me.eventSink?("connected")
+        }, context)
+        IOHIDManagerRegisterDeviceRemovalCallback(mgr, { context, _, _, _ in
+            guard let context = context else { return }
+            let me = Unmanaged<HidPaddle>.fromOpaque(context).takeUnretainedValue()
+            me.modifiers = 0
+            me.eventSink?("disconnected")
+        }, context)
         IOHIDManagerScheduleWithRunLoop(mgr, CFRunLoopGetMain(),
                                         CFRunLoopMode.defaultMode.rawValue)
 
@@ -91,10 +106,11 @@ final class HidPaddle: NSObject, FlutterStreamHandler {
         }
         self.opened = true
 
-        // If nothing matched, IOHIDManagerOpen still succeeds. Report that.
+        // If nothing matched, the manager stays open and connects the key
+        // whenever it is plugged in; nil tells Dart "waiting".
         let devices = IOHIDManagerCopyDevices(mgr) as? Set<IOHIDDevice>
         if devices?.isEmpty ?? true {
-            return "USB key 413d:2107 not found"
+            return nil
         }
         return "Connected: IOKit HID 413D:2107"
     }

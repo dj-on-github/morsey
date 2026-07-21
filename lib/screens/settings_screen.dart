@@ -44,25 +44,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
           return ListView(
             children: [
               _sectionTitle(context, 'Input device'),
-              RadioGroup<InputMethod>(
-                groupValue: settings.inputMethod,
-                onChanged: (v) => settings.inputMethod = v!,
-                child: Column(
-                  children: InputMethod.values
-                      .map(
-                        (m) => RadioListTile<InputMethod>(
-                          value: m,
-                          title: Text(m.label),
-                          subtitle: Text(m.description),
-                        ),
-                      )
-                      .toList(),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16, 0, 16, 4),
+                child: Text(
+                  'The keyboard paddles (Left/Right arrows, or . and -) and '
+                  'the USB key (413d:2107) are both always active — keying '
+                  'works from whichever you touch. Plug the key in at any '
+                  'time and it just works.',
+                  style: theme.textTheme.bodyMedium,
                 ),
               ),
-              // USB detection status. On iPadOS the key is read as a
-              // hardware keyboard, so there is nothing to detect.
-              if (settings.inputMethod == InputMethod.usbPaddle &&
-                  Platform.isIOS)
+              // USB status. On touch platforms the key is read as a hardware
+              // keyboard, so there is nothing to detect.
+              if (Platform.isIOS || Platform.isAndroid)
                 Padding(
                   padding: const EdgeInsets.fromLTRB(16, 4, 16, 8),
                   child: Row(
@@ -72,15 +66,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       const SizedBox(width: 8),
                       Expanded(
                         child: Text(
-                          'On iPadOS the USB key acts as a keyboard — just '
-                          'plug it in; the paddles arrive as Left/Right-Ctrl.',
+                          'Here the USB key acts as a keyboard — just plug '
+                          'it in; the paddles arrive as Left/Right-Ctrl.',
                           style: theme.textTheme.bodySmall,
                         ),
                       ),
                     ],
                   ),
                 )
-              else if (settings.inputMethod == InputMethod.usbPaddle)
+              else if (Platform.isLinux || Platform.isMacOS)
                 Padding(
                   padding: const EdgeInsets.fromLTRB(16, 4, 16, 8),
                   child: Row(
@@ -89,7 +83,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         _usbPath != null ? Icons.usb : Icons.usb_off,
                         color: _usbPath != null
                             ? Colors.green
-                            : theme.colorScheme.error,
+                            : theme.colorScheme.outline,
                         size: 20,
                       ),
                       const SizedBox(width: 8),
@@ -97,9 +91,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         child: Text(
                           _usbPath != null
                               ? 'USB key 413d:2107 detected: $_usbPath'
-                              : 'USB key 413d:2107 not found — plug it in, or '
-                                  'check permissions (Linux: /dev/hidraw*; '
-                                  'macOS: Input Monitoring in System Settings).',
+                              : 'USB key 413d:2107 not detected — it will '
+                                  'connect when plugged in. If it never '
+                                  'does, check permissions (Linux: '
+                                  '/dev/hidraw*; macOS: Input Monitoring in '
+                                  'System Settings).',
                           style: theme.textTheme.bodySmall,
                         ),
                       ),

@@ -9,9 +9,10 @@ The main window has a left column listing the parts of the program; click one to
 open it:
 
 - **About** — a description of the program and how it works.
-- **Settings** — choose the input device (USB paddle or keyboard), the paddle
-  orientation, the keying speed (WPM), the side-tone volume and frequency, and
-  the training character set.
+- **Settings** — choose the paddle orientation, the keying speed (WPM), the
+  side-tone volume and frequency, and the training character set. There is no
+  input-device selection: the USB key and the keyboard paddles are both always
+  active, and the key can be plugged in (or unplugged) at any time.
 - **Input Train** — a character is shown; you key it in Morse and the trainer
   decodes what you send and tells you whether it was correct.
 - **Listen Train** — the trainer plays a character as Morse audio; you type the
@@ -94,9 +95,11 @@ silently; Listen Train needs sound).
 
 ## Practising without the USB key
 
-Select **Keyboard** in Settings. Then the Left-Arrow key is the dit paddle and
-the Right-Arrow key is the dah paddle (`.`/`-` also work). Click the Input Train
-area first so it has keyboard focus.
+Nothing to configure — the keyboard paddles are always active alongside the
+USB key. The Left-Arrow key is the dit paddle and the Right-Arrow key is the
+dah paddle (`.`/`-` and Left/Right-Ctrl also work). Click the Input Train area
+first so it has keyboard focus. If you plug the USB key in mid-session it
+connects automatically.
 
 ## Running
 
@@ -130,8 +133,9 @@ lib/
   morsey/iambic_keyer.dart      software iambic keyer + live decoder
   audio/audio_engine.dart       Dart tone synth streamed via pacat
   input/paddle_source.dart      paddle source abstraction
-  input/hid_paddle_source.dart  reads the USB key from /dev/hidraw
+  input/hid_paddle_source.dart  reads the USB key (hidraw / IOKit), hotplugs
   input/keyboard_paddle_source.dart  keyboard keys as dit/dah paddles
+  input/combined_paddle_source.dart  keyboard + USB key active together
   screens/                      About / Settings / Input Train / Listen Train /
                                 Listen Tutorial / Input Tutorial
 ```

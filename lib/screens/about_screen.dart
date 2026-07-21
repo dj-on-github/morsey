@@ -21,8 +21,10 @@ class AboutScreen extends StatelessWidget {
           const _Bullet('About',
               'This page — a description of the program and how it works.'),
           const _Bullet('Settings',
-              'Choose the input device (USB paddle or keyboard), set the '
-                  'keying speed, and the side-tone volume and frequency.'),
+              'Set the paddle orientation, the keying speed, and the '
+                  'side-tone volume and frequency. The USB key and the '
+                  'keyboard paddles are both always active — no input '
+                  'selection needed.'),
           const _Bullet('Input Train',
               'A character is shown and you key it in Morse. The trainer '
                   'decodes what you send and tells you if it was correct.'),

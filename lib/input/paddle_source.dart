@@ -9,6 +9,10 @@ abstract class PaddleSource {
   /// Called whenever the dah paddle changes state (true = pressed).
   void Function(bool down)? onDah;
 
+  /// Called when [status] / [connected] change (e.g. the USB key was plugged
+  /// in or unplugged mid-session), so the UI can repaint.
+  void Function()? onStatus;
+
   /// Human-readable status (e.g. detected device path, or an error).
   String get status;
 

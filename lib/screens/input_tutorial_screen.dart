@@ -1,13 +1,10 @@
-import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../app_scope.dart';
-import '../input/hid_paddle_source.dart';
-import '../input/keyboard_paddle_source.dart';
-import '../input/paddle_source.dart';
+import '../input/combined_paddle_source.dart';
 import '../models/settings.dart';
 import '../morsey/iambic_keyer.dart';
 import '../morsey/morse_code.dart';
@@ -41,8 +38,7 @@ class _InputTutorialScreenState extends State<InputTutorialScreen> {
 
   Settings? _settings;
   late IambicKeyer _keyer;
-  PaddleSource? _source;
-  InputMethod? _sourceMethod;
+  CombinedPaddleSource? _source;
   bool _disposed = false;
 
   int _level = 1; // 1-based
@@ -81,7 +77,7 @@ class _InputTutorialScreenState extends State<InputTutorialScreen> {
       _keyer.start();
       _settings!.addListener(_onSettingsChanged);
       _setupLevel(_settings!.inputTutorialLevel);
-      _rebuildSource();
+      _startSource();
     }
   }
 
@@ -95,35 +91,20 @@ class _InputTutorialScreenState extends State<InputTutorialScreen> {
 
   void _onSettingsChanged() {
     if (!mounted) return;
-    final ditIsLeft = _settings!.ditPaddle == DitPaddle.left;
-    final src = _source;
-    if (src is HidPaddleSource) src.ditIsLeft = ditIsLeft;
-    if (src is KeyboardPaddleSource) src.ditIsLeft = ditIsLeft;
-    if (_settings!.inputMethod != _sourceMethod) {
-      _rebuildSource();
-    }
+    _source?.ditIsLeft = _settings!.ditPaddle == DitPaddle.left;
     setState(() {});
   }
 
-  Future<void> _rebuildSource() async {
-    await _source?.stop();
-    final ditIsLeft = _settings!.ditPaddle == DitPaddle.left;
-    _sourceMethod = _settings!.inputMethod;
-    final PaddleSource src;
-    if (_sourceMethod != InputMethod.usbPaddle) {
-      src = KeyboardPaddleSource(ditIsLeft: ditIsLeft);
-    } else if (Platform.isIOS) {
-      // iPadOS has no raw HID access, but the USB key enumerates as a
-      // keyboard whose paddles send Left-Ctrl / Right-Ctrl — read it as one.
-      src = KeyboardPaddleSource(
-        ditIsLeft: ditIsLeft,
-        statusLabel: 'USB key as keyboard (Left/Right-Ctrl paddles)',
-      );
-    } else {
-      src = HidPaddleSource(ditIsLeft: ditIsLeft);
-    }
+  /// Starts the combined keyboard + USB source; the USB key hotplugs.
+  Future<void> _startSource() async {
+    final src = CombinedPaddleSource(
+      ditIsLeft: _settings!.ditPaddle == DitPaddle.left,
+    );
     src.onDit = (down) => _keyer.setDit(down);
     src.onDah = (down) => _keyer.setDah(down);
+    src.onStatus = () {
+      if (mounted) setState(() {});
+    };
     await src.start();
     // If the screen was disposed while starting, don't keep the device open.
     if (_disposed || !mounted) {
@@ -267,13 +248,9 @@ class _InputTutorialScreenState extends State<InputTutorialScreen> {
       }
       return KeyEventResult.ignored;
     }
-    // Otherwise keys may be paddles (keyboard mode, or USB-as-keyboard).
-    final src = _source;
-    if (src is KeyboardPaddleSource) {
-      final handled = src.handleKeyEvent(event);
-      if (handled) return KeyEventResult.handled;
-    }
-    return KeyEventResult.ignored;
+    // Otherwise keys may be paddles (arrows, or the USB key as a keyboard).
+    final handled = _source?.handleKeyEvent(event) ?? false;
+    return handled ? KeyEventResult.handled : KeyEventResult.ignored;
   }
 
   @override
@@ -307,15 +284,17 @@ class _InputTutorialScreenState extends State<InputTutorialScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               _header(theme, scope.settings),
-              // Connection status of the keying device.
+              // Keying-device status: keyboard always works, USB hotplugs.
               Row(
                 children: [
                   Icon(
-                    _source?.connected == true ? Icons.link : Icons.link_off,
+                    _source?.usbConnected == true
+                        ? Icons.usb
+                        : Icons.keyboard,
                     size: 18,
-                    color: _source?.connected == true
+                    color: _source?.usbConnected == true
                         ? Colors.green
-                        : theme.colorScheme.error,
+                        : theme.colorScheme.outline,
                   ),
                   const SizedBox(width: 6),
                   Expanded(

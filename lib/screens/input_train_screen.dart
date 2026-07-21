@@ -1,12 +1,9 @@
-import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
 
 import '../app_scope.dart';
-import '../input/hid_paddle_source.dart';
-import '../input/keyboard_paddle_source.dart';
-import '../input/paddle_source.dart';
+import '../input/combined_paddle_source.dart';
 import '../models/settings.dart';
 import '../morsey/iambic_keyer.dart';
 import '../morsey/morse_code.dart';
@@ -25,8 +22,7 @@ class _InputTrainScreenState extends State<InputTrainScreen> {
 
   Settings? _settings;
   late IambicKeyer _keyer;
-  PaddleSource? _source;
-  InputMethod? _sourceMethod;
+  CombinedPaddleSource? _source;
 
   bool _disposed = false;
   String _target = 'E';
@@ -52,41 +48,26 @@ class _InputTrainScreenState extends State<InputTrainScreen> {
       _keyer.start();
       _settings!.addListener(_onSettingsChanged);
       _nextTarget();
-      _rebuildSource();
+      _startSource();
     }
   }
 
   void _onSettingsChanged() {
     if (!mounted) return;
-    final ditIsLeft = _settings!.ditPaddle == DitPaddle.left;
-    final src = _source;
-    if (src is HidPaddleSource) src.ditIsLeft = ditIsLeft;
-    if (src is KeyboardPaddleSource) src.ditIsLeft = ditIsLeft;
-    if (_settings!.inputMethod != _sourceMethod) {
-      _rebuildSource();
-    }
+    _source?.ditIsLeft = _settings!.ditPaddle == DitPaddle.left;
     setState(() {});
   }
 
-  Future<void> _rebuildSource() async {
-    await _source?.stop();
-    final ditIsLeft = _settings!.ditPaddle == DitPaddle.left;
-    _sourceMethod = _settings!.inputMethod;
-    final PaddleSource src;
-    if (_sourceMethod != InputMethod.usbPaddle) {
-      src = KeyboardPaddleSource(ditIsLeft: ditIsLeft);
-    } else if (Platform.isIOS) {
-      // iPadOS has no raw HID access, but the USB key enumerates as a
-      // keyboard whose paddles send Left-Ctrl / Right-Ctrl — read it as one.
-      src = KeyboardPaddleSource(
-        ditIsLeft: ditIsLeft,
-        statusLabel: 'USB key as keyboard (Left/Right-Ctrl paddles)',
-      );
-    } else {
-      src = HidPaddleSource(ditIsLeft: ditIsLeft);
-    }
+  /// Starts the combined keyboard + USB source; the USB key hotplugs.
+  Future<void> _startSource() async {
+    final src = CombinedPaddleSource(
+      ditIsLeft: _settings!.ditPaddle == DitPaddle.left,
+    );
     src.onDit = (down) => _keyer.setDit(down);
     src.onDah = (down) => _keyer.setDah(down);
+    src.onStatus = () {
+      if (mounted) setState(() {});
+    };
     await src.start();
     // If the screen was disposed while starting, don't keep the device open.
     if (_disposed || !mounted) {
@@ -123,12 +104,8 @@ class _InputTrainScreenState extends State<InputTrainScreen> {
   }
 
   KeyEventResult _onKey(FocusNode node, KeyEvent event) {
-    final src = _source;
-    if (src is KeyboardPaddleSource) {
-      final handled = src.handleKeyEvent(event);
-      if (handled) return KeyEventResult.handled;
-    }
-    return KeyEventResult.ignored;
+    final handled = _source?.handleKeyEvent(event) ?? false;
+    return handled ? KeyEventResult.handled : KeyEventResult.ignored;
   }
 
   @override
@@ -144,8 +121,8 @@ class _InputTrainScreenState extends State<InputTrainScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final settings = _settings!;
     final targetMorse = displayMorse(morseForChar(_target) ?? '');
+    final usb = _source?.usbConnected == true;
 
     return PageScaffold(
       title: 'Input Train',
@@ -159,17 +136,13 @@ class _InputTrainScreenState extends State<InputTrainScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // Status line.
+              // Status line: keyboard always works, USB key hotplugs.
               Row(
                 children: [
                   Icon(
-                    _source?.connected == true
-                        ? Icons.link
-                        : Icons.link_off,
+                    usb ? Icons.usb : Icons.keyboard,
                     size: 18,
-                    color: _source?.connected == true
-                        ? Colors.green
-                        : theme.colorScheme.error,
+                    color: usb ? Colors.green : theme.colorScheme.outline,
                   ),
                   const SizedBox(width: 6),
                   Expanded(
@@ -183,13 +156,6 @@ class _InputTrainScreenState extends State<InputTrainScreen> {
                 ],
               ),
               const SizedBox(height: 8),
-              if (settings.inputMethod == InputMethod.keyboardPaddle)
-                Text(
-                  'Keyboard paddles: Left-Arrow = dit, Right-Arrow = dah '
-                  '(click here first to focus).',
-                  style: theme.textTheme.bodySmall
-                      ?.copyWith(color: theme.colorScheme.outline),
-                ),
 
               Expanded(
                 child: Center(

@@ -15,11 +15,16 @@ import 'paddle_source.dart';
 ///
 /// Which paddle is dit vs dah is decided by [ditIsLeft] (from Settings).
 ///
+/// The source keeps watching for the key while started: plugging it in (or
+/// re-plugging it) mid-session connects automatically and fires [onStatus].
+///
 /// Platforms:
-///   * Linux — opens `/dev/hidrawN` directly and reads the raw reports.
+///   * Linux — opens `/dev/hidrawN` directly and reads the raw reports; a
+///     2-second retry timer picks up hotplug arrivals and re-opens after EOF.
 ///   * macOS — talks to a native IOHIDManager bridge (see
-///     `macos/Runner/HidPaddle.swift`) that ships the same 1-byte modifier
-///     bitmap over an EventChannel.
+///     `macos/Runner/HidPaddle.swift`). IOHIDManager tracks matching devices
+///     natively; the bridge streams the 1-byte modifier bitmap plus
+///     'connected' / 'disconnected' status strings over an EventChannel.
 class HidPaddleSource extends PaddleSource {
   HidPaddleSource({this.ditIsLeft = true});
 
@@ -35,6 +40,9 @@ class HidPaddleSource extends PaddleSource {
   static const EventChannel _macEvents =
       EventChannel('morsey/hid_paddle/events');
 
+  /// How often to look for the key while it is absent (Linux).
+  static const Duration _retryInterval = Duration(seconds: 2);
+
   bool ditIsLeft;
 
   String _status = 'Not started';
@@ -43,6 +51,8 @@ class HidPaddleSource extends PaddleSource {
   // Linux state.
   RandomAccessFile? _raf;
   bool _stopped = false;
+  Timer? _retry;
+  bool _attempting = false;
 
   // macOS state.
   StreamSubscription<dynamic>? _macSub;
@@ -55,6 +65,13 @@ class HidPaddleSource extends PaddleSource {
   String get status => _status;
   @override
   bool get connected => _connected;
+
+  void _setStatus(String status, bool connected) {
+    if (status == _status && connected == _connected) return;
+    _status = status;
+    _connected = connected;
+    onStatus?.call();
+  }
 
   /// Best-effort device presence check. Returns a human-readable location
   /// (e.g. `/dev/hidraw3` on Linux, `IOKit HID 413D:2107` on macOS) if the
@@ -77,12 +94,17 @@ class HidPaddleSource extends PaddleSource {
   Future<void> start() async {
     _stopped = false;
     if (Platform.isLinux) {
-      await _startLinux();
+      await _linuxAttempt();
+      // Keep watching so a key plugged in (or re-plugged) mid-session just
+      // starts working.
+      _retry?.cancel();
+      _retry = Timer.periodic(_retryInterval, (_) {
+        if (!_stopped && !_connected) _linuxAttempt();
+      });
     } else if (Platform.isMacOS) {
       await _startMacOS();
     } else {
-      _status = 'USB paddle not supported on this platform';
-      _connected = false;
+      _setStatus('USB paddle not supported on this platform', false);
     }
   }
 
@@ -90,6 +112,8 @@ class HidPaddleSource extends PaddleSource {
   Future<void> stop() async {
     _stopped = true;
     // Linux
+    _retry?.cancel();
+    _retry = null;
     try {
       await _raf?.close();
     } on Object {
@@ -106,8 +130,7 @@ class HidPaddleSource extends PaddleSource {
         // ignore
       }
     }
-    _connected = false;
-    _status = 'Stopped';
+    _setStatus('Stopped', false);
     _releaseLatched();
   }
 
@@ -143,39 +166,58 @@ class HidPaddleSource extends PaddleSource {
     return null;
   }
 
-  Future<void> _startLinux() async {
-    final path = _linuxFindDevicePath();
-    if (path == null) {
-      _status = 'USB key 413d:2107 not found';
-      _connected = false;
-      return;
-    }
+  /// One attempt to find and open the device. Called at start and from the
+  /// retry timer while disconnected.
+  Future<void> _linuxAttempt() async {
+    if (_attempting) return;
+    _attempting = true;
     try {
-      _raf = await File(path).open(mode: FileMode.read);
-    } on Object catch (e) {
-      _status = 'Found $path but cannot open it (permissions?): $e';
-      _connected = false;
-      return;
+      // Drop any stale handle from before an unplug.
+      try {
+        await _raf?.close();
+      } on Object {
+        // ignore
+      }
+      _raf = null;
+      final path = _linuxFindDevicePath();
+      if (path == null) {
+        _setStatus('USB key not detected — plug it in and it will connect',
+            false);
+        return;
+      }
+      RandomAccessFile raf;
+      try {
+        raf = await File(path).open(mode: FileMode.read);
+      } on Object catch (e) {
+        _setStatus('Found $path but cannot open it (permissions?): $e', false);
+        return;
+      }
+      if (_stopped) {
+        await raf.close();
+        return;
+      }
+      _raf = raf;
+      _setStatus('Connected: $path', true);
+      unawaited(_linuxReadLoop(raf));
+    } finally {
+      _attempting = false;
     }
-    _status = 'Connected: $path';
-    _connected = true;
-    unawaited(_linuxReadLoop());
   }
 
-  Future<void> _linuxReadLoop() async {
-    final raf = _raf;
-    if (raf == null) return;
+  Future<void> _linuxReadLoop(RandomAccessFile raf) async {
     try {
       while (!_stopped) {
         final report = await raf.read(8);
         if (report.isEmpty) break; // EOF — unplugged.
         _dispatchModifiers(report[0]);
       }
-    } on Object catch (e) {
-      if (!_stopped) _status = 'Read error: $e';
+    } on Object {
+      // Fall through to the unplugged state; the retry timer reconnects.
     } finally {
-      _connected = false;
       _releaseLatched();
+      if (!_stopped) {
+        _setStatus('USB key unplugged — reconnects when plugged in', false);
+      }
     }
   }
 
@@ -186,33 +228,39 @@ class HidPaddleSource extends PaddleSource {
     try {
       status = await _macChannel.invokeMethod<String>('start');
     } on PlatformException catch (e) {
-      _status = 'macOS HID error: ${e.message ?? e.code}';
-      _connected = false;
+      _setStatus('macOS HID error: ${e.message ?? e.code}', false);
       return;
     } on MissingPluginException {
-      _status = 'macOS HID bridge not registered';
-      _connected = false;
+      _setStatus('macOS HID bridge not registered', false);
       return;
     }
     if (status == null) {
-      _status = 'USB key 413d:2107 not found';
-      _connected = false;
-      return;
+      // The native manager stays open and will report 'connected' when the
+      // key arrives.
+      _setStatus('USB key not detected — plug it in and it will connect',
+          false);
+    } else {
+      _setStatus(status, status.startsWith('Connected'));
     }
-    _status = status;
-    _connected = status.startsWith('Connected');
     _macSub = _macEvents.receiveBroadcastStream().listen(
       (dynamic data) {
         if (data is Uint8List && data.isNotEmpty) {
           _dispatchModifiers(data[0]);
+        } else if (data is String) {
+          if (data == 'connected') {
+            _setStatus('Connected: IOKit HID 413D:2107', true);
+          } else if (data == 'disconnected') {
+            _releaseLatched();
+            _setStatus(
+                'USB key unplugged — reconnects when plugged in', false);
+          }
         } else if (data is List && data.isNotEmpty && data.first is int) {
           _dispatchModifiers(data.first as int);
         }
       },
       onError: (Object err) {
-        _status = 'macOS HID stream error: $err';
-        _connected = false;
         _releaseLatched();
+        _setStatus('macOS HID stream error: $err', false);
       },
     );
   }
