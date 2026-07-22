@@ -115,5 +115,7 @@
   "keyerModeIambic": "Iambische Paddel",
   "keyerModeIambicDesc": "Zwei Paddel — eines für Dits, eines für Dahs; zusammendrücken für Wechsel",
   "keyerModeStraight": "Handtaste",
-  "keyerModeStraightDesc": "Eine Taste — Sie machen das Timing: kurzer Druck ist ein Dit, langer Druck ein Dah"
+  "keyerModeStraightDesc": "Eine Taste — Sie machen das Timing: kurzer Druck ist ein Dit, langer Druck ein Dah",
+  "levelAccuracy": ": {percent} %",
+  "hintUsed": "(Hinweis verwendet)"
 }

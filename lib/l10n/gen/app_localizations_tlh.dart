@@ -415,4 +415,12 @@ class AppLocalizationsTlh extends AppLocalizations {
   @override
   String get keyerModeStraightDesc =>
       'wa\' leQ neH — poH DachenmoH: \'uy ngaj dit \'oH, \'uy nI\' dah \'oH';
+
+  @override
+  String levelAccuracy(Object percent) {
+    return ': $percent%';
+  }
+
+  @override
+  String get hintUsed => '(qeS lo\'lu\'pu\')';
 }

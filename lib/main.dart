@@ -3,6 +3,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'app_scope.dart';
 import 'audio/audio_engine.dart';
+import 'input/combined_paddle_source.dart';
 import 'l10n/fallback_localizations.dart';
 import 'l10n/gen/app_localizations.dart';
 import 'models/settings.dart';
@@ -24,20 +25,37 @@ Future<void> main() async {
   );
   await audio.start();
 
-  // Keep the audio engine's live parameters in sync with settings.
+  // One app-lifetime paddle source shared by every keying screen. Screens
+  // must NOT open/close their own: on macOS they all share one native
+  // IOHIDManager, and a new screen's start raced the old screen's dispose
+  // (dispose runs after the next screen builds), killing USB input on every
+  // keying-screen to keying-screen switch.
+  final paddles = CombinedPaddleSource(
+    ditIsLeft: settings.ditPaddle == DitPaddle.left,
+  );
+  await paddles.start();
+
+  // Keep the audio engine's and paddle source's live parameters in sync.
   settings.addListener(() {
     audio.frequency = settings.frequency;
     audio.volume = settings.volume;
+    paddles.ditIsLeft = settings.ditPaddle == DitPaddle.left;
   });
 
-  runApp(MorseyApp(settings: settings, audio: audio));
+  runApp(MorseyApp(settings: settings, audio: audio, paddles: paddles));
 }
 
 class MorseyApp extends StatelessWidget {
-  const MorseyApp({super.key, required this.settings, required this.audio});
+  const MorseyApp({
+    super.key,
+    required this.settings,
+    required this.audio,
+    required this.paddles,
+  });
 
   final Settings settings;
   final AudioEngine audio;
+  final CombinedPaddleSource paddles;
 
   static ThemeData _theme(Brightness brightness) => ThemeData(
         useMaterial3: true,
@@ -52,6 +70,7 @@ class MorseyApp extends StatelessWidget {
     return AppScope(
       settings: settings,
       audio: audio,
+      paddles: paddles,
       // Rebuild on settings changes so the theme choice applies immediately.
       child: ListenableBuilder(
         listenable: settings,

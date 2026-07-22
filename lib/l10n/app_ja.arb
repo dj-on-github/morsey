@@ -115,5 +115,7 @@
   "keyerModeIambic": "パドル（イアンビック）",
   "keyerModeIambicDesc": "パドル 2 つ — 短点用と長点用。両方握ると交互に出ます",
   "keyerModeStraight": "縦振れ電鍵",
-  "keyerModeStraightDesc": "キー 1 つ — タイミングは自分で作ります。短く押すと短点、長く押すと長点"
+  "keyerModeStraightDesc": "キー 1 つ — タイミングは自分で作ります。短く押すと短点、長く押すと長点",
+  "levelAccuracy": "：{percent}%",
+  "hintUsed": "（ヒント使用）"
 }

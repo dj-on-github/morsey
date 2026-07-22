@@ -115,5 +115,7 @@
   "keyerModeIambic": "Palas yámbicas",
   "keyerModeIambicDesc": "Dos palas: una para dits y otra para dahs; apriete ambas para alternar",
   "keyerModeStraight": "Llave vertical",
-  "keyerModeStraightDesc": "Una sola llave — usted marca el tiempo: una pulsación corta es un dit y una larga, un dah"
+  "keyerModeStraightDesc": "Una sola llave — usted marca el tiempo: una pulsación corta es un dit y una larga, un dah",
+  "levelAccuracy": ": {percent} %",
+  "hintUsed": "(pista usada)"
 }

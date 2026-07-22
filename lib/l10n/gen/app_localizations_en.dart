@@ -421,4 +421,12 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get keyerModeStraightDesc =>
       'One key — you make the timing: a short press is a dit, a long press a dah';
+
+  @override
+  String levelAccuracy(Object percent) {
+    return ': $percent%';
+  }
+
+  @override
+  String get hintUsed => '(hint used)';
 }

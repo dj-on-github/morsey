@@ -115,5 +115,7 @@
   "keyerModeIambic": "iambic पैडल",
   "keyerModeIambicDesc": "दो पैडल — एक डिट के लिए, एक डाह के लिए; दोनों दबाने पर बारी-बारी",
   "keyerModeStraight": "सीधी कुंजी",
-  "keyerModeStraightDesc": "एक ही कुंजी — समय आप तय करते हैं: छोटा दबाव डिट, लंबा दबाव डाह"
+  "keyerModeStraightDesc": "एक ही कुंजी — समय आप तय करते हैं: छोटा दबाव डिट, लंबा दबाव डाह",
+  "levelAccuracy": ": {percent}%",
+  "hintUsed": "(संकेत इस्तेमाल हुआ)"
 }

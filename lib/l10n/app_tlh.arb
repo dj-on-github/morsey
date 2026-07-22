@@ -115,5 +115,7 @@
   "keyerModeIambic": "cha' leQ (iambic)",
   "keyerModeIambicDesc": "cha' leQ — wa' dit, wa' dah; cha' Da'uychugh tlhej",
   "keyerModeStraight": "leQ mob",
-  "keyerModeStraightDesc": "wa' leQ neH — poH DachenmoH: 'uy ngaj dit 'oH, 'uy nI' dah 'oH"
+  "keyerModeStraightDesc": "wa' leQ neH — poH DachenmoH: 'uy ngaj dit 'oH, 'uy nI' dah 'oH",
+  "levelAccuracy": ": {percent}%",
+  "hintUsed": "(qeS lo'lu'pu')"
 }

@@ -40,8 +40,7 @@ class _InputTutorialScreenState extends State<InputTutorialScreen> {
 
   Settings? _settings;
   late IambicKeyer _keyer;
-  CombinedPaddleSource? _source;
-  bool _disposed = false;
+  CombinedPaddleSource? _paddles;
 
   int _level = 1; // 1-based
   _Phase _phase = _Phase.intro;
@@ -49,6 +48,9 @@ class _InputTutorialScreenState extends State<InputTutorialScreen> {
   late String _newLetter; // letter introduced this level
   late List<String> _levelLetters; // every letter unlocked at this level
   Map<String, int> _counts = {}; // correct answers so far, per letter
+  int _levelCorrect = 0; // practice answers that were right this level
+  int _levelAttempts = 0; // all practice answers this level
+  bool _hintUsed = false; // whether a hint was shown during this level
   String _target = ''; // letter currently drilled in practice
   String _livePattern = ''; // elements keyed so far in this character
   String? _lastDecoded; // what the last committed pattern decoded to
@@ -80,7 +82,7 @@ class _InputTutorialScreenState extends State<InputTutorialScreen> {
       _keyer.start();
       _settings!.addListener(_onSettingsChanged);
       _setupLevel(_settings!.inputTutorialLevel);
-      _startSource();
+      _attachPaddles(scope.paddles);
     }
   }
 
@@ -94,27 +96,32 @@ class _InputTutorialScreenState extends State<InputTutorialScreen> {
 
   void _onSettingsChanged() {
     if (!mounted) return;
-    _source?.ditIsLeft = _settings!.ditPaddle == DitPaddle.left;
     setState(() {});
   }
 
-  /// Starts the combined keyboard + USB source; the USB key hotplugs.
-  Future<void> _startSource() async {
-    final src = CombinedPaddleSource(
-      ditIsLeft: _settings!.ditPaddle == DitPaddle.left,
-    );
-    src.onDit = (down) => _keyer.setDit(down);
-    src.onDah = (down) => _keyer.setDah(down);
-    src.onStatus = () {
-      if (mounted) setState(() {});
-    };
-    await src.start();
-    // If the screen was disposed while starting, don't keep the device open.
-    if (_disposed || !mounted) {
-      await src.stop();
-      return;
-    }
-    setState(() => _source = src);
+  void _handleDit(bool down) => _keyer.setDit(down);
+  void _handleDah(bool down) => _keyer.setDah(down);
+  void _handleStatus() {
+    if (mounted) setState(() {});
+  }
+
+  /// Attaches this screen's keyer to the app-wide shared paddle source.
+  void _attachPaddles(CombinedPaddleSource paddles) {
+    _paddles = paddles;
+    paddles.onDit = _handleDit;
+    paddles.onDah = _handleDah;
+    paddles.onStatus = _handleStatus;
+  }
+
+  /// Detaches, but only if the callbacks are still ours: the next keying
+  /// screen attaches BEFORE this one's dispose runs, and must not be
+  /// clobbered. (Same-instance method tear-offs compare equal.)
+  void _detachPaddles() {
+    final p = _paddles;
+    if (p == null) return;
+    if (p.onDit == _handleDit) p.onDit = null;
+    if (p.onDah == _handleDah) p.onDah = null;
+    if (p.onStatus == _handleStatus) p.onStatus = null;
   }
 
   // --- Level / phase transitions ---------------------------------------------
@@ -143,6 +150,9 @@ class _InputTutorialScreenState extends State<InputTutorialScreen> {
     setState(() {
       _phase = _Phase.practice;
       _counts = {for (final c in _levelLetters) c: 0};
+      _levelCorrect = 0;
+      _levelAttempts = 0;
+      _hintUsed = false;
       _livePattern = '';
       _lastDecoded = null;
       _lastCorrect = null;
@@ -220,8 +230,13 @@ class _InputTutorialScreenState extends State<InputTutorialScreen> {
     setState(() {
       _lastDecoded = decoded ?? '?';
       _lastCorrect = ok;
-      if (ok && _phase == _Phase.practice) {
-        _counts[_target] = min(_targetPerLetter, (_counts[_target] ?? 0) + 1);
+      if (_phase == _Phase.practice) {
+        _levelAttempts++;
+        if (ok) {
+          _levelCorrect++;
+          _counts[_target] =
+              min(_targetPerLetter, (_counts[_target] ?? 0) + 1);
+        }
       }
     });
     if (!ok) return;
@@ -252,17 +267,16 @@ class _InputTutorialScreenState extends State<InputTutorialScreen> {
       return KeyEventResult.ignored;
     }
     // Otherwise keys may be paddles (arrows, or the USB key as a keyboard).
-    final handled = _source?.handleKeyEvent(event) ?? false;
+    final handled = _paddles?.handleKeyEvent(event) ?? false;
     return handled ? KeyEventResult.handled : KeyEventResult.ignored;
   }
 
   @override
   void dispose() {
-    _disposed = true;
+    _detachPaddles();
     _playToken++; // cancel any playback
     _settings?.removeListener(_onSettingsChanged);
     _keyer.dispose();
-    _source?.stop();
     _focusNode.dispose();
     super.dispose();
   }
@@ -292,24 +306,37 @@ class _InputTutorialScreenState extends State<InputTutorialScreen> {
               Row(
                 children: [
                   Icon(
-                    _source?.usbConnected == true
+                    _paddles?.usbConnected == true
                         ? Icons.usb
                         : Icons.keyboard,
                     size: 18,
-                    color: _source?.usbConnected == true
+                    color: _paddles?.usbConnected == true
                         ? Colors.green
                         : theme.colorScheme.outline,
                   ),
                   const SizedBox(width: 6),
                   Expanded(
                     child: Text(
-                      _source?.statusText(l10n) ?? l10n.statusStarting,
+                      _paddles?.statusText(l10n) ?? l10n.statusStarting,
                       style: theme.textTheme.bodySmall,
                     ),
                   ),
                 ],
               ),
-              Expanded(child: Center(child: _body(theme, l10n))),
+              // Scroll when the body (e.g. several wrapped rows of progress
+              // chips at high levels) is taller than the available space;
+              // stay centred when it is shorter.
+              Expanded(
+                child: LayoutBuilder(
+                  builder: (context, constraints) => SingleChildScrollView(
+                    child: ConstrainedBox(
+                      constraints:
+                          BoxConstraints(minHeight: constraints.maxHeight),
+                      child: Center(child: _body(theme, l10n)),
+                    ),
+                  ),
+                ),
+              ),
               if (_phase != _Phase.levelComplete)
                 _controls(theme, scope, l10n),
             ],
@@ -452,7 +479,10 @@ class _InputTutorialScreenState extends State<InputTutorialScreen> {
                   ),
                 )
               : TextButton(
-                  onPressed: () => setState(() => _showHint = true),
+                  onPressed: () => setState(() {
+                    _showHint = true;
+                    _hintUsed = true;
+                  }),
                   child: Text(l10n.showHint),
                 ),
         ),
@@ -468,13 +498,20 @@ class _InputTutorialScreenState extends State<InputTutorialScreen> {
 
   Widget _completeBody(ThemeData theme, AppLocalizations l10n) {
     final last = _level >= _levelCount;
+    final title = last ? l10n.tutorialComplete : l10n.levelComplete(_level);
+    final percent = _levelAttempts == 0
+        ? 100
+        : ((_levelCorrect / _levelAttempts) * 100).round();
+    var scored = '$title${l10n.levelAccuracy(percent)}';
+    if (_hintUsed) scored = '$scored ${l10n.hintUsed}';
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Icon(Icons.emoji_events, size: 72, color: theme.colorScheme.tertiary),
         const SizedBox(height: 16),
         Text(
-          last ? l10n.tutorialComplete : l10n.levelComplete(_level),
+          scored,
+          textAlign: TextAlign.center,
           style: theme.textTheme.headlineSmall,
         ),
         const SizedBox(height: 8),

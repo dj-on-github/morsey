@@ -422,4 +422,12 @@ class AppLocalizationsHi extends AppLocalizations {
   @override
   String get keyerModeStraightDesc =>
       'एक ही कुंजी — समय आप तय करते हैं: छोटा दबाव डिट, लंबा दबाव डाह';
+
+  @override
+  String levelAccuracy(Object percent) {
+    return ': $percent%';
+  }
+
+  @override
+  String get hintUsed => '(संकेत इस्तेमाल हुआ)';
 }

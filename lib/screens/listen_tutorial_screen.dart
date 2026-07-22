@@ -41,6 +41,8 @@ class _ListenTutorialScreenState extends State<ListenTutorialScreen> {
   late String _newLetter; // letter introduced this level
   late List<String> _levelLetters; // every letter unlocked at this level
   Map<String, int> _counts = {}; // correct answers so far, per letter
+  int _levelCorrect = 0; // practice answers that were right this level
+  int _levelAttempts = 0; // all practice answers this level
   String _target = ''; // letter currently being played in practice
   String _typed = ''; // last key the pupil pressed (for display)
   bool? _lastCorrect;
@@ -89,6 +91,8 @@ class _ListenTutorialScreenState extends State<ListenTutorialScreen> {
     setState(() {
       _phase = _Phase.practice;
       _counts = {for (final c in _levelLetters) c: 0};
+      _levelCorrect = 0;
+      _levelAttempts = 0;
       _typed = '';
       _lastCorrect = null;
     });
@@ -203,7 +207,9 @@ class _ListenTutorialScreenState extends State<ListenTutorialScreen> {
       setState(() {
         _typed = typed;
         _lastCorrect = ok;
+        _levelAttempts++;
         if (ok) {
+          _levelCorrect++;
           _counts[_target] =
               min(_targetPerLetter, (_counts[_target] ?? 0) + 1);
         }
@@ -253,7 +259,20 @@ class _ListenTutorialScreenState extends State<ListenTutorialScreen> {
                         ?.copyWith(color: theme.colorScheme.error),
                   ),
                 ),
-              Expanded(child: Center(child: _body(theme, l10n))),
+              // Scroll when the body (e.g. several wrapped rows of progress
+              // chips at high levels) is taller than the available space;
+              // stay centred when it is shorter.
+              Expanded(
+                child: LayoutBuilder(
+                  builder: (context, constraints) => SingleChildScrollView(
+                    child: ConstrainedBox(
+                      constraints:
+                          BoxConstraints(minHeight: constraints.maxHeight),
+                      child: Center(child: _body(theme, l10n)),
+                    ),
+                  ),
+                ),
+              ),
               if (_phase != _Phase.levelComplete) _controls(theme, l10n),
               // Touch platforms have no hardware keyboard to answer with.
               if (_phase != _Phase.levelComplete && _isTouchPlatform) ...[
@@ -402,13 +421,18 @@ class _ListenTutorialScreenState extends State<ListenTutorialScreen> {
 
   Widget _completeBody(ThemeData theme, AppLocalizations l10n) {
     final last = _level >= _levelCount;
+    final title = last ? l10n.tutorialComplete : l10n.levelComplete(_level);
+    final percent = _levelAttempts == 0
+        ? 100
+        : ((_levelCorrect / _levelAttempts) * 100).round();
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Icon(Icons.emoji_events, size: 72, color: theme.colorScheme.tertiary),
         const SizedBox(height: 16),
         Text(
-          last ? l10n.tutorialComplete : l10n.levelComplete(_level),
+          '$title${l10n.levelAccuracy(percent)}',
+          textAlign: TextAlign.center,
           style: theme.textTheme.headlineSmall,
         ),
         const SizedBox(height: 8),

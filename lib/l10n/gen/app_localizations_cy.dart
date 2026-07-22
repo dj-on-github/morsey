@@ -422,4 +422,12 @@ class AppLocalizationsCy extends AppLocalizations {
   @override
   String get keyerModeStraightDesc =>
       'Un allwedd — chi sy\'n amseru: mae pwysiad byr yn dit, a phwysiad hir yn dah';
+
+  @override
+  String levelAccuracy(Object percent) {
+    return ': $percent%';
+  }
+
+  @override
+  String get hintUsed => '(defnyddiwyd awgrym)';
 }

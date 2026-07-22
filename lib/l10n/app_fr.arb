@@ -115,5 +115,7 @@
   "keyerModeIambic": "Palettes ïambiques",
   "keyerModeIambicDesc": "Deux palettes — une pour les dits, une pour les dahs ; serrez les deux pour alterner",
   "keyerModeStraight": "Manipulateur droit",
-  "keyerModeStraightDesc": "Une seule touche — c'est vous qui rythmez : un appui court donne un dit, un appui long un dah"
+  "keyerModeStraightDesc": "Une seule touche — c'est vous qui rythmez : un appui court donne un dit, un appui long un dah",
+  "levelAccuracy": " : {percent} %",
+  "hintUsed": "(indice utilisé)"
 }

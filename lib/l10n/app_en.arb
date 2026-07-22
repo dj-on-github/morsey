@@ -232,5 +232,12 @@
   "keyerModeIambic": "Iambic paddles",
   "keyerModeIambicDesc": "Two paddles — one for dits, one for dahs; squeeze for alternation",
   "keyerModeStraight": "Straight key",
-  "keyerModeStraightDesc": "One key — you make the timing: a short press is a dit, a long press a dah"
+  "keyerModeStraightDesc": "One key — you make the timing: a short press is a dit, a long press a dah",
+  "levelAccuracy": ": {percent}%",
+  "@levelAccuracy": {
+    "placeholders": {
+      "percent": {}
+    }
+  },
+  "hintUsed": "(hint used)"
 }

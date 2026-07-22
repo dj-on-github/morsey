@@ -423,4 +423,12 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get keyerModeStraightDesc =>
       'Une seule touche — c\'est vous qui rythmez : un appui court donne un dit, un appui long un dah';
+
+  @override
+  String levelAccuracy(Object percent) {
+    return ' : $percent %';
+  }
+
+  @override
+  String get hintUsed => '(indice utilisé)';
 }

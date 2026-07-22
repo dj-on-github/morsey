@@ -56,8 +56,7 @@ class _FreeKeyScreenState extends State<FreeKeyScreen> {
   Settings? _settings;
   late _GatedAudio _gated;
   late IambicKeyer _keyer;
-  CombinedPaddleSource? _source;
-  bool _disposed = false;
+  CombinedPaddleSource? _paddles;
 
   bool _audioOn = true;
   String _text = ''; // decoded characters (plus word spaces)
@@ -84,17 +83,16 @@ class _FreeKeyScreenState extends State<FreeKeyScreen> {
       );
       _keyer.start();
       _settings!.addListener(_onSettingsChanged);
-      _startSource();
+      _attachPaddles(scope.paddles);
     }
   }
 
   @override
   void dispose() {
-    _disposed = true;
+    _detachPaddles();
     _wordGap?.cancel();
     _settings?.removeListener(_onSettingsChanged);
     _keyer.dispose();
-    _source?.stop();
     _focusNode.dispose();
     _textScroll.dispose();
     _morseScroll.dispose();
@@ -103,26 +101,32 @@ class _FreeKeyScreenState extends State<FreeKeyScreen> {
 
   void _onSettingsChanged() {
     if (!mounted) return;
-    _source?.ditIsLeft = _settings!.ditPaddle == DitPaddle.left;
     setState(() {});
   }
 
-  /// Starts the combined keyboard + USB source; the USB key hotplugs.
-  Future<void> _startSource() async {
-    final src = CombinedPaddleSource(
-      ditIsLeft: _settings!.ditPaddle == DitPaddle.left,
-    );
-    src.onDit = (down) => _keyer.setDit(down);
-    src.onDah = (down) => _keyer.setDah(down);
-    src.onStatus = () {
-      if (mounted) setState(() {});
-    };
-    await src.start();
-    if (_disposed || !mounted) {
-      await src.stop();
-      return;
-    }
-    setState(() => _source = src);
+  void _handleDit(bool down) => _keyer.setDit(down);
+  void _handleDah(bool down) => _keyer.setDah(down);
+  void _handleStatus() {
+    if (mounted) setState(() {});
+  }
+
+  /// Attaches this screen's keyer to the app-wide shared paddle source.
+  void _attachPaddles(CombinedPaddleSource paddles) {
+    _paddles = paddles;
+    paddles.onDit = _handleDit;
+    paddles.onDah = _handleDah;
+    paddles.onStatus = _handleStatus;
+  }
+
+  /// Detaches, but only if the callbacks are still ours: the next keying
+  /// screen attaches BEFORE this one's dispose runs, and must not be
+  /// clobbered. (Same-instance method tear-offs compare equal.)
+  void _detachPaddles() {
+    final p = _paddles;
+    if (p == null) return;
+    if (p.onDit == _handleDit) p.onDit = null;
+    if (p.onDah == _handleDah) p.onDah = null;
+    if (p.onStatus == _handleStatus) p.onStatus = null;
   }
 
   // --- Decoding --------------------------------------------------------------
@@ -181,7 +185,7 @@ class _FreeKeyScreenState extends State<FreeKeyScreen> {
   }
 
   KeyEventResult _onKey(FocusNode node, KeyEvent event) {
-    final handled = _source?.handleKeyEvent(event) ?? false;
+    final handled = _paddles?.handleKeyEvent(event) ?? false;
     return handled ? KeyEventResult.handled : KeyEventResult.ignored;
   }
 
@@ -209,7 +213,7 @@ class _FreeKeyScreenState extends State<FreeKeyScreen> {
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context);
     final morse = _renderedMorse();
-    final usb = _source?.usbConnected == true;
+    final usb = _paddles?.usbConnected == true;
 
     return PageScaffold(
       title: l10n.menuFreeKey,
@@ -248,7 +252,7 @@ class _FreeKeyScreenState extends State<FreeKeyScreen> {
                   const SizedBox(width: 6),
                   Expanded(
                     child: Text(
-                      _source?.statusText(l10n) ?? l10n.statusStarting,
+                      _paddles?.statusText(l10n) ?? l10n.statusStarting,
                       style: theme.textTheme.bodySmall,
                       overflow: TextOverflow.ellipsis,
                     ),

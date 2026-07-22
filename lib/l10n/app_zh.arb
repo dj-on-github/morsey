@@ -115,5 +115,7 @@
   "keyerModeIambic": "双拨片（iambic）",
   "keyerModeIambicDesc": "两个拨片 — 一个发点，一个发划；同时按住则交替发出",
   "keyerModeStraight": "直键",
-  "keyerModeStraightDesc": "只有一个键 — 节奏由你掌握：短按为点，长按为划"
+  "keyerModeStraightDesc": "只有一个键 — 节奏由你掌握：短按为点，长按为划",
+  "levelAccuracy": "：{percent}%",
+  "hintUsed": "（使用了提示）"
 }

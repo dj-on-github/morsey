@@ -413,4 +413,12 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get keyerModeStraightDesc => 'キー 1 つ — タイミングは自分で作ります。短く押すと短点、長く押すと長点';
+
+  @override
+  String levelAccuracy(Object percent) {
+    return '：$percent%';
+  }
+
+  @override
+  String get hintUsed => '（ヒント使用）';
 }

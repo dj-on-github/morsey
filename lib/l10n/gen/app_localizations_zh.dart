@@ -409,4 +409,12 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get keyerModeStraightDesc => '只有一个键 — 节奏由你掌握：短按为点，长按为划';
+
+  @override
+  String levelAccuracy(Object percent) {
+    return '：$percent%';
+  }
+
+  @override
+  String get hintUsed => '（使用了提示）';
 }

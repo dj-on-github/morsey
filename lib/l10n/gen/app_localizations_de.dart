@@ -423,4 +423,12 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get keyerModeStraightDesc =>
       'Eine Taste — Sie machen das Timing: kurzer Druck ist ein Dit, langer Druck ein Dah';
+
+  @override
+  String levelAccuracy(Object percent) {
+    return ': $percent %';
+  }
+
+  @override
+  String get hintUsed => '(Hinweis verwendet)';
 }

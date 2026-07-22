@@ -422,4 +422,12 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get keyerModeStraightDesc =>
       'Una sola llave — usted marca el tiempo: una pulsación corta es un dit y una larga, un dah';
+
+  @override
+  String levelAccuracy(Object percent) {
+    return ': $percent %';
+  }
+
+  @override
+  String get hintUsed => '(pista usada)';
 }

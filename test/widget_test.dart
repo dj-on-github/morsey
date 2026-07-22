@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:morsey/audio/audio_engine.dart';
+import 'package:morsey/input/combined_paddle_source.dart';
 import 'package:morsey/models/settings.dart';
 import 'package:morsey/morsey/morse_code.dart';
 import 'package:morsey/main.dart';
@@ -51,7 +52,11 @@ void main() {
 
   testWidgets('App shows the program parts', (tester) async {
     await tester.pumpWidget(
-      MorseyApp(settings: Settings(), audio: SilentAudioEngine()),
+      MorseyApp(
+        settings: Settings(),
+        audio: SilentAudioEngine(),
+        paddles: CombinedPaddleSource(),
+      ),
     );
     await tester.pump();
 

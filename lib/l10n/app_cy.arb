@@ -115,5 +115,7 @@
   "keyerModeIambic": "Padlau iambig",
   "keyerModeIambicDesc": "Dau badl — un ar gyfer ditiau, un ar gyfer dahiau; gwasgwch y ddau am ailadrodd bob yn ail",
   "keyerModeStraight": "Allwedd syth",
-  "keyerModeStraightDesc": "Un allwedd — chi sy'n amseru: mae pwysiad byr yn dit, a phwysiad hir yn dah"
+  "keyerModeStraightDesc": "Un allwedd — chi sy'n amseru: mae pwysiad byr yn dit, a phwysiad hir yn dah",
+  "levelAccuracy": ": {percent}%",
+  "hintUsed": "(defnyddiwyd awgrym)"
 }

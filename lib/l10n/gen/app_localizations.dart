@@ -807,6 +807,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'One key — you make the timing: a short press is a dit, a long press a dah'**
   String get keyerModeStraightDesc;
+
+  /// No description provided for @levelAccuracy.
+  ///
+  /// In en, this message translates to:
+  /// **': {percent}%'**
+  String levelAccuracy(Object percent);
+
+  /// No description provided for @hintUsed.
+  ///
+  /// In en, this message translates to:
+  /// **'(hint used)'**
+  String get hintUsed;
 }
 
 class _AppLocalizationsDelegate
