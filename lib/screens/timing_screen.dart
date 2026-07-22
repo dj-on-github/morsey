@@ -118,8 +118,9 @@ class _TimingScreenState extends State<TimingScreen> {
 
   void _onSettingsChanged() {
     if (!mounted) return;
-    // Switching keyer mode mid-line invalidates the measurements.
-    if (_settings!.keyerMode != _modeAtStart && _phase == _Phase.keying) {
+    // Switching keyer mode invalidates any in-progress measurements, and on
+    // the results view it signals intent to key a fresh line in that mode.
+    if (_settings!.keyerMode != _modeAtStart) {
       _newLine();
     } else {
       setState(() {});
@@ -355,14 +356,41 @@ class _TimingScreenState extends State<TimingScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Row(
+              // Controls fold onto extra rows on narrow screens.
+              Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                crossAxisAlignment: WrapCrossAlignment.center,
                 children: [
                   FilledButton.tonalIcon(
                     onPressed: _newLine,
                     icon: const Icon(Icons.refresh),
                     label: Text(l10n.timingRestart),
                   ),
-                  const SizedBox(width: 12),
+                  // Quick keyer-mode switch; writes the shared setting, so
+                  // it stays in sync with the Settings screen and restarts
+                  // the line in the chosen mode.
+                  SegmentedButton<KeyerMode>(
+                    segments: [
+                      ButtonSegment(
+                        value: KeyerMode.iambic,
+                        label: Text(l10n.keyerModeIambic),
+                      ),
+                      ButtonSegment(
+                        value: KeyerMode.straight,
+                        label: Text(l10n.keyerModeStraight),
+                      ),
+                    ],
+                    selected: {_settings!.keyerMode},
+                    onSelectionChanged: (selection) =>
+                        _settings!.keyerMode = selection.first,
+                    showSelectedIcon: false,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
+              Row(
+                children: [
                   Icon(
                     usb ? Icons.usb : Icons.keyboard,
                     size: 18,
@@ -392,14 +420,42 @@ class _TimingScreenState extends State<TimingScreen> {
   }
 
   Widget _keyingView(ThemeData theme, AppLocalizations l10n) {
-    // Two-tone morse: pieces of characters accepted so far in primary.
-    final doneMorse = StringBuffer();
-    final restMorse = StringBuffer();
+    // Three-tone rendering of the text and its morse: accepted characters in
+    // primary, the character expected NOW under a highlight cursor, the rest
+    // muted. Text characters and morse pieces are index-aligned, so one
+    // pass builds both span lists.
+    final highlight = TextStyle(
+      color: theme.colorScheme.onPrimaryContainer,
+      backgroundColor: theme.colorScheme.primaryContainer,
+      fontWeight: FontWeight.bold,
+    );
+    final donePrimary = TextStyle(color: theme.colorScheme.primary);
+    final restMuted = TextStyle(color: theme.colorScheme.onSurfaceVariant);
+
+    final textSpans = <TextSpan>[];
+    final morseSpans = <TextSpan>[];
     var keyableSeen = 0;
-    for (final piece in _charMorse) {
-      if (piece.isNotEmpty) keyableSeen++;
-      (keyableSeen <= _charIdx ? doneMorse : restMorse)
-          .write(piece.isEmpty ? '/  ' : '$piece  ');
+    for (var i = 0; i < _charMorse.length; i++) {
+      final piece = _charMorse[i];
+      final keyable = piece.isNotEmpty;
+      if (keyable) keyableSeen++;
+      final isDone = keyableSeen <= _charIdx;
+      final isCurrent = keyable && keyableSeen == _charIdx + 1;
+      final trail = isDone ? donePrimary : restMuted;
+
+      textSpans.add(TextSpan(
+        text: _line[i],
+        style: isCurrent ? highlight : (isDone ? donePrimary : null),
+      ));
+      if (keyable) {
+        morseSpans.add(TextSpan(
+          text: piece,
+          style: isCurrent ? highlight : trail,
+        ));
+        morseSpans.add(TextSpan(text: '  ', style: trail));
+      } else {
+        morseSpans.add(TextSpan(text: '/  ', style: trail));
+      }
     }
 
     return SingleChildScrollView(
@@ -412,28 +468,20 @@ class _TimingScreenState extends State<TimingScreen> {
                 ?.copyWith(color: theme.colorScheme.outline),
           ),
           const SizedBox(height: 16),
-          Text(
-            _line,
-            style: theme.textTheme.headlineSmall,
+          Text.rich(
+            TextSpan(
+              style: theme.textTheme.headlineSmall,
+              children: textSpans,
+            ),
           ),
           const SizedBox(height: 16),
-          RichText(
-            text: TextSpan(
+          Text.rich(
+            TextSpan(
               style: theme.textTheme.titleLarge?.copyWith(
                 letterSpacing: 3,
                 height: 1.8,
               ),
-              children: [
-                TextSpan(
-                  text: doneMorse.toString(),
-                  style: TextStyle(color: theme.colorScheme.primary),
-                ),
-                TextSpan(
-                  text: restMorse.toString(),
-                  style:
-                      TextStyle(color: theme.colorScheme.onSurfaceVariant),
-                ),
-              ],
+              children: morseSpans,
             ),
           ),
           const SizedBox(height: 12),
