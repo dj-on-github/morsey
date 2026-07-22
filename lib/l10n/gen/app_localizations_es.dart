@@ -31,7 +31,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get aboutIntro =>
-      'Una herramienta de práctica para aprender código Morse, escrita en Dart / Flutter.';
+      'Una herramienta de práctica para aprender código Morse.';
 
   @override
   String get aboutPartsHeading => 'Las partes del programa';
@@ -65,7 +65,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get aboutUsbBody =>
-      'Este programa admite una llave Morse yámbica (doble pala) que se enumera por USB como dispositivo 413d:2107. En Linux la llave se lee directamente de su nodo /dev/hidraw, sin controladores, siempre que su usuario pueda leer el dispositivo (grupo plugdev / regla udev). Cada pala se informa como un bit modificador de teclado (Ctrl-izquierda y Ctrl-derecha); el software convierte esas pulsaciones en dits y dahs correctamente temporizados.';
+      'Este programa admite una llave Morse yámbica (doble pala) que se enumera por USB como dispositivo 413d:2107. En Linux la llave se lee directamente de su nodo /dev/hidraw, sin controladores, siempre que su usuario pueda leer el dispositivo (grupo plugdev / regla udev). Cada pala se informa como un bit modificador de teclado (Ctrl-izquierda y Ctrl-derecha). En modo yámbico el software convierte esas pulsaciones en dits y dahs correctamente temporizados — una pala para dits, otra para dahs; apriete ambas para alternar. En modo de llave vertical (se elige en Ajustes) cualquier contacto actúa como una sola llave y usted marca el tiempo: el tono sigue su pulsación, una pulsación de menos de dos dits cuenta como dit y una más larga como dah.';
 
   @override
   String get aboutTimingHeading => 'Temporización';

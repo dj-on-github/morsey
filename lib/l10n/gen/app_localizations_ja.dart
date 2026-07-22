@@ -30,7 +30,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get menuInputTutorial => '送信チュートリアル';
 
   @override
-  String get aboutIntro => 'モールス信号を学ぶための練習ツール。Dart / Flutter 製。';
+  String get aboutIntro => 'モールス信号を学ぶための練習ツール。';
 
   @override
   String get aboutPartsHeading => 'プログラムの構成';
@@ -62,7 +62,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get aboutUsbBody =>
-      'このプログラムは、USB デバイス 413d:2107 として認識されるイアンビック（デュアルパドル）モールスキーに対応しています。Linux では /dev/hidraw ノードから直接読み取るためドライバーは不要です（plugdev グループ / udev ルールでデバイスを読める必要があります）。各パドルはキーボードの修飾キービット（左 Ctrl と右 Ctrl）として報告され、ソフトウェアがそれを正しいタイミングの短点・長点に変換します。';
+      'このプログラムは、USB デバイス 413d:2107 として認識されるイアンビック（デュアルパドル）モールスキーに対応しています。Linux では /dev/hidraw ノードから直接読み取るためドライバーは不要です（plugdev グループ / udev ルールでデバイスを読める必要があります）。各パドルはキーボードの修飾キービット（左 Ctrl と右 Ctrl）として報告されます。イアンビックモードでは、ソフトウェアがパドル操作を正しいタイミングの短点・長点に変換します — 一方が短点用、もう一方が長点用で、両方握ると交互に出ます。縦振れ電鍵モード（設定で選択）では、どの接点も 1 つのキーとして働き、タイミングは自分で作ります。音は押している間だけ鳴り、短点 2 つ分より短い押下は短点、それより長い押下は長点になります。';
 
   @override
   String get aboutTimingHeading => 'タイミング';

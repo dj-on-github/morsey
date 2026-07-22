@@ -30,7 +30,7 @@ class AppLocalizationsTlh extends AppLocalizations {
   String get menuInputTutorial => 'lab ghojmoH';
 
   @override
-  String get aboutIntro => 'morS ngoq ghojmeH jan. Dart / Flutter lo\'lu\'.';
+  String get aboutIntro => 'morS ngoq ghojmeH jan.';
 
   @override
   String get aboutPartsHeading => 'jan \'ay\'mey';
@@ -63,7 +63,7 @@ class AppLocalizationsTlh extends AppLocalizations {
 
   @override
   String get aboutUsbBody =>
-      'morS jan cha\' leQ ghaj (USB 413d:2107). Linux-Daq /dev/hidraw lo\'lu\' — driver poQbe\'lu\' (plugdev ghom / udev chut poQlu\'). Ctrl-poS Ctrl-nIH je Da leQmey; dit dah je lughmoH software.';
+      'morS jan cha\' leQ ghaj (USB 413d:2107). Linux-Daq /dev/hidraw lo\'lu\' — driver poQbe\'lu\' (plugdev ghom / udev chut poQlu\'). Ctrl-poS Ctrl-nIH je Da leQmey. iambic mIwDaq dit dah je lughmoH software — wa\' leQ dit, wa\' leQ dah; cha\' Da\'uychugh tlhej. leQ mob mIwDaq (DuHmeyDaq wIv) wa\' leQ Da Hoch \'ej poH DachenmoH: \'uyDI\' wab chu\'lu\'; cha\' dit puSchugh \'uy dit \'oH, nI\'chugh dah \'oH.';
 
   @override
   String get aboutTimingHeading => 'poH';

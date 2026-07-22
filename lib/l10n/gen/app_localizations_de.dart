@@ -30,8 +30,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get menuInputTutorial => 'Gebe-Tutorial';
 
   @override
-  String get aboutIntro =>
-      'Ein Übungsprogramm zum Erlernen des Morsecodes, geschrieben in Dart / Flutter.';
+  String get aboutIntro => 'Ein Übungsprogramm zum Erlernen des Morsecodes.';
 
   @override
   String get aboutPartsHeading => 'Die Teile des Programms';
@@ -65,7 +64,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get aboutUsbBody =>
-      'Dieses Programm unterstützt eine iambische Morsetaste (Doppelpaddel), die sich über USB als Gerät 413d:2107 meldet. Unter Linux wird die Taste direkt über ihren /dev/hidraw-Knoten gelesen — keine Treiber nötig, solange Ihr Benutzer das Gerät lesen darf (plugdev-Gruppe / udev-Regel). Jedes Paddel wird als Tastatur-Modifikatorbit gemeldet (Strg-Links und Strg-Rechts); die Software macht daraus korrekt getaktete Dits und Dahs.';
+      'Dieses Programm unterstützt eine iambische Morsetaste (Doppelpaddel), die sich über USB als Gerät 413d:2107 meldet. Unter Linux wird die Taste direkt über ihren /dev/hidraw-Knoten gelesen — keine Treiber nötig, solange Ihr Benutzer das Gerät lesen darf (plugdev-Gruppe / udev-Regel). Jedes Paddel wird als Tastatur-Modifikatorbit gemeldet (Strg-Links und Strg-Rechts). Im iambischen Modus macht die Software aus den Paddeldrücken korrekt getaktete Dits und Dahs — ein Paddel für Dits, eines für Dahs, beide zusammendrücken für Wechsel. Im Handtasten-Modus (in den Einstellungen wählbar) wirkt jeder Kontakt als eine einzige Taste und Sie machen das Timing selbst: Der Ton folgt Ihrem Druck, ein Druck kürzer als zwei Dits zählt als Dit, ein längerer als Dah.';
 
   @override
   String get aboutTimingHeading => 'Timing';

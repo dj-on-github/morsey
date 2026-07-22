@@ -31,7 +31,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get aboutIntro =>
-      'Un outil d\'entraînement pour apprendre le code Morse, écrit en Dart / Flutter.';
+      'Un outil d\'entraînement pour apprendre le code Morse.';
 
   @override
   String get aboutPartsHeading => 'Les parties du programme';
@@ -65,7 +65,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get aboutUsbBody =>
-      'Ce programme prend en charge une clé Morse ïambique (double palette) qui s\'énumère en USB comme périphérique 413d:2107. Sous Linux, la clé est lue directement depuis son nœud /dev/hidraw — aucun pilote requis, tant que votre utilisateur peut lire le périphérique (groupe plugdev / règle udev). Chaque palette est signalée comme un bit modificateur de clavier (Ctrl-gauche et Ctrl-droite) ; le logiciel transforme ces appuis en dits et dahs correctement synchronisés.';
+      'Ce programme prend en charge une clé Morse ïambique (double palette) qui s\'énumère en USB comme périphérique 413d:2107. Sous Linux, la clé est lue directement depuis son nœud /dev/hidraw — aucun pilote requis, tant que votre utilisateur peut lire le périphérique (groupe plugdev / règle udev). Chaque palette est signalée comme un bit modificateur de clavier (Ctrl-gauche et Ctrl-droite). En mode ïambique, le logiciel transforme ces appuis en dits et dahs correctement synchronisés — une palette pour les dits, une pour les dahs, serrez les deux pour alterner. En mode manipulateur droit (choisi dans les Réglages), tout contact agit comme une touche unique et c\'est vous qui rythmez : la tonalité suit votre appui, un appui de moins de deux dits compte comme un dit, un appui plus long comme un dah.';
 
   @override
   String get aboutTimingHeading => 'Synchronisation';

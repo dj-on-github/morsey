@@ -30,7 +30,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get menuInputTutorial => '发报教程';
 
   @override
-  String get aboutIntro => '一款用于学习摩尔斯电码的练习工具，使用 Dart / Flutter 编写。';
+  String get aboutIntro => '一款用于学习摩尔斯电码的练习工具。';
 
   @override
   String get aboutPartsHeading => '程序的组成部分';
@@ -61,7 +61,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get aboutUsbBody =>
-      '本程序支持以 USB 设备 413d:2107 枚举的双拨片（iambic）摩尔斯电键。在 Linux 上直接从其 /dev/hidraw 节点读取 — 无需驱动，只要你的用户能读取该设备（plugdev 组 / udev 规则）。每个拨片以键盘修饰键位报告（左 Ctrl 和右 Ctrl）；软件把这些按压转换为节拍正确的点和划。';
+      '本程序支持以 USB 设备 413d:2107 枚举的双拨片（iambic）摩尔斯电键。在 Linux 上直接从其 /dev/hidraw 节点读取 — 无需驱动，只要你的用户能读取该设备（plugdev 组 / udev 规则）。每个拨片以键盘修饰键位报告（左 Ctrl 和右 Ctrl）。在双拨片模式下，软件把拨片按压转换为节拍正确的点和划 — 一个拨片发点，另一个发划，同时按住则交替发出。在直键模式下（在设置中选择），任何触点都作为单个电键使用，节奏由你掌握：音调跟随按压，短于两个点时长的按压算作点，更长的算作划。';
 
   @override
   String get aboutTimingHeading => '节拍';

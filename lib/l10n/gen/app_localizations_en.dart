@@ -30,8 +30,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get menuInputTutorial => 'Input Tutorial';
 
   @override
-  String get aboutIntro =>
-      'A practice tool for learning Morse code, written in Dart / Flutter.';
+  String get aboutIntro => 'A practice tool for learning Morse code.';
 
   @override
   String get aboutPartsHeading => 'The parts of the program';
@@ -65,7 +64,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get aboutUsbBody =>
-      'This program supports an iambic (dual-paddle) Morse key that enumerates over USB as device 413d:2107. On Linux the key is read directly from its /dev/hidraw node — no drivers required, as long as your user can read the device (the plugdev group / a udev rule). Each paddle is reported as a keyboard modifier bit (Left-Ctrl and Right-Ctrl); the software turns those paddle presses into properly-timed dits and dahs.';
+      'This program supports an iambic (dual-paddle) Morse key that enumerates over USB as device 413d:2107. On Linux the key is read directly from its /dev/hidraw node — no drivers required, as long as your user can read the device (the plugdev group / a udev rule). Each paddle is reported as a keyboard modifier bit (Left-Ctrl and Right-Ctrl). In iambic mode the software turns those paddle presses into properly-timed dits and dahs — one paddle for dits, one for dahs, squeeze both to alternate. In straight-key mode (chosen in Settings) any contact acts as a single key and you make the timing yourself: the tone follows your press, a press shorter than two dits counts as a dit and a longer one as a dah.';
 
   @override
   String get aboutTimingHeading => 'Timing';

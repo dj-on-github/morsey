@@ -30,8 +30,7 @@ class AppLocalizationsCy extends AppLocalizations {
   String get menuInputTutorial => 'Tiwtorial Bysellu';
 
   @override
-  String get aboutIntro =>
-      'Offeryn ymarfer ar gyfer dysgu cod Morse, wedi\'i ysgrifennu yn Dart / Flutter.';
+  String get aboutIntro => 'Offeryn ymarfer ar gyfer dysgu cod Morse.';
 
   @override
   String get aboutPartsHeading => 'Rhannau\'r rhaglen';
@@ -65,7 +64,7 @@ class AppLocalizationsCy extends AppLocalizations {
 
   @override
   String get aboutUsbBody =>
-      'Mae\'r rhaglen hon yn cefnogi allwedd Morse iambig (padl ddeuol) sy\'n ymddangos dros USB fel dyfais 413d:2107. Ar Linux darllenir yr allwedd yn uniongyrchol o\'i nod /dev/hidraw — nid oes angen gyrwyr, cyn belled â bod eich defnyddiwr yn gallu darllen y ddyfais (y grŵp plugdev / rheol udev). Adroddir pob padl fel did addasydd bysellfwrdd (Ctrl-Chwith a Ctrl-Dde); mae\'r feddalwedd yn troi\'r pwysiadau hynny\'n ditiau a dahiau wedi\'u hamseru\'n gywir.';
+      'Mae\'r rhaglen hon yn cefnogi allwedd Morse iambig (padl ddeuol) sy\'n ymddangos dros USB fel dyfais 413d:2107. Ar Linux darllenir yr allwedd yn uniongyrchol o\'i nod /dev/hidraw — nid oes angen gyrwyr, cyn belled â bod eich defnyddiwr yn gallu darllen y ddyfais (y grŵp plugdev / rheol udev). Adroddir pob padl fel did addasydd bysellfwrdd (Ctrl-Chwith a Ctrl-Dde). Yn y modd iambig mae\'r feddalwedd yn troi pwysiadau\'r padlau\'n ditiau a dahiau wedi\'u hamseru\'n gywir — un padl ar gyfer ditiau, un ar gyfer dahiau, gwasgwch y ddau i ailadrodd bob yn ail. Yn y modd allwedd syth (a ddewisir yn y Gosodiadau) mae unrhyw gyswllt yn gweithredu fel un allwedd a chi sy\'n amseru: mae\'r tôn yn dilyn eich pwysiad, mae pwysiad byrrach na dau dit yn cyfrif fel dit, ac un hirach fel dah.';
 
   @override
   String get aboutTimingHeading => 'Amseru';
