@@ -429,4 +429,57 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get hintUsed => '(hint used)';
+
+  @override
+  String get menuTiming => 'Timing';
+
+  @override
+  String get timingInstruction =>
+      'Key the line below — the timing of every pulse and gap is measured.';
+
+  @override
+  String get timingIambicNote =>
+      'Iambic mode: the machine makes the element timing, so only the letter and word gaps are scored. Key the line below.';
+
+  @override
+  String get timingRestart => 'Restart';
+
+  @override
+  String get timingComplete => 'Line complete!';
+
+  @override
+  String get timingDits => 'Dits';
+
+  @override
+  String get timingDahs => 'Dahs';
+
+  @override
+  String get timingLetterGaps => 'Letter gaps';
+
+  @override
+  String get timingWordGaps => 'Word gaps';
+
+  @override
+  String timingStats(Object mean, Object sd, Object count) {
+    return 'mean $mean ms · σ $sd ms · $count samples';
+  }
+
+  @override
+  String timingConsistency(Object percent) {
+    return '$percent% consistent';
+  }
+
+  @override
+  String timingOverall(Object percent) {
+    return 'Overall consistency: $percent%';
+  }
+
+  @override
+  String get aboutTimingScreenDesc =>
+      'Shows a line from a public-domain book with its Morse; key it and the timing of every pulse and gap is measured. At the end you get a timing distribution and a consistency score for dits, dahs, letter gaps and word gaps (straight key), or for the gaps alone (iambic, where the machine times the elements). Your actual sending speed in WPM is also reported.';
+
+  @override
+  String timingWpm(Object wpm) {
+    return 'Speed: $wpm WPM';
+  }
 }

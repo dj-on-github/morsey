@@ -430,4 +430,57 @@ class AppLocalizationsCy extends AppLocalizations {
 
   @override
   String get hintUsed => '(defnyddiwyd awgrym)';
+
+  @override
+  String get menuTiming => 'Amseriad';
+
+  @override
+  String get timingInstruction =>
+      'Bysellwch y llinell isod — mesurir amseriad pob pwls a bwlch.';
+
+  @override
+  String get timingIambicNote =>
+      'Modd iambig: y peiriant sy\'n amseru\'r elfennau, felly dim ond bylchau llythrennau a geiriau a sgorir. Bysellwch y llinell isod.';
+
+  @override
+  String get timingRestart => 'Ailddechrau';
+
+  @override
+  String get timingComplete => 'Llinell wedi\'i chwblhau!';
+
+  @override
+  String get timingDits => 'Ditiau';
+
+  @override
+  String get timingDahs => 'Dahiau';
+
+  @override
+  String get timingLetterGaps => 'Bylchau llythrennau';
+
+  @override
+  String get timingWordGaps => 'Bylchau geiriau';
+
+  @override
+  String timingStats(Object mean, Object sd, Object count) {
+    return 'cymedr $mean ms · σ $sd ms · $count sampl';
+  }
+
+  @override
+  String timingConsistency(Object percent) {
+    return '$percent% yn gyson';
+  }
+
+  @override
+  String timingOverall(Object percent) {
+    return 'Cysondeb cyffredinol: $percent%';
+  }
+
+  @override
+  String get aboutTimingScreenDesc =>
+      'Dangosir llinell o lyfr parth cyhoeddus gyda\'i Morse; bysellwch hi a mesurir amseriad pob pwls a bwlch. Ar y diwedd cewch ddosraniad amseriad a sgôr cysondeb ar gyfer ditiau, dahiau, bylchau llythrennau a bylchau geiriau (allwedd syth), neu\'r bylchau\'n unig (iambig). Adroddir hefyd eich cyflymder anfon gwirioneddol mewn WPM.';
+
+  @override
+  String timingWpm(Object wpm) {
+    return 'Cyflymder: $wpm WPM';
+  }
 }

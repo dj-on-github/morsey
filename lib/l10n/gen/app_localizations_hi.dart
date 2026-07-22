@@ -430,4 +430,57 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get hintUsed => '(संकेत इस्तेमाल हुआ)';
+
+  @override
+  String get menuTiming => 'टाइमिंग';
+
+  @override
+  String get timingInstruction =>
+      'नीचे की पंक्ति भेजें — हर पल्स और अंतराल का समय मापा जाएगा।';
+
+  @override
+  String get timingIambicNote =>
+      'iambic मोड: तत्वों का समय मशीन बनाती है, केवल अक्षर और शब्द अंतराल आँके जाते हैं। नीचे की पंक्ति भेजें।';
+
+  @override
+  String get timingRestart => 'फिर से शुरू करें';
+
+  @override
+  String get timingComplete => 'पंक्ति पूरी!';
+
+  @override
+  String get timingDits => 'डिट';
+
+  @override
+  String get timingDahs => 'डाह';
+
+  @override
+  String get timingLetterGaps => 'अक्षर-अंतराल';
+
+  @override
+  String get timingWordGaps => 'शब्द-अंतराल';
+
+  @override
+  String timingStats(Object mean, Object sd, Object count) {
+    return 'औसत $mean ms · σ $sd ms · $count नमूने';
+  }
+
+  @override
+  String timingConsistency(Object percent) {
+    return '$percent% नियमितता';
+  }
+
+  @override
+  String timingOverall(Object percent) {
+    return 'कुल नियमितता: $percent%';
+  }
+
+  @override
+  String get aboutTimingScreenDesc =>
+      'सार्वजनिक-डोमेन पुस्तक की एक पंक्ति और उसका मोर्स दिखता है; उसे भेजें और हर पल्स व अंतराल का समय मापा जाता है। अंत में डिट, डाह, अक्षर-अंतराल और शब्द-अंतराल का वितरण और नियमितता स्कोर मिलता है (सीधी कुंजी), या iambic में केवल अंतरालों का। आपकी वास्तविक भेजने की गति (WPM) भी बताई जाती है।';
+
+  @override
+  String timingWpm(Object wpm) {
+    return 'गति: $wpm WPM';
+  }
 }

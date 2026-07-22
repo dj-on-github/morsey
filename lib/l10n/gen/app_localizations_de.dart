@@ -431,4 +431,57 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get hintUsed => '(Hinweis verwendet)';
+
+  @override
+  String get menuTiming => 'Timing';
+
+  @override
+  String get timingInstruction =>
+      'Geben Sie die Zeile unten — die Dauer jedes Impulses und jeder Pause wird gemessen.';
+
+  @override
+  String get timingIambicNote =>
+      'Iambischer Modus: die Elemente taktet die Maschine, gewertet werden nur Buchstaben- und Wortpausen. Geben Sie die Zeile unten.';
+
+  @override
+  String get timingRestart => 'Neu starten';
+
+  @override
+  String get timingComplete => 'Zeile geschafft!';
+
+  @override
+  String get timingDits => 'Dits';
+
+  @override
+  String get timingDahs => 'Dahs';
+
+  @override
+  String get timingLetterGaps => 'Buchstabenpausen';
+
+  @override
+  String get timingWordGaps => 'Wortpausen';
+
+  @override
+  String timingStats(Object mean, Object sd, Object count) {
+    return 'Mittel $mean ms · σ $sd ms · $count Werte';
+  }
+
+  @override
+  String timingConsistency(Object percent) {
+    return '$percent % gleichmäßig';
+  }
+
+  @override
+  String timingOverall(Object percent) {
+    return 'Gesamt-Gleichmäßigkeit: $percent %';
+  }
+
+  @override
+  String get aboutTimingScreenDesc =>
+      'Zeigt eine Zeile aus einem gemeinfreien Buch mit ihrem Morse; geben Sie sie und die Dauer jedes Impulses und jeder Pause wird gemessen. Am Ende gibt es Verteilungen und eine Gleichmäßigkeits-Wertung für Dits, Dahs, Buchstaben- und Wortpausen (Handtaste) bzw. nur für die Pausen (iambisch, die Elemente taktet die Maschine). Auch Ihr tatsächliches Gebetempo in WPM wird angezeigt.';
+
+  @override
+  String timingWpm(Object wpm) {
+    return 'Tempo: $wpm WPM';
+  }
 }

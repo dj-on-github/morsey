@@ -819,6 +819,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'(hint used)'**
   String get hintUsed;
+
+  /// No description provided for @menuTiming.
+  ///
+  /// In en, this message translates to:
+  /// **'Timing'**
+  String get menuTiming;
+
+  /// No description provided for @timingInstruction.
+  ///
+  /// In en, this message translates to:
+  /// **'Key the line below — the timing of every pulse and gap is measured.'**
+  String get timingInstruction;
+
+  /// No description provided for @timingIambicNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Iambic mode: the machine makes the element timing, so only the letter and word gaps are scored. Key the line below.'**
+  String get timingIambicNote;
+
+  /// No description provided for @timingRestart.
+  ///
+  /// In en, this message translates to:
+  /// **'Restart'**
+  String get timingRestart;
+
+  /// No description provided for @timingComplete.
+  ///
+  /// In en, this message translates to:
+  /// **'Line complete!'**
+  String get timingComplete;
+
+  /// No description provided for @timingDits.
+  ///
+  /// In en, this message translates to:
+  /// **'Dits'**
+  String get timingDits;
+
+  /// No description provided for @timingDahs.
+  ///
+  /// In en, this message translates to:
+  /// **'Dahs'**
+  String get timingDahs;
+
+  /// No description provided for @timingLetterGaps.
+  ///
+  /// In en, this message translates to:
+  /// **'Letter gaps'**
+  String get timingLetterGaps;
+
+  /// No description provided for @timingWordGaps.
+  ///
+  /// In en, this message translates to:
+  /// **'Word gaps'**
+  String get timingWordGaps;
+
+  /// No description provided for @timingStats.
+  ///
+  /// In en, this message translates to:
+  /// **'mean {mean} ms · σ {sd} ms · {count} samples'**
+  String timingStats(Object mean, Object sd, Object count);
+
+  /// No description provided for @timingConsistency.
+  ///
+  /// In en, this message translates to:
+  /// **'{percent}% consistent'**
+  String timingConsistency(Object percent);
+
+  /// No description provided for @timingOverall.
+  ///
+  /// In en, this message translates to:
+  /// **'Overall consistency: {percent}%'**
+  String timingOverall(Object percent);
+
+  /// No description provided for @aboutTimingScreenDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Shows a line from a public-domain book with its Morse; key it and the timing of every pulse and gap is measured. At the end you get a timing distribution and a consistency score for dits, dahs, letter gaps and word gaps (straight key), or for the gaps alone (iambic, where the machine times the elements). Your actual sending speed in WPM is also reported.'**
+  String get aboutTimingScreenDesc;
+
+  /// No description provided for @timingWpm.
+  ///
+  /// In en, this message translates to:
+  /// **'Speed: {wpm} WPM'**
+  String timingWpm(Object wpm);
 }
 
 class _AppLocalizationsDelegate

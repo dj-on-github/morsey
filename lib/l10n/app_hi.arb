@@ -117,5 +117,19 @@
   "keyerModeStraight": "सीधी कुंजी",
   "keyerModeStraightDesc": "एक ही कुंजी — समय आप तय करते हैं: छोटा दबाव डिट, लंबा दबाव डाह",
   "levelAccuracy": ": {percent}%",
-  "hintUsed": "(संकेत इस्तेमाल हुआ)"
+  "hintUsed": "(संकेत इस्तेमाल हुआ)",
+  "menuTiming": "टाइमिंग",
+  "timingInstruction": "नीचे की पंक्ति भेजें — हर पल्स और अंतराल का समय मापा जाएगा।",
+  "timingIambicNote": "iambic मोड: तत्वों का समय मशीन बनाती है, केवल अक्षर और शब्द अंतराल आँके जाते हैं। नीचे की पंक्ति भेजें।",
+  "timingRestart": "फिर से शुरू करें",
+  "timingComplete": "पंक्ति पूरी!",
+  "timingDits": "डिट",
+  "timingDahs": "डाह",
+  "timingLetterGaps": "अक्षर-अंतराल",
+  "timingWordGaps": "शब्द-अंतराल",
+  "timingStats": "औसत {mean} ms · σ {sd} ms · {count} नमूने",
+  "timingConsistency": "{percent}% नियमितता",
+  "timingOverall": "कुल नियमितता: {percent}%",
+  "aboutTimingScreenDesc": "सार्वजनिक-डोमेन पुस्तक की एक पंक्ति और उसका मोर्स दिखता है; उसे भेजें और हर पल्स व अंतराल का समय मापा जाता है। अंत में डिट, डाह, अक्षर-अंतराल और शब्द-अंतराल का वितरण और नियमितता स्कोर मिलता है (सीधी कुंजी), या iambic में केवल अंतरालों का। आपकी वास्तविक भेजने की गति (WPM) भी बताई जाती है।",
+  "timingWpm": "गति: {wpm} WPM"
 }

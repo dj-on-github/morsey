@@ -117,5 +117,19 @@
   "keyerModeStraight": "Allwedd syth",
   "keyerModeStraightDesc": "Un allwedd — chi sy'n amseru: mae pwysiad byr yn dit, a phwysiad hir yn dah",
   "levelAccuracy": ": {percent}%",
-  "hintUsed": "(defnyddiwyd awgrym)"
+  "hintUsed": "(defnyddiwyd awgrym)",
+  "menuTiming": "Amseriad",
+  "timingInstruction": "Bysellwch y llinell isod — mesurir amseriad pob pwls a bwlch.",
+  "timingIambicNote": "Modd iambig: y peiriant sy'n amseru'r elfennau, felly dim ond bylchau llythrennau a geiriau a sgorir. Bysellwch y llinell isod.",
+  "timingRestart": "Ailddechrau",
+  "timingComplete": "Llinell wedi'i chwblhau!",
+  "timingDits": "Ditiau",
+  "timingDahs": "Dahiau",
+  "timingLetterGaps": "Bylchau llythrennau",
+  "timingWordGaps": "Bylchau geiriau",
+  "timingStats": "cymedr {mean} ms · σ {sd} ms · {count} sampl",
+  "timingConsistency": "{percent}% yn gyson",
+  "timingOverall": "Cysondeb cyffredinol: {percent}%",
+  "aboutTimingScreenDesc": "Dangosir llinell o lyfr parth cyhoeddus gyda'i Morse; bysellwch hi a mesurir amseriad pob pwls a bwlch. Ar y diwedd cewch ddosraniad amseriad a sgôr cysondeb ar gyfer ditiau, dahiau, bylchau llythrennau a bylchau geiriau (allwedd syth), neu'r bylchau'n unig (iambig). Adroddir hefyd eich cyflymder anfon gwirioneddol mewn WPM.",
+  "timingWpm": "Cyflymder: {wpm} WPM"
 }

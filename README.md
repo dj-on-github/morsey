@@ -45,6 +45,17 @@ open it:
   key; each completed character is decoded into the text box, and pausing
   seven dits inserts a word space. The same toggle mutes the keying
   side-tone.
+- **Timing** — shows a line from a public-domain book (1000 bundled lines
+  from Dickens, Austen, Melville, Franklin, Adam Smith and others) with its
+  Morse; key it and every pulse and gap is timed against the expected
+  sequence. Alignment is per character using the keyer's decode: a miskeyed
+  letter shows what you sent, discards that attempt's timings, and waits for
+  a re-key (or resyncs if you skipped a letter) — one slip never poisons the
+  rest of the line. On completion you get a histogram and consistency score
+  (100 − coefficient of variation) per category — dits, dahs, letter gaps
+  and word gaps with a straight key, or the gaps alone in iambic mode — plus
+  your actual sending speed in WPM (nominal PARIS units ÷ elapsed time).
+  Restart picks a new line.
 
 ## The Hardware
 

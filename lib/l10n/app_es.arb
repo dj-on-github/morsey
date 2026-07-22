@@ -117,5 +117,19 @@
   "keyerModeStraight": "Llave vertical",
   "keyerModeStraightDesc": "Una sola llave — usted marca el tiempo: una pulsación corta es un dit y una larga, un dah",
   "levelAccuracy": ": {percent} %",
-  "hintUsed": "(pista usada)"
+  "hintUsed": "(pista usada)",
+  "menuTiming": "Temporización",
+  "timingInstruction": "Manipule la línea de abajo: se mide la duración de cada pulso y espacio.",
+  "timingIambicNote": "Modo yámbico: la máquina temporiza los elementos; solo se puntúan los espacios entre letras y palabras. Manipule la línea de abajo.",
+  "timingRestart": "Reiniciar",
+  "timingComplete": "¡Línea completada!",
+  "timingDits": "Dits",
+  "timingDahs": "Dahs",
+  "timingLetterGaps": "Espacios entre letras",
+  "timingWordGaps": "Espacios entre palabras",
+  "timingStats": "media {mean} ms · σ {sd} ms · {count} muestras",
+  "timingConsistency": "{percent} % de regularidad",
+  "timingOverall": "Regularidad total: {percent} %",
+  "aboutTimingScreenDesc": "Muestra una línea de un libro de dominio público con su Morse; manipúlela y se mide la duración de cada pulso y espacio. Al final verá distribuciones y una puntuación de regularidad para dits, dahs y espacios entre letras y palabras (llave vertical), o solo los espacios (yámbico, la máquina temporiza los elementos). También se indica su velocidad real de envío en WPM.",
+  "timingWpm": "Velocidad: {wpm} WPM"
 }

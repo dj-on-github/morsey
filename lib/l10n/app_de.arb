@@ -117,5 +117,19 @@
   "keyerModeStraight": "Handtaste",
   "keyerModeStraightDesc": "Eine Taste — Sie machen das Timing: kurzer Druck ist ein Dit, langer Druck ein Dah",
   "levelAccuracy": ": {percent} %",
-  "hintUsed": "(Hinweis verwendet)"
+  "hintUsed": "(Hinweis verwendet)",
+  "menuTiming": "Timing",
+  "timingInstruction": "Geben Sie die Zeile unten — die Dauer jedes Impulses und jeder Pause wird gemessen.",
+  "timingIambicNote": "Iambischer Modus: die Elemente taktet die Maschine, gewertet werden nur Buchstaben- und Wortpausen. Geben Sie die Zeile unten.",
+  "timingRestart": "Neu starten",
+  "timingComplete": "Zeile geschafft!",
+  "timingDits": "Dits",
+  "timingDahs": "Dahs",
+  "timingLetterGaps": "Buchstabenpausen",
+  "timingWordGaps": "Wortpausen",
+  "timingStats": "Mittel {mean} ms · σ {sd} ms · {count} Werte",
+  "timingConsistency": "{percent} % gleichmäßig",
+  "timingOverall": "Gesamt-Gleichmäßigkeit: {percent} %",
+  "aboutTimingScreenDesc": "Zeigt eine Zeile aus einem gemeinfreien Buch mit ihrem Morse; geben Sie sie und die Dauer jedes Impulses und jeder Pause wird gemessen. Am Ende gibt es Verteilungen und eine Gleichmäßigkeits-Wertung für Dits, Dahs, Buchstaben- und Wortpausen (Handtaste) bzw. nur für die Pausen (iambisch, die Elemente taktet die Maschine). Auch Ihr tatsächliches Gebetempo in WPM wird angezeigt.",
+  "timingWpm": "Tempo: {wpm} WPM"
 }

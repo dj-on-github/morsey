@@ -421,4 +421,56 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get hintUsed => '（ヒント使用）';
+
+  @override
+  String get menuTiming => 'タイミング';
+
+  @override
+  String get timingInstruction => '下の行を送信してください — 各パルスと間隔の長さを測定します。';
+
+  @override
+  String get timingIambicNote =>
+      'イアンビックモード：要素の長さは機械が作るため、文字間隔と語間隔のみを評価します。下の行を送信してください。';
+
+  @override
+  String get timingRestart => 'やり直す';
+
+  @override
+  String get timingComplete => '行を完了！';
+
+  @override
+  String get timingDits => '短点';
+
+  @override
+  String get timingDahs => '長点';
+
+  @override
+  String get timingLetterGaps => '文字間隔';
+
+  @override
+  String get timingWordGaps => '語間隔';
+
+  @override
+  String timingStats(Object mean, Object sd, Object count) {
+    return '平均 $mean ms · σ $sd ms · $count 回';
+  }
+
+  @override
+  String timingConsistency(Object percent) {
+    return '均一度 $percent%';
+  }
+
+  @override
+  String timingOverall(Object percent) {
+    return '総合均一度：$percent%';
+  }
+
+  @override
+  String get aboutTimingScreenDesc =>
+      'パブリックドメインの本の一行とそのモールスを表示します。送信すると各パルスと間隔が測定され、最後に短点・長点・文字間隔・語間隔の分布と均一度スコアが出ます（縦振れ電鍵）。イアンビックでは間隔のみが対象です。 実際の送信速度（WPM）も表示されます。';
+
+  @override
+  String timingWpm(Object wpm) {
+    return '速度：$wpm WPM';
+  }
 }

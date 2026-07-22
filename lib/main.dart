@@ -15,6 +15,7 @@ import 'screens/input_tutorial_screen.dart';
 import 'screens/listen_train_screen.dart';
 import 'screens/listen_tutorial_screen.dart';
 import 'screens/settings_screen.dart';
+import 'screens/timing_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -151,6 +152,8 @@ class _HomePageState extends State<HomePage> {
         (_) => const FreeTypeScreen()),
     _Section((l) => l.menuFreeKey, Icons.cell_tower,
         (_) => const FreeKeyScreen()),
+    _Section((l) => l.menuTiming, Icons.timer_outlined,
+        (_) => const TimingScreen()),
   ];
 
   /// Width below which the sidebar collapses into a drawer.

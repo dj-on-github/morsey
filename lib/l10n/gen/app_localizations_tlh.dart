@@ -423,4 +423,57 @@ class AppLocalizationsTlh extends AppLocalizations {
 
   @override
   String get hintUsed => '(qeS lo\'lu\'pu\')';
+
+  @override
+  String get menuTiming => 'poH';
+
+  @override
+  String get timingInstruction =>
+      'bIngDaq tlhegh yIlab — Hoch \'uy poH bIng poH je juvlu\'.';
+
+  @override
+  String get timingIambicNote =>
+      'iambic mIwDaq \'ay\'mey poH chenmoH jan; ngutlh mu\' bIngmey neH juvlu\'. bIngDaq tlhegh yIlab.';
+
+  @override
+  String get timingRestart => 'yItaghqa\'';
+
+  @override
+  String get timingComplete => 'rIn tlhegh!';
+
+  @override
+  String get timingDits => 'ditmey';
+
+  @override
+  String get timingDahs => 'dahmey';
+
+  @override
+  String get timingLetterGaps => 'ngutlh bIngmey';
+
+  @override
+  String get timingWordGaps => 'mu\' bIngmey';
+
+  @override
+  String timingStats(Object mean, Object sd, Object count) {
+    return 'motlh $mean ms · σ $sd ms · $count';
+  }
+
+  @override
+  String timingConsistency(Object percent) {
+    return '$percent% rap';
+  }
+
+  @override
+  String timingOverall(Object percent) {
+    return 'Hoch rap: $percent%';
+  }
+
+  @override
+  String get aboutTimingScreenDesc =>
+      'paq tlhab tlhegh morS je cha\'lu\'; Dalab \'ej Hoch \'uy poH bIng poH je juvlu\'. rInDI\' dit dah bIng je poH Del cha\'lu\' \'ej rap mI\' nob (leQ mob); iambic mIwDaq bIngmey neH. Do\'lIj (WPM) je \'anglu\'.';
+
+  @override
+  String timingWpm(Object wpm) {
+    return 'Do: $wpm WPM';
+  }
 }

@@ -417,4 +417,55 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get hintUsed => '（使用了提示）';
+
+  @override
+  String get menuTiming => '节奏';
+
+  @override
+  String get timingInstruction => '发出下面这一行 — 程序会测量每个脉冲和间隔的时长。';
+
+  @override
+  String get timingIambicNote => '双拨片模式下码元时长由机器生成，只评估字母间隔和词间隔。请发出下面这一行。';
+
+  @override
+  String get timingRestart => '重新开始';
+
+  @override
+  String get timingComplete => '完成一行！';
+
+  @override
+  String get timingDits => '点';
+
+  @override
+  String get timingDahs => '划';
+
+  @override
+  String get timingLetterGaps => '字母间隔';
+
+  @override
+  String get timingWordGaps => '词间隔';
+
+  @override
+  String timingStats(Object mean, Object sd, Object count) {
+    return '平均 $mean ms · σ $sd ms · $count 次';
+  }
+
+  @override
+  String timingConsistency(Object percent) {
+    return '稳定度 $percent%';
+  }
+
+  @override
+  String timingOverall(Object percent) {
+    return '总体稳定度：$percent%';
+  }
+
+  @override
+  String get aboutTimingScreenDesc =>
+      '显示公有领域书籍中的一行文字及其摩尔斯电码；照着发报，程序测量每个脉冲和间隔的时长。完成后给出点、划、字母间隔和词间隔的时长分布与稳定度评分（直键），双拨片模式则只统计间隔。 还会报告你的实际发报速度（WPM）。';
+
+  @override
+  String timingWpm(Object wpm) {
+    return '速度：$wpm WPM';
+  }
 }

@@ -117,5 +117,19 @@
   "keyerModeStraight": "leQ mob",
   "keyerModeStraightDesc": "wa' leQ neH — poH DachenmoH: 'uy ngaj dit 'oH, 'uy nI' dah 'oH",
   "levelAccuracy": ": {percent}%",
-  "hintUsed": "(qeS lo'lu'pu')"
+  "hintUsed": "(qeS lo'lu'pu')",
+  "menuTiming": "poH",
+  "timingInstruction": "bIngDaq tlhegh yIlab — Hoch 'uy poH bIng poH je juvlu'.",
+  "timingIambicNote": "iambic mIwDaq 'ay'mey poH chenmoH jan; ngutlh mu' bIngmey neH juvlu'. bIngDaq tlhegh yIlab.",
+  "timingRestart": "yItaghqa'",
+  "timingComplete": "rIn tlhegh!",
+  "timingDits": "ditmey",
+  "timingDahs": "dahmey",
+  "timingLetterGaps": "ngutlh bIngmey",
+  "timingWordGaps": "mu' bIngmey",
+  "timingStats": "motlh {mean} ms · σ {sd} ms · {count}",
+  "timingConsistency": "{percent}% rap",
+  "timingOverall": "Hoch rap: {percent}%",
+  "aboutTimingScreenDesc": "paq tlhab tlhegh morS je cha'lu'; Dalab 'ej Hoch 'uy poH bIng poH je juvlu'. rInDI' dit dah bIng je poH Del cha'lu' 'ej rap mI' nob (leQ mob); iambic mIwDaq bIngmey neH. Do'lIj (WPM) je 'anglu'.",
+  "timingWpm": "Do: {wpm} WPM"
 }

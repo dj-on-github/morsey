@@ -239,5 +239,41 @@
       "percent": {}
     }
   },
-  "hintUsed": "(hint used)"
+  "hintUsed": "(hint used)",
+  "menuTiming": "Timing",
+  "timingInstruction": "Key the line below — the timing of every pulse and gap is measured.",
+  "timingIambicNote": "Iambic mode: the machine makes the element timing, so only the letter and word gaps are scored. Key the line below.",
+  "timingRestart": "Restart",
+  "timingComplete": "Line complete!",
+  "timingDits": "Dits",
+  "timingDahs": "Dahs",
+  "timingLetterGaps": "Letter gaps",
+  "timingWordGaps": "Word gaps",
+  "timingStats": "mean {mean} ms · σ {sd} ms · {count} samples",
+  "timingConsistency": "{percent}% consistent",
+  "timingOverall": "Overall consistency: {percent}%",
+  "aboutTimingScreenDesc": "Shows a line from a public-domain book with its Morse; key it and the timing of every pulse and gap is measured. At the end you get a timing distribution and a consistency score for dits, dahs, letter gaps and word gaps (straight key), or for the gaps alone (iambic, where the machine times the elements). Your actual sending speed in WPM is also reported.",
+  "@timingStats": {
+    "placeholders": {
+      "mean": {},
+      "sd": {},
+      "count": {}
+    }
+  },
+  "@timingConsistency": {
+    "placeholders": {
+      "percent": {}
+    }
+  },
+  "@timingOverall": {
+    "placeholders": {
+      "percent": {}
+    }
+  },
+  "timingWpm": "Speed: {wpm} WPM",
+  "@timingWpm": {
+    "placeholders": {
+      "wpm": {}
+    }
+  }
 }

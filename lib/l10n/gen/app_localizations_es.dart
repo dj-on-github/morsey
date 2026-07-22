@@ -430,4 +430,57 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get hintUsed => '(pista usada)';
+
+  @override
+  String get menuTiming => 'Temporización';
+
+  @override
+  String get timingInstruction =>
+      'Manipule la línea de abajo: se mide la duración de cada pulso y espacio.';
+
+  @override
+  String get timingIambicNote =>
+      'Modo yámbico: la máquina temporiza los elementos; solo se puntúan los espacios entre letras y palabras. Manipule la línea de abajo.';
+
+  @override
+  String get timingRestart => 'Reiniciar';
+
+  @override
+  String get timingComplete => '¡Línea completada!';
+
+  @override
+  String get timingDits => 'Dits';
+
+  @override
+  String get timingDahs => 'Dahs';
+
+  @override
+  String get timingLetterGaps => 'Espacios entre letras';
+
+  @override
+  String get timingWordGaps => 'Espacios entre palabras';
+
+  @override
+  String timingStats(Object mean, Object sd, Object count) {
+    return 'media $mean ms · σ $sd ms · $count muestras';
+  }
+
+  @override
+  String timingConsistency(Object percent) {
+    return '$percent % de regularidad';
+  }
+
+  @override
+  String timingOverall(Object percent) {
+    return 'Regularidad total: $percent %';
+  }
+
+  @override
+  String get aboutTimingScreenDesc =>
+      'Muestra una línea de un libro de dominio público con su Morse; manipúlela y se mide la duración de cada pulso y espacio. Al final verá distribuciones y una puntuación de regularidad para dits, dahs y espacios entre letras y palabras (llave vertical), o solo los espacios (yámbico, la máquina temporiza los elementos). También se indica su velocidad real de envío en WPM.';
+
+  @override
+  String timingWpm(Object wpm) {
+    return 'Velocidad: $wpm WPM';
+  }
 }

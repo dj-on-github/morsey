@@ -117,5 +117,19 @@
   "keyerModeStraight": "直键",
   "keyerModeStraightDesc": "只有一个键 — 节奏由你掌握：短按为点，长按为划",
   "levelAccuracy": "：{percent}%",
-  "hintUsed": "（使用了提示）"
+  "hintUsed": "（使用了提示）",
+  "menuTiming": "节奏",
+  "timingInstruction": "发出下面这一行 — 程序会测量每个脉冲和间隔的时长。",
+  "timingIambicNote": "双拨片模式下码元时长由机器生成，只评估字母间隔和词间隔。请发出下面这一行。",
+  "timingRestart": "重新开始",
+  "timingComplete": "完成一行！",
+  "timingDits": "点",
+  "timingDahs": "划",
+  "timingLetterGaps": "字母间隔",
+  "timingWordGaps": "词间隔",
+  "timingStats": "平均 {mean} ms · σ {sd} ms · {count} 次",
+  "timingConsistency": "稳定度 {percent}%",
+  "timingOverall": "总体稳定度：{percent}%",
+  "aboutTimingScreenDesc": "显示公有领域书籍中的一行文字及其摩尔斯电码；照着发报，程序测量每个脉冲和间隔的时长。完成后给出点、划、字母间隔和词间隔的时长分布与稳定度评分（直键），双拨片模式则只统计间隔。 还会报告你的实际发报速度（WPM）。",
+  "timingWpm": "速度：{wpm} WPM"
 }

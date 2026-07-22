@@ -431,4 +431,57 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get hintUsed => '(indice utilisé)';
+
+  @override
+  String get menuTiming => 'Cadence';
+
+  @override
+  String get timingInstruction =>
+      'Manipulez la ligne ci-dessous — la durée de chaque impulsion et de chaque espace est mesurée.';
+
+  @override
+  String get timingIambicNote =>
+      'Mode ïambique : la machine cadence les éléments ; seuls les espaces entre lettres et mots sont notés. Manipulez la ligne ci-dessous.';
+
+  @override
+  String get timingRestart => 'Recommencer';
+
+  @override
+  String get timingComplete => 'Ligne terminée !';
+
+  @override
+  String get timingDits => 'Dits';
+
+  @override
+  String get timingDahs => 'Dahs';
+
+  @override
+  String get timingLetterGaps => 'Espaces entre lettres';
+
+  @override
+  String get timingWordGaps => 'Espaces entre mots';
+
+  @override
+  String timingStats(Object mean, Object sd, Object count) {
+    return 'moyenne $mean ms · σ $sd ms · $count mesures';
+  }
+
+  @override
+  String timingConsistency(Object percent) {
+    return '$percent % de régularité';
+  }
+
+  @override
+  String timingOverall(Object percent) {
+    return 'Régularité globale : $percent %';
+  }
+
+  @override
+  String get aboutTimingScreenDesc =>
+      'Affiche une ligne tirée d\'un livre du domaine public avec son Morse ; manipulez-la et la durée de chaque impulsion et espace est mesurée. À la fin, des distributions et une note de régularité pour les dits, les dahs et les espaces entre lettres et mots (manipulateur droit), ou seulement les espaces (ïambique, la machine cadence les éléments). Votre vitesse d\'envoi réelle en WPM est également indiquée.';
+
+  @override
+  String timingWpm(Object wpm) {
+    return 'Vitesse : $wpm WPM';
+  }
 }

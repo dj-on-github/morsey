@@ -117,5 +117,19 @@
   "keyerModeStraight": "Manipulateur droit",
   "keyerModeStraightDesc": "Une seule touche — c'est vous qui rythmez : un appui court donne un dit, un appui long un dah",
   "levelAccuracy": " : {percent} %",
-  "hintUsed": "(indice utilisé)"
+  "hintUsed": "(indice utilisé)",
+  "menuTiming": "Cadence",
+  "timingInstruction": "Manipulez la ligne ci-dessous — la durée de chaque impulsion et de chaque espace est mesurée.",
+  "timingIambicNote": "Mode ïambique : la machine cadence les éléments ; seuls les espaces entre lettres et mots sont notés. Manipulez la ligne ci-dessous.",
+  "timingRestart": "Recommencer",
+  "timingComplete": "Ligne terminée !",
+  "timingDits": "Dits",
+  "timingDahs": "Dahs",
+  "timingLetterGaps": "Espaces entre lettres",
+  "timingWordGaps": "Espaces entre mots",
+  "timingStats": "moyenne {mean} ms · σ {sd} ms · {count} mesures",
+  "timingConsistency": "{percent} % de régularité",
+  "timingOverall": "Régularité globale : {percent} %",
+  "aboutTimingScreenDesc": "Affiche une ligne tirée d'un livre du domaine public avec son Morse ; manipulez-la et la durée de chaque impulsion et espace est mesurée. À la fin, des distributions et une note de régularité pour les dits, les dahs et les espaces entre lettres et mots (manipulateur droit), ou seulement les espaces (ïambique, la machine cadence les éléments). Votre vitesse d'envoi réelle en WPM est également indiquée.",
+  "timingWpm": "Vitesse : {wpm} WPM"
 }
